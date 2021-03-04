@@ -9,18 +9,18 @@ class ModelViewer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            width: 0.625 * window.innerWidth
+            widthCoefficient: 0.625
         }
     }
 
     loadViewer = (scene, axesHelper, light, renderer, camera, highlightData) => {
         scene.add(axesHelper)
         scene.add(light);
-        camera.position.z = 450;
+        camera.position.z = 250;
         camera.position.x = 250;
         
         renderer.outputEncoding = THREE.sRGBEncoding;
-        renderer.setSize(this.state.width, window.innerHeight);
+        renderer.setSize(window.innerWidth * this.state.widthCoefficient, window.innerHeight);
         document.body.appendChild(renderer.domElement);
 
         this.mount.appendChild(renderer.domElement);
@@ -34,10 +34,21 @@ class ModelViewer extends Component {
                         if ((child).isMesh) {
                             let m = child
                             //the sphere and plane will not be mouse picked. THe plane will receive shadows while everything else casts shadows.
-                            m.castShadow = true
-                            highlightData.pickableObjects.push(m)
+                            m.castShadow = true;
+                            highlightData.pickableObjects.push(m);
                             //store reference to original materials for later
+
+                            m.material.polygonOffset = true;
+                            m.depthTest = true;
+                            m.material.polygonOffsetFactor = 0.5;
+                            m.material.polygonOffsetUnits = 1;
+                            m.material.color.convertSRGBToLinear();
+
+                            let mat = m.material.clone();
+                            m.material = mat.clone();
+
                             highlightData.originalMaterials[m.name] = (m).material;
+
                         }
                     })
 
@@ -64,9 +75,9 @@ class ModelViewer extends Component {
 
         // Добавление слушателя на изменения размера окна для изменения aspect камеры и размеров viewer.
         const onWindowResize = () => {
-            camera.aspect = this.state.width / window.innerHeight;
+            camera.aspect = window.innerWidth * this.state.widthCoefficient / window.innerHeight;
             camera.updateProjectionMatrix();
-            renderer.setSize(this.state.width, window.innerHeight);
+            renderer.setSize(window.innerWidth * this.state.widthCoefficient, window.innerHeight);
             render();
         }
         window.addEventListener('resize', onWindowResize, false)
@@ -88,7 +99,7 @@ class ModelViewer extends Component {
 
     onMouseMove = (event) => {
         const { viewerData } = this.props.stores.modelStore;
-        let { hoveredPart } = this.props.stores.modelStore;
+        let { hoveredPart, selectedPart } = this.props.stores.modelStore;
         const { renderer, camera, highlightData } = viewerData;
         let { pickableObjects, intersectedObject, raycaster, intersects } = highlightData;
         
@@ -105,19 +116,29 @@ class ModelViewer extends Component {
         intersects = raycaster.intersectObjects(pickableObjects, false);
 
         if (intersects.length > 0) {
-            intersectedObject = intersects[0].object
+            intersectedObject = intersects[0].object;
+            this.mount.style.cursor = "pointer";
         } else {
-            intersectedObject = null
+            this.mount.style.cursor = "default";
+            intersectedObject = null;
         }
 
-        hoveredPart = intersectedObject;
-        
+        // TODO исправить подсвечивания у выделенного объекта
         pickableObjects.forEach((o, i) => {
             if (intersectedObject && intersectedObject.name === o.name ) {
-                
                 pickableObjects[i].material.transparent = true;
                 pickableObjects[i].material.opacity = 0.8;
+                console.log( intersectedObject )
+                console.log(selectedPart)
+                hoveredPart = intersectedObject;
+                if (hoveredPart === selectedPart) {
+                    return;
+                } else {
+                    pickableObjects[i].material.color = new THREE.Color("skyblue");
+                }
+
             } else {
+                pickableObjects[i].material.color = new THREE.Color(1, 1,1);
                 pickableObjects[i].material.transparent = false;
             }
         })
@@ -158,7 +179,7 @@ class ModelViewer extends Component {
     }
     render() {
         return (
-            <div ref={ref => (this.mount = ref)} onMouseMove={this.onMouseMove} onClick={this.onModelClick}/>
+            <div ref={ref => (this.mount = ref)} onMouseMove={this.onMouseMove} onDoubleClick={this.onModelClick}/>
         )
     }
 }

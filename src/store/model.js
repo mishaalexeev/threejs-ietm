@@ -29,9 +29,13 @@ export default class ModelStore {
     initializeViewer(window) {
         this.viewerData.scene = new THREE.Scene();
         this.viewerData.axesHelper = new THREE.AxesHelper(100);
-        this.viewerData.camera = new THREE.PerspectiveCamera(75, 0.625*window.innerWidth / window.innerHeight, 0.1, 1000);
+        this.viewerData.camera = new THREE.PerspectiveCamera(75, 0.625*window.innerWidth / window.innerHeight, 0.1, 3000);
         this.viewerData.light = new THREE.AmbientLight();
+
         this.viewerData.renderer = new THREE.WebGLRenderer();
+        this.viewerData.renderer.setPixelRatio(window.devicePixelRatio > 1 ?  1 : window.devicePixelRatio);
+        this.viewerData.renderer.setClearColor(new THREE.Color(0xc8c8c8));
+
         this.viewerData.controls = new OrbitControls(this.viewerData.camera, this.viewerData.renderer.domElement);
 
 
