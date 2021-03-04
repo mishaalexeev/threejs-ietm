@@ -125,29 +125,34 @@ class ModelViewer extends Component {
 
         // TODO исправить подсвечивания у выделенного объекта
         pickableObjects.forEach((o, i) => {
-            if (intersectedObject && intersectedObject.name === o.name ) {
-                pickableObjects[i].material.transparent = true;
-                pickableObjects[i].material.opacity = 0.8;
-                console.log( intersectedObject )
-                console.log(selectedPart)
-                hoveredPart = intersectedObject;
-                if (hoveredPart === selectedPart) {
-                    return;
-                } else {
-                    pickableObjects[i].material.color = new THREE.Color("skyblue");
-                }
+            const isSelected = o === selectedPart;
+            if (isSelected){
+                o.material.transparent = false;
+            }
 
+            if (intersectedObject && intersectedObject.name === o.name ) {
+                o.material.transparent = true;
+                o.material.opacity = 0.8;
+                hoveredPart = intersectedObject;
+                if (intersectedObject === selectedPart){
+                    return;
+                }
+                o.material.color = new THREE.Color("skyblue");
             } else {
-                pickableObjects[i].material.color = new THREE.Color(1, 1,1);
-                pickableObjects[i].material.transparent = false;
+                if (o === selectedPart){
+                    return;
+                }
+                // ToDo исправить свет из массива чтобы брался
+                o.material.color = new THREE.Color(1, 1,1);
+                o.material.transparent = false;
             }
         })
     }
 
     onModelClick = (event) => {
-        const { renderer, camera, highlightData } = this.props.stores.modelStore.viewerData;
+        const { modelStore } = this.props.stores;
+        const { renderer, camera, highlightData } = modelStore.viewerData;
         let { pickableObjects, intersectedObject, raycaster, intersects } = highlightData;
-        let { selectedPart } = this.props.stores.modelStore;
 
         const offset = {
             left: document.querySelector(".ant-col-4").offsetWidth,
@@ -161,19 +166,19 @@ class ModelViewer extends Component {
         intersects = raycaster.intersectObjects(pickableObjects, false);
 
         if (intersects.length > 0) {
-            intersectedObject = intersects[0].object
+            intersectedObject = intersects[0].object;
         } else {
-            intersectedObject = null
+            intersectedObject = null;
             return
         }
         
         pickableObjects.forEach((o, i) => {
             if (intersectedObject && intersectedObject.name === o.name) {
-                selectedPart = intersectedObject;
+                modelStore.selectedPart = pickableObjects[i];
                 pickableObjects[i].material.transparent = true;
-                pickableObjects[i].material.color = new THREE.Color('red');
+                pickableObjects[i].material.color = new THREE.Color('#df1b1b');
             } else{
-                pickableObjects[i].material.color = new THREE.Color('1,1,1');
+                pickableObjects[i].material.color = new THREE.Color(1,1,1);
             }
         })
     }
