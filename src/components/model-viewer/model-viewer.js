@@ -1,41 +1,33 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
 import * as THREE from "three";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 import withStores from "../../hocs/withStores";
-import { LuminanceFormat } from "three";
 
 class ModelViewer extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            width: 0.625 * window.innerWidth
+        }
     }
 
-
-    componentDidMount() {
-        console.log(this.props.stores);
-        this.props.stores.modelStore.initializeViewer(window);
-        const { scene, axesHelper, light, renderer, controls, camera, highlightData } = this.props.stores.modelStore.viewerData;
-        const width = 0.625 * window.innerWidth;
+    loadViewer = (scene, axesHelper, light, renderer, camera, highlightData) => {
         scene.add(axesHelper)
         scene.add(light);
-
-        camera.position.z = 300
-
-        //renderer.physicallyCorrectLights = true
-        //renderer.shadowMap.enabled = true
-        renderer.outputEncoding = THREE.sRGBEncoding
-        renderer.setSize(width, window.innerHeight)
-        document.body.appendChild(renderer.domElement)
-
-
+        camera.position.z = 450;
+        camera.position.x = 250;
+        
+        renderer.outputEncoding = THREE.sRGBEncoding;
+        renderer.setSize(this.state.width, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
 
         this.mount.appendChild(renderer.domElement);
         const loader = new GLTFLoader()
-      //  loader.setDRACOLoader(new DRACOLoader().setDecoderPath('/draco/'));
+        loader.setDRACOLoader(new DRACOLoader().setDecoderPath('/draco/'));
         new Promise((res, rej) => {
-                loader.load(
+            loader.load(
                 '/models/gear222.glb',
                 function (gltf) {
                     gltf.scene.traverse(function (child) {
@@ -48,60 +40,57 @@ class ModelViewer extends Component {
                             highlightData.originalMaterials[m.name] = (m).material;
                         }
                     })
-                    
+
                     scene.add(gltf.scene);
                     res();
                 },
                 (xhr) => {
-                    //console.log((xhr.loaded / xhr.total * 100) + '% loaded')
+                    console.log((xhr.loaded / xhr.total * 100) + '% loaded')
                 },
                 (error) => {
-                    //console.log(error);
+                    console.log(error);
                 }
             );
         }).then(()=> {
 
         })
+    }
 
+    componentDidMount() {
+        const { modelStore } = this.props.stores;
+        modelStore.initializeViewer(window);
+        const { scene, axesHelper, light, renderer, controls, camera, highlightData } = modelStore.viewerData;
+        this.loadViewer(scene, axesHelper, light, renderer, camera, highlightData);
 
-
-
-
-
+        // Добавление слушателя на изменения размера окна для изменения aspect камеры и размеров viewer.
+        const onWindowResize = () => {
+            camera.aspect = this.state.width / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(this.state.width, window.innerHeight);
+            render();
+        }
         window.addEventListener('resize', onWindowResize, false)
-        function onWindowResize() {
-            camera.aspect = 0.625 * window.innerWidth / window.innerHeight
-            camera.updateProjectionMatrix()
-            renderer.setSize(0.625 * window.innerWidth, window.innerHeight)
-            render()
+
+        //Вывод сцены на экран
+        const render = () => {
+            renderer.render(scene, camera);
         }
 
-
+        // Three js loop
         const animate = () => {
-            requestAnimationFrame(animate)
-            controls.update()
-
-            //this.castRays(renderer);
-
-            render()
+            requestAnimationFrame(animate);
+            controls.update();
+            render();
         };
 
-        function render() {
-            renderer.render(scene, camera)
-        }
         animate();
-
     }
 
     onMouseMove = (event) => {
-
-        let { selectedPart, hoveredPart } = this.props.stores.modelStore;
-        const { scene, axesHelper, light, renderer, controls, camera, highlightData } = this.props.stores.modelStore.viewerData;
-        let { pickableObjects, intersectedObject, originalMaterials, highlightedMaterial, raycaster, intersects } = highlightData;
-
-
-        const width = document.querySelector("canvas").offsetWidth;
-
+        const { viewerData } = this.props.stores.modelStore;
+        let { hoveredPart } = this.props.stores.modelStore;
+        const { renderer, camera, highlightData } = viewerData;
+        let { pickableObjects, intersectedObject, raycaster, intersects } = highlightData;
         
         const offset = {
             left: document.querySelector(".ant-col-4").offsetWidth,
@@ -135,14 +124,12 @@ class ModelViewer extends Component {
     }
 
     onModelClick = (event) => {
-        const { scene, axesHelper, light, renderer, controls, camera, highlightData } = this.props.stores.modelStore.viewerData;
-        let { pickableObjects, intersectedObject, originalMaterials, highlightedMaterial, raycaster, intersects } = highlightData;
-        let { selectedPart, hoveredPart } = this.props.stores.modelStore;
+        const { renderer, camera, highlightData } = this.props.stores.modelStore.viewerData;
+        let { pickableObjects, intersectedObject, raycaster, intersects } = highlightData;
+        let { selectedPart } = this.props.stores.modelStore;
 
-        
         const offset = {
             left: document.querySelector(".ant-col-4").offsetWidth,
-            right: document.querySelector(".ant-col-5").offsetWidth,
         }
        
         raycaster.setFromCamera({
@@ -158,11 +145,10 @@ class ModelViewer extends Component {
             intersectedObject = null
             return
         }
-
         
         pickableObjects.forEach((o, i) => {
             if (intersectedObject && intersectedObject.name === o.name) {
-                this.props.stores.modelStore.selectedPart = intersectedObject;
+                selectedPart = intersectedObject;
                 pickableObjects[i].material.transparent = true;
                 pickableObjects[i].material.color = new THREE.Color('red');
             } else{
