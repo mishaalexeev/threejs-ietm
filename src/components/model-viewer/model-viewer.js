@@ -5,17 +5,32 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 import withStores from "../../hocs/withStores";
 
+import { Menu, Dropdown } from 'antd';
+
+import { EyeInvisibleOutlined , StarFilled, StarTwoTone } from '@ant-design/icons';
+
+
 class ModelViewer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            widthCoefficient: 0.625
+            widthCoefficient: 0.625,
+            disabled: true
         }
     }
 
     loadViewer = (scene, axesHelper, light, renderer, camera, highlightData) => {
         scene.add(axesHelper)
-        scene.add(light);
+
+        const ambientLight = new THREE.AmbientLight();
+        const directionalLight1 = new THREE.DirectionalLight(new THREE.Color('hsl(64, 33%, 83%)'),0.8);
+        directionalLight1.position.set(-100, 0, -100);
+                
+        const directionalLight2 = new THREE.DirectionalLight(new THREE.Color('hsl(64, 33%, 83%)'),0.8);
+        directionalLight2.position.set(100, 100, -100);
+
+        scene.add(ambientLight, directionalLight1, directionalLight2);
+       
         camera.position.z = 250;
         camera.position.x = 250;
         
@@ -28,7 +43,7 @@ class ModelViewer extends Component {
         loader.setDRACOLoader(new DRACOLoader().setDecoderPath('/draco/'));
         new Promise((res, rej) => {
             loader.load(
-                '/models/gear222.glb',
+                '/models/34.glb',
                 function (gltf) {
                     gltf.scene.traverse(function (child) {
                         if ((child).isMesh) {
@@ -38,6 +53,7 @@ class ModelViewer extends Component {
                             highlightData.pickableObjects.push(m);
                             //store reference to original materials for later
 
+                            
                             m.material.polygonOffset = true;
                             m.depthTest = true;
                             m.material.polygonOffsetFactor = 0.5;
@@ -46,6 +62,7 @@ class ModelViewer extends Component {
 
                             let mat = m.material.clone();
                             m.material = mat.clone();
+                            console.log(m.parent.name);
 
                             highlightData.originalMaterials[m.name] = (m).material;
 
@@ -134,6 +151,7 @@ class ModelViewer extends Component {
                 o.material.transparent = true;
                 o.material.opacity = 0.8;
                 hoveredPart = intersectedObject;
+                
                 if (intersectedObject === selectedPart){
                     return;
                 }
@@ -177,14 +195,32 @@ class ModelViewer extends Component {
                 modelStore.selectedPart = pickableObjects[i];
                 pickableObjects[i].material.transparent = true;
                 pickableObjects[i].material.color = new THREE.Color('#df1b1b');
+                this.setState({
+                    disabled: false
+                })
             } else{
                 pickableObjects[i].material.color = new THREE.Color(1,1,1);
             }
         })
     }
+
+    onMenuVisibilityChange = (e) => {
+        alert();
+    }
+
     render() {
+        const menu = (
+            <Menu>
+              <Menu.Item key="1" icon={<EyeInvisibleOutlined/>}>Скрыть</Menu.Item>
+              <Menu.Item key="2" icon={<StarFilled />}>Сфокусироваться</Menu.Item>
+              <Menu.Item key="3" icon={<StarTwoTone />}>Выделить</Menu.Item>
+            </Menu>
+          );
+
         return (
-            <div ref={ref => (this.mount = ref)} onMouseMove={this.onMouseMove} onDoubleClick={this.onModelClick}/>
+            <Dropdown overlay={menu} trigger={['contextMenu']}>
+                <div ref={ref => (this.mount = ref)} onMouseMove={this.onMouseMove} onDoubleClick={this.onModelClick}/>
+            </Dropdown>
         )
     }
 }
