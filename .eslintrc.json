@@ -16,11 +16,8 @@
       "error", {
         "semi": false
       }
-    ],
+    ]
     //ours
-    "react/destructuring-assignment": ["off"],
-    "react/prop-types": ["off"],
-    "no-param-reassign": ["off"],
-    "no-console": ["off"]
+
   }
 }
