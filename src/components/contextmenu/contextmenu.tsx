@@ -11,7 +11,7 @@ import withStores from "../../hocs/withStores";
 
 type Props = {
   stores: RootStore;
-  menuItemClicked: (key: number, xPos: number, yPos: number) => void;
+  menuItemClicked: (key: string, xPos: number, yPos: number) => void;
 };
 
 const ContextMenu: FunctionComponent<Props> = (props) => {
@@ -34,7 +34,7 @@ const ContextMenu: FunctionComponent<Props> = (props) => {
     setOpen(false);
     // ToDo исправить сложение и вычитания offset
     props.menuItemClicked(
-      +event.key,
+      event.key,
       xPos + props.stores.modelStore.offset.left,
       yPos
     );

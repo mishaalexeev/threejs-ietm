@@ -1,4 +1,4 @@
-import ModelStore from "src/store/model";
+import ModelStore from "./model";
 
 class RootStore {
   constructor() {

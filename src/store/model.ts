@@ -3,22 +3,22 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 type ViewerData = {
-  scene: THREE.Scene | null,
-  axesHelper: THREE.AxesHelper | null,
-  camera: THREE.Camera | null,
-  light: THREE.Light | null,
-  renderer: THREE.Renderer | null,
-  controls: OrbitControls | null,
-}
+  scene: THREE.Scene | null;
+  axesHelper: THREE.AxesHelper | null;
+  camera: THREE.Camera | null;
+  light: THREE.Light | null;
+  renderer: THREE.Renderer | null;
+  controls: OrbitControls | null;
+};
 type HighlightData = {
-  pickableObjects: any[] | null,
-  intersectedObject: any[] | null,
-  originalMaterials: THREE.Material[] | null,
-  highlightedMaterial: THREE.Material | null,
-  raycaster: THREE.Raycaster | null,
-}
+  pickableObjects: any[] | null;
+  intersectedObject: THREE.Mesh;
+  originalMaterials: THREE.Material[] | null;
+  highlightedMaterial: THREE.Material | null;
+  raycaster: THREE.Raycaster | null;
+};
 export default class ModelStore {
-  modelsData = [];
+  modelsData: any = [];
 
   viewerData: ViewerData = {
     scene: null,
@@ -42,11 +42,13 @@ export default class ModelStore {
     right: 0,
   };
 
-  selectedPart = {};
+  selectedPart: any = {};
 
-  intersectedObject = {};
+  intersectedObject: THREE.Mesh = {};
 
-  hiddenObjects = [];
+  hiddenObjects: any = [];
+
+  private rootStore: any;
 
   initializeViewer(window) {
     this.viewerData.scene = new THREE.Scene();
@@ -64,10 +66,12 @@ export default class ModelStore {
     );
     this.viewerData.light.position.set(-100, 0, -100);
 
-    // this.offset = {
-    //   left: document.querySelector(".ant-col-4")!.offsetWidth,
-    //   right: document.querySelector(".ant-col-5")!.offsetWidth,
-    // };
+    this.offset = {
+      // @ts-ignore
+      left: document.querySelector(".ant-col-4")!.offsetWidth,
+      // @ts-ignore
+      right: document.querySelector(".ant-col-5")!.offsetWidth,
+    };
 
     this.viewerData.renderer = new THREE.WebGLRenderer();
     this.viewerData.renderer.setPixelRatio(
@@ -90,7 +94,7 @@ export default class ModelStore {
   }
 
   // Получить массив объектов на которые наведена мышь
-  getIntersects(clientX, clientY) {
+  getIntersects(clientX: number, clientY: number): THREE.Intersection[] {
     const { raycaster, pickableObjects } = this.highlightData;
     const { renderer, camera } = this.viewerData;
     raycaster.setFromCamera(
@@ -106,7 +110,7 @@ export default class ModelStore {
     return raycaster.intersectObjects(pickableObjects, false);
   }
 
-  setIntersectedObject(intersects) {
+  setIntersectedObject(intersects: THREE.Intersection[]) {
     if (intersects.length > 0) {
       const intersect = intersects.find(
         (el) => this.hiddenObjects.indexOf(el.object) === -1

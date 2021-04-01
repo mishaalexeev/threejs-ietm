@@ -4,15 +4,26 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 
 import { Spin } from "antd";
+import ModelStore from "store/model";
 
+import { RootStore } from "store";
 import ContextMenu from "../contextmenu";
 import withStores from "../../hocs/withStores";
 import "./model-viewer.css";
 import ModelViewerTools from "../model-viewer-tools/model-viewer-tools";
-import ModelStore from "store/model";
 
-class ModelViewer extends Component {
+type Props = {
+  stores: RootStore;
+};
+
+type State = {
+  widthCoefficient: number;
+  isLoading: boolean;
+};
+class ModelViewer extends Component<Props, State> {
   private readonly store: ModelStore;
+
+  private mount: any;
 
   constructor(props) {
     super(props);
@@ -41,7 +52,6 @@ class ModelViewer extends Component {
       camera,
       this.store.highlightData
     );
-
 
     // Вывод сцены на экран
     const render = () => {
@@ -127,7 +137,7 @@ class ModelViewer extends Component {
             }
           });
           scene.add(gltf.scene);
-          res();
+          res(1);
         },
         (xhr) => {
           console.log(`${(xhr.loaded / xhr.total) * 100}% loaded`);
@@ -148,14 +158,11 @@ class ModelViewer extends Component {
     const { selectedPart, highlightData, intersectedObject } = this.store;
     const { pickableObjects } = highlightData;
 
-    highlightData.intersects = this.store.getIntersects(
-      event.clientX,
-      event.clientY
-    );
-    this.store.setIntersectedObject(highlightData.intersects);
+    const intersects = this.store.getIntersects(event.clientX, event.clientY);
+    this.store.setIntersectedObject(intersects);
     this.mount.style.cursor = intersectedObject ? "pointer" : "default";
 
-    pickableObjects.forEach((o) => {
+    pickableObjects!.forEach((o) => {
       const isSelected = o === selectedPart;
       if (isSelected) {
         // o.material.transparent = false;
@@ -175,6 +182,7 @@ class ModelViewer extends Component {
           return;
         }
 
+        // @ts-ignore
         o.material.color = highlightData.originalMaterials[o.id].color;
         o.material.transparent = false;
       }
@@ -190,11 +198,13 @@ class ModelViewer extends Component {
     this.store.setSelectedObject(intersects);
     this.mount.style.cursor = intersectedObject ? "pointer" : "default";
 
-    pickableObjects.forEach((o, i) => {
+    pickableObjects!.forEach((o, i) => {
       if (selectedPart && intersectedObject.name === o.name) {
-        pickableObjects[i].material.transparent = true;
-        pickableObjects[i].material.color = new THREE.Color("#df1b1b");
-      } else {
+        if (pickableObjects) {
+          pickableObjects[i].material.transparent = true;
+          pickableObjects[i].material.color = new THREE.Color("#df1b1b");
+        }
+      } else if (highlightData.originalMaterials) {
         o.material.color = highlightData.originalMaterials[o.id].color;
       }
     });
@@ -204,16 +214,21 @@ class ModelViewer extends Component {
     // alert()
   };
 
-  menuItemClicked = (key, xPos, yPos) => {
+  menuItemClicked = (key: string, xPos: number, yPos: number) => {
     const { hiddenObjects, highlightData } = this.store;
     const { pickableObjects } = highlightData;
-    let { intersectedObject, intersects } = highlightData;
 
     switch (key) {
-      case "1":
-        intersects = this.store.getIntersects(xPos, yPos);
+      case "1": {
+        const intersects: THREE.Intersection[] = this.store.getIntersects(
+          xPos,
+          yPos
+        );
+
         this.store.setIntersectedObject(intersects);
-        this.mount.style.cursor = intersectedObject ? "pointer" : "default";
+        this.mount.style.cursor = highlightData.intersectedObject
+          ? "pointer"
+          : "default";
 
         if (intersects.length > 0) {
           const intersect = intersects.find(
@@ -222,26 +237,33 @@ class ModelViewer extends Component {
 
           if (typeof intersect === "undefined") {
             this.mount.style.cursor = "default";
-            intersectedObject = null;
+            highlightData.intersectedObject = null;
           } else {
             this.mount.style.cursor = "pointer";
-            intersectedObject = intersect.object;
-            hiddenObjects.push(intersectedObject);
+            highlightData.intersectedObject = intersect.object;
+            hiddenObjects.push(highlightData.intersectedObject);
           }
         } else {
-          intersectedObject = null;
+          highlightData.intersectedObject = null;
           return;
         }
 
-        pickableObjects.forEach((o, i) => {
-          if (intersectedObject && intersectedObject.name === o.name) {
-            pickableObjects[i].parent.visible = false;
+        pickableObjects!.forEach((o, i) => {
+          if (
+            highlightData.intersectedObject &&
+            highlightData.intersectedObject.name === o.name
+          ) {
+            if (pickableObjects) {
+              pickableObjects[i].parent.visible = false;
+            }
             this.store.hiddenObjects.push(o);
           } else {
+            // @ts-ignore
             o.material.color = highlightData.originalMaterials[o.id].color;
           }
         });
         break;
+      }
       // Изоляция детали
       case "2":
         break;

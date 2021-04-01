@@ -10,6 +10,7 @@ type Props = {
 };
 
 const Info: FC<Props> = ({ stores }) => {
+  // @ts-ignore
   const name =
     Object.keys(stores.modelStore.selectedPart).length === 0
       ? "Объект не выбран"
