@@ -1,9 +1,9 @@
-import React from "react"
-import "./App.css"
-import { Row, Col } from "antd"
-import ModelViewer from "./components/model-viewer"
-import Menu from "./components/menu"
-import Info from "./components/info"
+import * as React from "react";
+import "./App.css";
+import { Row, Col } from "antd";
+import ModelViewer from "components/model-viewer";
+import Menu from "./components/menu";
+import Info from "./components/info";
 
 const App = () => (
   <div className="App">
@@ -19,6 +19,6 @@ const App = () => (
       </Col>
     </Row>
   </div>
-)
+);
 
-export default App
+export default App;

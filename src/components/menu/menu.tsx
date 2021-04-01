@@ -1,27 +1,27 @@
-import { Menu } from "antd"
-import React from "react"
+import { Menu } from "antd";
+import React from "react";
 import {
   AppstoreOutlined,
   MailOutlined,
   SettingOutlined,
-} from "@ant-design/icons"
+} from "@ant-design/icons";
 
-const { SubMenu } = Menu
+const { SubMenu } = Menu;
 
 // submenu keys of first level
-const rootSubmenuKeys = ["sub1", "sub2", "sub4"]
+const rootSubmenuKeys = ["sub1", "sub2", "sub4"];
 
 const MenuMain = () => {
-  const [openKeys, setOpenKeys] = React.useState(["sub1"])
+  const [openKeys, setOpenKeys] = React.useState(["sub1"]);
 
   const onOpenChange = (keys) => {
-    const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1)
+    const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
     if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-      setOpenKeys(keys)
+      setOpenKeys(keys);
     } else {
-      setOpenKeys(latestOpenKey ? [latestOpenKey] : [])
+      setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
     }
-  }
+  };
 
   return (
     <Menu mode="inline" openKeys={openKeys} onOpenChange={onOpenChange}>
@@ -46,7 +46,7 @@ const MenuMain = () => {
         <Menu.Item key="12">Option 12</Menu.Item>
       </SubMenu>
     </Menu>
-  )
-}
+  );
+};
 
-export default MenuMain
+export default MenuMain;

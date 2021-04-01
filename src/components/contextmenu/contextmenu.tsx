@@ -1,38 +1,45 @@
-import React, { useState } from "react"
-import { Menu } from "antd"
-import "./contextmenu.css"
+import React, { useState, FunctionComponent, MouseEvent } from "react";
+import { Menu } from "antd";
+import "./contextmenu.css";
 import {
   EyeInvisibleOutlined,
   StarFilled,
   StarTwoTone,
-} from "@ant-design/icons"
-import withStores from "../../hocs/withStores"
+} from "@ant-design/icons";
+import { RootStore } from "store";
+import withStores from "../../hocs/withStores";
 
-const ContextMenu = (props) => {
-  const [xPos, setXPos] = useState(0)
-  const [yPos, setYPos] = useState(0)
-  const [open, setOpen] = useState(false)
+type Props = {
+  stores: RootStore;
+  menuItemClicked: (key: number, xPos: number, yPos: number) => void;
+};
 
-  const handleContextMenu = (event) => {
+const ContextMenu: FunctionComponent<Props> = (props) => {
+  const [xPos, setXPos] = useState(0);
+  const [yPos, setYPos] = useState(0);
+  const [open, setOpen] = useState(false);
+
+  const handleContextMenu = (event: MouseEvent<HTMLDivElement>): void => {
     const intersects = props.stores.modelStore.getIntersects(
       event.clientX,
       event.clientY
-    )
+    );
 
-    setXPos(event.clientX - props.stores.modelStore.offset.left)
-    setYPos(event.clientY)
-    setOpen(intersects.length > 0)
-  }
+    setXPos(event.clientX - props.stores.modelStore.offset.left);
+    setYPos(event.clientY);
+    setOpen(intersects.length > 0);
+  };
 
-  const menuItemClicked = (event) => {
-    setOpen(false)
+  const menuItemClicked = (event): void => {
+    setOpen(false);
     // ToDo исправить сложение и вычитания offset
     props.menuItemClicked(
-      event.key,
+      +event.key,
       xPos + props.stores.modelStore.offset.left,
       yPos
-    )
-  }
+    );
+  };
+
   return (
     <>
       <Menu
@@ -62,7 +69,7 @@ const ContextMenu = (props) => {
         {props.children}
       </div>
     </>
-  )
-}
+  );
+};
 
-export default withStores(ContextMenu)
+export default withStores(ContextMenu);

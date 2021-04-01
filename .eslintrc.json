@@ -2,22 +2,47 @@
   "extends": [
     "react-app",
     "airbnb",
+    "airbnb-typescript",
     "plugin:jsx-a11y/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
     "prettier"
   ],
   "plugins": [
     "jsx-a11y",
     "prettier"
   ],
+  "parserOptions": {
+    "project": ["tsconfig.json"]
+  },
   "rules": {
-    "semi": 0,
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "semi": 1,
     "prettier/prettier": [
       "error", {
-        "semi": false
+        "semi": true
       }
-    ]
+    ],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
+    // 'React' was used before it was defined  no-use-before-define
+    // Stackoverflow answer - https://clck.ru/U3jmb
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["error"],
     //ours
-
+    "react/destructuring-assignment": ["off"],
+    "react/prop-types": ["off"],
+    "no-param-reassign": ["off"],
+    "no-console": ["off"],
+    "import/no-unresolved": ["off"]
   }
 }
