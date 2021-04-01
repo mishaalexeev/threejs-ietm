@@ -1,9 +1,9 @@
-import modelStore from "./model";
+import ModelStore from "./model"
 
 class RootStore {
-    constructor(){
-        this.modelStore = new modelStore(this);
-    }
+  constructor() {
+    this.modelStore = new ModelStore(this)
+  }
 }
 
-export default new RootStore();
+export default new RootStore()

@@ -1,3 +1,3 @@
-import ModelViewer from "./model-viewer";
+import ModelViewer from "./model-viewer"
 
-export default ModelViewer;
+export default ModelViewer

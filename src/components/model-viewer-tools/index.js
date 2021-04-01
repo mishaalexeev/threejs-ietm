@@ -1,3 +1,3 @@
-import ModelViewerTools from "./model-viewer-tools";
+import ModelViewerTools from "./model-viewer-tools"
 
-export default ModelViewerTools;
+export default ModelViewerTools

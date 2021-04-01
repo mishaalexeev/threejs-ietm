@@ -1,3 +1,3 @@
-import ContextMenu from "./contextmenu";
+import ContextMenu from "./contextmenu"
 
-export default ContextMenu;
+export default ContextMenu
