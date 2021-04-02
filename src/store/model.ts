@@ -1,9 +1,11 @@
 import { observable, makeObservable, action } from "mobx";
 import * as THREE from "three";
+import { Scene } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { RootStore } from "store/index";
 
 type ViewerData = {
-  scene: THREE.Scene | null;
+  scene: Scene;
   axesHelper: THREE.AxesHelper | null;
   camera: THREE.Camera | null;
   light: THREE.Light | null;
@@ -11,16 +13,18 @@ type ViewerData = {
   controls: OrbitControls | null;
 };
 type HighlightData = {
-  pickableObjects: any[] | null;
+  pickableObjects: Array<THREE.Mesh> | null;
   intersectedObject: THREE.Mesh;
   originalMaterials: THREE.Material[] | null;
   highlightedMaterial: THREE.Material | null;
   raycaster: THREE.Raycaster | null;
 };
+type Offsets = {
+  left: number;
+  right: number;
+};
 export default class ModelStore {
-  modelsData: any = [];
-
-  viewerData: ViewerData = {
+  @observable viewerData: ViewerData = {
     scene: null,
     axesHelper: null,
     camera: null,
@@ -29,7 +33,7 @@ export default class ModelStore {
     controls: null,
   };
 
-  highlightData: HighlightData = {
+  @observable highlightData: HighlightData = {
     pickableObjects: null,
     intersectedObject: null,
     originalMaterials: null,
@@ -37,20 +41,20 @@ export default class ModelStore {
     raycaster: null,
   };
 
-  offset = {
+  @observable offset: Offsets = {
     left: 0,
     right: 0,
   };
 
-  selectedPart: any = {};
+  public selectedPart: THREE.Mesh = {};
 
-  intersectedObject: THREE.Mesh = {};
+  @observable intersectedObject: THREE.Mesh = {};
 
-  hiddenObjects: any = [];
+  @observable hiddenObjects: THREE.Mesh[] = [];
 
-  private rootStore: any;
+  private rootStore: RootStore;
 
-  initializeViewer(window) {
+  @action initializeViewer(window) {
     this.viewerData.scene = new THREE.Scene();
     this.viewerData.axesHelper = new THREE.AxesHelper(100);
     this.viewerData.camera = new THREE.PerspectiveCamera(
@@ -65,7 +69,6 @@ export default class ModelStore {
       0.8
     );
     this.viewerData.light.position.set(-100, 0, -100);
-
     this.offset = {
       // @ts-ignore
       left: document.querySelector(".ant-col-4")!.offsetWidth,
@@ -94,7 +97,10 @@ export default class ModelStore {
   }
 
   // Получить массив объектов на которые наведена мышь
-  getIntersects(clientX: number, clientY: number): THREE.Intersection[] {
+  @action getIntersects(
+    clientX: number,
+    clientY: number
+  ): THREE.Intersection[] {
     const { raycaster, pickableObjects } = this.highlightData;
     const { renderer, camera } = this.viewerData;
     raycaster.setFromCamera(
@@ -110,7 +116,7 @@ export default class ModelStore {
     return raycaster.intersectObjects(pickableObjects, false);
   }
 
-  setIntersectedObject(intersects: THREE.Intersection[]) {
+  @action setIntersectedObject(intersects: THREE.Intersection[]) {
     if (intersects.length > 0) {
       const intersect = intersects.find(
         (el) => this.hiddenObjects.indexOf(el.object) === -1
@@ -121,7 +127,7 @@ export default class ModelStore {
     }
   }
 
-  setSelectedObject(intersects) {
+  @action setSelectedObject(intersects) {
     if (intersects.length > 0) {
       const intersect = intersects.find(
         (el) => this.hiddenObjects.indexOf(el.object) === -1
@@ -135,7 +141,6 @@ export default class ModelStore {
   constructor(rootStore) {
     this.rootStore = rootStore;
     makeObservable(this, {
-      modelsData: observable,
       viewerData: observable,
       selectedPart: observable,
       offset: observable,

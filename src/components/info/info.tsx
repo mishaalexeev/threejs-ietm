@@ -1,7 +1,7 @@
 import React, { FunctionComponent as FC } from "react";
 import { Typography } from "antd";
 import { RootStore } from "store";
-import withStore from "../../hocs/withStores";
+import withStore from "hocs/withStores";
 
 const { Title, Paragraph } = Typography;
 

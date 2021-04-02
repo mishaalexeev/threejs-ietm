@@ -1,19 +1,25 @@
-import React from "react";
+import React, { FunctionComponent as FC } from "react";
 import { Button, Space } from "antd";
 import { EyeOutlined, SyncOutlined } from "@ant-design/icons";
-import withStores from "../../hocs/withStores";
+import { RootStore, ModelStore } from "store";
+import withStores from "hocs/withStores";
 
-const ModelViewerTools = (props) => {
-  const store = props.stores.modelStore;
+type Props = {
+  stores: RootStore;
+};
+const ModelViewerTools: FC<Props> = ({ stores }) => {
+  const store: ModelStore = stores.modelStore;
 
-  const handleRestoreVisibilityClicked = () => {
+  const handleRestoreVisibilityClicked = (): void => {
     const { pickableObjects } = store.highlightData;
-    pickableObjects.forEach((o, i) => {
-      pickableObjects[i].parent.visible = true;
-      store.hiddenObjects = [];
-    });
+    if (pickableObjects) {
+      pickableObjects.forEach((o, i) => {
+        pickableObjects[i].parent.visible = true;
+        store.hiddenObjects = [];
+      });
+    }
   };
-  const handleRotateClicked = () => {
+  const handleRotateClicked = (): void => {
     store.viewerData.controls.autoRotate = !store.viewerData.controls
       .autoRotate;
   };

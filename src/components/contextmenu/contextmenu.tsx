@@ -7,7 +7,7 @@ import {
   StarTwoTone,
 } from "@ant-design/icons";
 import { RootStore } from "store";
-import withStores from "../../hocs/withStores";
+import withStores from "hocs/withStores";
 
 type Props = {
   stores: RootStore;

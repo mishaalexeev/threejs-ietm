@@ -7,10 +7,10 @@ import { Spin } from "antd";
 import ModelStore from "store/model";
 
 import { RootStore } from "store";
+import ModelViewerTools from "components/model-viewer-tools/model-viewer-tools";
+import withStores from "hocs/withStores";
 import ContextMenu from "../contextmenu";
-import withStores from "../../hocs/withStores";
 import "./model-viewer.css";
-import ModelViewerTools from "../model-viewer-tools/model-viewer-tools";
 
 type Props = {
   stores: RootStore;
