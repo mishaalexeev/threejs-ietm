@@ -15,6 +15,7 @@ const Info: FC<Props> = ({ stores }) => {
     Object.keys(stores.modelStore.selectedPart).length === 0
       ? "Объект не выбран"
       : stores.modelStore.selectedPart.parent.name;
+
   return (
     <Typography>
       <Title>{name}</Title>
@@ -24,6 +25,9 @@ const Info: FC<Props> = ({ stores }) => {
         might cause designers and developers difficulties and duplication and
         reduce the efficiency of development.
       </Paragraph>
+      <button type="button" onClick={() => stores.modelStore.startAnimation()}>
+        Анимация
+      </button>
     </Typography>
   );
 };

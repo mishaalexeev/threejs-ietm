@@ -20,6 +20,7 @@ type State = {
   widthCoefficient: number;
   isLoading: boolean;
 };
+
 class ModelViewer extends Component<Props, State> {
   private readonly store: ModelStore;
 
@@ -71,10 +72,13 @@ class ModelViewer extends Component<Props, State> {
     };
     window.addEventListener("resize", onWindowResize, false);
 
+    const clock: THREE.Clock = new THREE.Clock();
     // Three js loop
     const animate = () => {
       requestAnimationFrame(animate);
       controls.update();
+      if (!this.state.isLoading)
+        this.props.stores.modelStore.mixer.update(clock.getDelta());
       render();
     };
 
@@ -116,7 +120,7 @@ class ModelViewer extends Component<Props, State> {
     );
     new Promise((res, rej) => {
       loader.load(
-        "/models/gear anim.glb",
+        "/models/animations2.gltf",
         (gltf) => {
           gltf.scene.traverse((child) => {
             if (child.isMesh) {
@@ -136,7 +140,19 @@ class ModelViewer extends Component<Props, State> {
               highlightData.originalMaterials[m.id] = mat;
             }
           });
+
           scene.add(gltf.scene);
+          this.props.stores.modelStore.mixer = new THREE.AnimationMixer(
+            gltf.scene
+          );
+          this.props.stores.modelStore.actions.push();
+          gltf.animations.forEach((el) => {
+            this.props.stores.modelStore.actions.push(el);
+            // const action = this.props.stores.modelStore.mixer.clipAction(el);
+            // console.log(action);
+            // action.play();
+          });
+
           res(1);
         },
         (xhr) => {
@@ -208,10 +224,6 @@ class ModelViewer extends Component<Props, State> {
         o.material.color = highlightData.originalMaterials[o.id].color;
       }
     });
-  };
-
-  onMenuVisibilityChange = () => {
-    // alert()
   };
 
   menuItemClicked = (key: string, xPos: number, yPos: number) => {

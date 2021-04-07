@@ -46,6 +46,11 @@ export default class ModelStore {
     right: 0,
   };
 
+  // anim
+  @observable mixer: THREE.Mixer | null = null;
+
+  @observable actions: Array<any> = [];
+
   public selectedPart: THREE.Mesh = {};
 
   @observable intersectedObject: THREE.Mesh = {};
@@ -94,6 +99,18 @@ export default class ModelStore {
       color: 0x00ff00,
     });
     this.highlightData.raycaster = new THREE.Raycaster();
+
+    // animations
+    this.mixer = new THREE.AnimationMixer();
+  }
+
+  @action startAnimation() {
+    // this.actions.push(...appendActions(this.viewerData.scene, this.mixer));
+    // this.mixer.update(1);
+
+    this.actions.forEach((a, i) => {
+      this.mixer.clipAction(a).play();
+    });
   }
 
   // Получить массив объектов на которые наведена мышь
@@ -133,6 +150,7 @@ export default class ModelStore {
         (el) => this.hiddenObjects.indexOf(el.object) === -1
       );
       this.selectedPart = intersect ? intersect.object : null;
+      console.log(this.selectedPart);
     } else {
       this.selectedPart = null;
     }
@@ -149,6 +167,9 @@ export default class ModelStore {
       setIntersectedObject: action,
       setSelectedObject: action,
       initializeViewer: action,
+      startAnimation: action,
+      mixer: observable,
+      actions: observable,
     });
   }
 }
