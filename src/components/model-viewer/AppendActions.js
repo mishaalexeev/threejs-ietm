@@ -26,13 +26,13 @@ function isolateParts(root, partsNames) {
 function appendActions(scene, mixer) {
   const anims = [
     {
-      name: ["Крышка_промежуточная_верхняя001"],
+      name: ["Крышка_промежуточная_верхняя"],
       visible: {
-        times: [0, 4, 150],
+        times: [0, 2, 999],
         values: [1, 0, 0],
       },
       transparent: {
-        times: [0, 4, 150],
+        times: [0, 2, 999],
         values: [false, true, true],
       },
       highlight: {

@@ -108,16 +108,16 @@ export default class ModelStore {
   }
 
   @action startAnimation() {
-    // const act: THREE.AnimationAction[] = appendActions(
-    //   this.viewerData.scene,
-    //   this.mixer
-    // );
+    const act: THREE.AnimationAction[] = appendActions(
+      this.viewerData.scene,
+      this.mixer
+    );
 
-    // act.forEach((el) => {
-    //   el.clampWhenFinished = true;
-    //   el.repetitions = 1;
-    //   el.play();
-    // });
+    act.forEach((el) => {
+      el.clampWhenFinished = true;
+      el.repetitions = 1;
+      el.play();
+    });
 
     this.actions.forEach((a: THREE.AnimationClip, i) => {
       const animAction: THREE.AnimationAction = this.mixer.clipAction(a);
