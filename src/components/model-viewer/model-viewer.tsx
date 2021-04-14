@@ -120,7 +120,7 @@ class ModelViewer extends Component<Props, State> {
     );
     new Promise((res, rej) => {
       loader.load(
-        "/models/animations2.gltf",
+        "/models/gearboxRenamedAnimationsUnf2.glb",
         (gltf) => {
           gltf.scene.traverse((child) => {
             if (child.isMesh) {
@@ -145,12 +145,9 @@ class ModelViewer extends Component<Props, State> {
           this.props.stores.modelStore.mixer = new THREE.AnimationMixer(
             gltf.scene
           );
-          this.props.stores.modelStore.actions.push();
+
           gltf.animations.forEach((el) => {
             this.props.stores.modelStore.actions.push(el);
-            // const action = this.props.stores.modelStore.mixer.clipAction(el);
-            // console.log(action);
-            // action.play();
           });
 
           res(1);
@@ -185,19 +182,21 @@ class ModelViewer extends Component<Props, State> {
       }
 
       if (intersectedObject && intersectedObject.name === o.name) {
-        o.material.transparent = true;
-        o.material.opacity = 0.8;
         // this.props.stores.modelStore.hoveredPart = intersectedObject;
 
         if (intersectedObject === selectedPart) {
           return;
         }
-        o.material.color = new THREE.Color("blue");
+        o.material = new THREE.MeshBasicMaterial();
+        o.material.transparent = true;
+        o.material.opacity = 0.7;
+        o.material.color = new THREE.Color("#000128");
       } else {
         if (o === selectedPart) {
           return;
         }
-
+        // @ts-ignore
+        o.material = highlightData.originalMaterials[o.id];
         // @ts-ignore
         o.material.color = highlightData.originalMaterials[o.id].color;
         o.material.transparent = false;
@@ -217,10 +216,13 @@ class ModelViewer extends Component<Props, State> {
     pickableObjects!.forEach((o, i) => {
       if (selectedPart && intersectedObject.name === o.name) {
         if (pickableObjects) {
-          pickableObjects[i].material.transparent = true;
-          pickableObjects[i].material.color = new THREE.Color("#df1b1b");
+          o.material = new THREE.MeshBasicMaterial();
+          o.material.transparent = true;
+          o.material.opacity = 0.9;
+          o.material.color = new THREE.Color("#9a3737");
         }
       } else if (highlightData.originalMaterials) {
+        o.material = highlightData.originalMaterials[o.id];
         o.material.color = highlightData.originalMaterials[o.id].color;
       }
     });
@@ -269,8 +271,8 @@ class ModelViewer extends Component<Props, State> {
               pickableObjects[i].parent.visible = false;
             }
             this.store.hiddenObjects.push(o);
-          } else {
-            // @ts-ignore
+          } else if (highlightData.originalMaterials) {
+            o.material = highlightData.originalMaterials[o.id];
             o.material.color = highlightData.originalMaterials[o.id].color;
           }
         });

@@ -3,6 +3,7 @@ import * as THREE from "three";
 import { Scene } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { RootStore } from "store/index";
+import appendActions from "components/model-viewer/AppendActions";
 
 type ViewerData = {
   scene: Scene;
@@ -105,11 +106,16 @@ export default class ModelStore {
   }
 
   @action startAnimation() {
-    // this.actions.push(...appendActions(this.viewerData.scene, this.mixer));
-    // this.mixer.update(1);
+    // const act = appendActions(this.viewerData.scene, this.mixer);
+    // act.forEach((el) => {
+    //   el.play();
+    // });
 
-    this.actions.forEach((a, i) => {
-      this.mixer.clipAction(a).play();
+    this.actions.forEach((a: THREE.AnimationClip, i) => {
+      const animAction: THREE.AnimationAction = this.mixer.clipAction(a);
+      animAction.clampWhenFinished = true;
+      animAction.repetitions = 1;
+      animAction.play();
     });
   }
 
