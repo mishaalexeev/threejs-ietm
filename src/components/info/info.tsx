@@ -14,8 +14,9 @@ const Info: FC<Props> = ({ stores }) => {
   const name =
     Object.keys(stores.modelStore.selectedPart).length === 0
       ? "Объект не выбран"
-      : stores.modelStore.selectedPart.parent.name;
+      : stores.modelStore.selectedPart.userData.name;
 
+  console.log(stores.modelStore.selectedPart);
   return (
     <Typography>
       <Title>{name}</Title>

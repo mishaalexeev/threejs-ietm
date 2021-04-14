@@ -1,17 +1,26 @@
 import { Menu } from "antd";
-import React from "react";
+import React, { FC } from "react";
+
 import {
   AppstoreOutlined,
   MailOutlined,
   SettingOutlined,
+  UnorderedListOutlined,
+  // @ts-ignore
 } from "@ant-design/icons";
+import withStores from "hocs/withStores";
+import { RootStore } from "store";
+
+type Props = {
+  stores: RootStore;
+};
 
 const { SubMenu } = Menu;
 
 // submenu keys of first level
-const rootSubmenuKeys = ["sub1", "sub2", "sub4"];
+const rootSubmenuKeys = ["sub1"];
 
-const MenuMain = () => {
+const MenuMain: FC<Props> = ({ stores }) => {
   const [openKeys, setOpenKeys] = React.useState(["sub1"]);
 
   const onOpenChange = (keys) => {
@@ -23,30 +32,87 @@ const MenuMain = () => {
     }
   };
 
+  const handleItemClicked = ({ key }) => {
+    stores.modelStore.setSelectedPartById(+key);
+  };
+  const menu = [
+    {
+      key: "sub1",
+      icon: <UnorderedListOutlined />,
+      title: "Дерево модели",
+      children: [
+        {
+          key: "Корпус",
+          icon: <MailOutlined />,
+          title: "Корпус",
+          children: [
+            {
+              key: 384,
+              title: "Верхняя часть корпуса",
+            },
+            {
+              key: 404,
+              title: "Средняя часть корпуса",
+            },
+            {
+              key: 402,
+              title: "Нижняя часть корпуса",
+            },
+          ],
+        },
+        {
+          key: "Болты",
+          icon: <MailOutlined />,
+          title: "Болт",
+          children: [
+            {
+              key: "4",
+              title: "lorem",
+            },
+            {
+              key: "5",
+              title: "upsum",
+            },
+            {
+              key: "6",
+              title: "down",
+            },
+          ],
+        },
+      ],
+    },
+  ];
+
+  const madeRecursiveJSXMenu = (menuProps) =>
+    menuProps.map((menuItem) => {
+      if (menuItem.children) {
+        return (
+          <SubMenu
+            key={menuItem.key}
+            icon={menuItem.icon}
+            title={menuItem.title}
+          >
+            {madeRecursiveJSXMenu(menuItem.children)}
+          </SubMenu>
+        );
+      }
+      return <Menu.Item key={menuItem.key}>{menuItem.title}</Menu.Item>;
+    });
+
+  const JSXMenu = madeRecursiveJSXMenu(menu);
+
   return (
-    <Menu mode="inline" openKeys={openKeys} onOpenChange={onOpenChange}>
-      <SubMenu key="sub1" icon={<MailOutlined />} title="Navigation One">
-        <Menu.Item key="1">Option 1</Menu.Item>
-        <Menu.Item key="2">Option 2</Menu.Item>
-        <Menu.Item key="3">Option 3</Menu.Item>
-        <Menu.Item key="4">Option 4</Menu.Item>
-      </SubMenu>
-      <SubMenu key="sub2" icon={<AppstoreOutlined />} title="Navigation Two">
-        <Menu.Item key="5">Option 5</Menu.Item>
-        <Menu.Item key="6">Option 6</Menu.Item>
-        <SubMenu key="sub3" title="Submenu">
-          <Menu.Item key="7">Option 7</Menu.Item>
-          <Menu.Item key="8">Option 8</Menu.Item>
-        </SubMenu>
-      </SubMenu>
-      <SubMenu key="sub4" icon={<SettingOutlined />} title="Navigation Three">
-        <Menu.Item key="9">Option 9</Menu.Item>
-        <Menu.Item key="10">Option 10</Menu.Item>
-        <Menu.Item key="11">Option 11</Menu.Item>
-        <Menu.Item key="12">Option 12</Menu.Item>
-      </SubMenu>
+    <Menu
+      mode="inline"
+      inlineIndent={10}
+      style={{ margin: "2px" }}
+      openKeys={openKeys}
+      onOpenChange={onOpenChange}
+      onClick={handleItemClicked}
+    >
+      {JSXMenu}
     </Menu>
   );
 };
 
-export default MenuMain;
+export default withStores(MenuMain);

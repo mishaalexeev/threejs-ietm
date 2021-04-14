@@ -8,9 +8,7 @@ import "antd/dist/antd.css";
 
 ReactDOM.render(
   <Provider stores={stores}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <App />
   </Provider>,
   document.getElementById("root")
 );

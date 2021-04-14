@@ -119,6 +119,30 @@ export default class ModelStore {
     });
   }
 
+  @action highlightPart = (part: THREE.Mesh) => {
+    this.highlightData.pickableObjects!.forEach((o, i) => {
+      if (part && part.name === o.name) {
+        o.material = new THREE.MeshBasicMaterial();
+        o.material.transparent = true;
+        o.material.opacity = 0.9;
+        o.material.color = new THREE.Color("#9a3737");
+      } else if (this.highlightData.originalMaterials) {
+        o.material = this.highlightData.originalMaterials[o.id];
+        o.material.color = this.highlightData.originalMaterials[o.id].color;
+      }
+    });
+  };
+
+  @action setSelectedPartById = (id: number) => {
+    const selectedPart = this.viewerData.scene.children[4].children[0].getObjectById(
+      id
+    );
+    if (selectedPart) {
+      this.selectedPart = selectedPart;
+      this.highlightPart(this.selectedPart);
+    }
+  };
+
   // Получить массив объектов на которые наведена мышь
   @action getIntersects(
     clientX: number,
@@ -156,7 +180,6 @@ export default class ModelStore {
         (el) => this.hiddenObjects.indexOf(el.object) === -1
       );
       this.selectedPart = intersect ? intersect.object : null;
-      console.log(this.selectedPart);
     } else {
       this.selectedPart = null;
     }
