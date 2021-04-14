@@ -58,6 +58,8 @@ export default class ModelStore {
 
   @observable hiddenObjects: THREE.Mesh[] = [];
 
+  @observable animationPlaying: boolean = false;
+
   private rootStore: RootStore;
 
   @action initializeViewer(window) {
@@ -106,8 +108,14 @@ export default class ModelStore {
   }
 
   @action startAnimation() {
-    // const act = appendActions(this.viewerData.scene, this.mixer);
+    // const act: THREE.AnimationAction[] = appendActions(
+    //   this.viewerData.scene,
+    //   this.mixer
+    // );
+
     // act.forEach((el) => {
+    //   el.clampWhenFinished = true;
+    //   el.repetitions = 1;
     //   el.play();
     // });
 
@@ -137,6 +145,7 @@ export default class ModelStore {
     const selectedPart = this.viewerData.scene.children[4].children[0].getObjectById(
       id
     );
+    console.log(selectedPart);
     if (selectedPart) {
       this.selectedPart = selectedPart;
       this.highlightPart(this.selectedPart);

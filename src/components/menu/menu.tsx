@@ -2,10 +2,10 @@ import { Menu } from "antd";
 import React, { FC } from "react";
 
 import {
-  AppstoreOutlined,
+  ApartmentOutlined,
   MailOutlined,
-  SettingOutlined,
-  UnorderedListOutlined,
+  ThunderboltOutlined,
+  ToolOutlined,
   // @ts-ignore
 } from "@ant-design/icons";
 import withStores from "hocs/withStores";
@@ -33,12 +33,19 @@ const MenuMain: FC<Props> = ({ stores }) => {
   };
 
   const handleItemClicked = ({ key }) => {
-    stores.modelStore.setSelectedPartById(+key);
+    switch (key) {
+      case "Разборка редуктора":
+        stores.modelStore.startAnimation();
+        break;
+      default:
+        stores.modelStore.setSelectedPartById(+key);
+        break;
+    }
   };
   const menu = [
     {
       key: "sub1",
-      icon: <UnorderedListOutlined />,
+      icon: <ApartmentOutlined />,
       title: "Дерево модели",
       children: [
         {
@@ -47,15 +54,15 @@ const MenuMain: FC<Props> = ({ stores }) => {
           title: "Корпус",
           children: [
             {
-              key: 384,
+              key: 362,
               title: "Верхняя часть корпуса",
             },
             {
-              key: 404,
+              key: 352,
               title: "Средняя часть корпуса",
             },
             {
-              key: 402,
+              key: 447,
               title: "Нижняя часть корпуса",
             },
           ],
@@ -78,6 +85,18 @@ const MenuMain: FC<Props> = ({ stores }) => {
               title: "down",
             },
           ],
+        },
+      ],
+    },
+    {
+      key: "sub2",
+      icon: <ThunderboltOutlined />,
+      title: "Анимация",
+      children: [
+        {
+          key: "Разборка редуктора",
+          icon: <ToolOutlined />,
+          title: "Разборка редуктора",
         },
       ],
     },

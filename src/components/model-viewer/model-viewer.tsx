@@ -120,7 +120,7 @@ class ModelViewer extends Component<Props, State> {
     );
     new Promise((res, rej) => {
       loader.load(
-        "/models/gearboxRenamedAnimationsUnf2.glb",
+        "/models/gearboxAnimated.glb",
         (gltf) => {
           gltf.scene.traverse((child) => {
             if (child.isMesh) {
@@ -182,8 +182,6 @@ class ModelViewer extends Component<Props, State> {
       }
 
       if (intersectedObject && intersectedObject.name === o.name) {
-        // this.props.stores.modelStore.hoveredPart = intersectedObject;
-
         if (intersectedObject === selectedPart) {
           return;
         }

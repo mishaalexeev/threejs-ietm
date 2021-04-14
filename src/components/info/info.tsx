@@ -16,7 +16,6 @@ const Info: FC<Props> = ({ stores }) => {
       ? "Объект не выбран"
       : stores.modelStore.selectedPart.userData.name;
 
-  console.log(stores.modelStore.selectedPart);
   return (
     <Typography>
       <Title>{name}</Title>
@@ -26,9 +25,6 @@ const Info: FC<Props> = ({ stores }) => {
         might cause designers and developers difficulties and duplication and
         reduce the efficiency of development.
       </Paragraph>
-      <button type="button" onClick={() => stores.modelStore.startAnimation()}>
-        Анимация
-      </button>
     </Typography>
   );
 };
