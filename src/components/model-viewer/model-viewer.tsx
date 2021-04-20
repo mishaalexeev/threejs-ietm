@@ -61,16 +61,15 @@ class ModelViewer extends Component<Props, State> {
 
     // Добавление слушателя на изменения размера окна для изменения aspect камеры и размеров viewer.
     const onWindowResize = () => {
-      const left = document.getElementById("menu")?.clientWidth;
-      const right = document.getElementById("info")?.clientWidth;
+      const left = document.getElementById("menu")?.offsetWidth;
+      const right = document.getElementById("info")?.offsetWidth;
       if (!(left && right)) {
         return;
       }
 
       this.store.setOffset(left);
-      console.log(left, right);
 
-      camera.aspect = (window.innerWidth - left) / window.innerHeight;
+      camera.aspect = (window.innerWidth - left - right) / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth - left - right, window.innerHeight);
       render();

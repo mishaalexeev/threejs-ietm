@@ -69,16 +69,18 @@ export default class ModelStore {
   @action initializeViewer(window) {
     this.viewerData.scene = new THREE.Scene();
     this.viewerData.axesHelper = new THREE.AxesHelper(100);
-    const left = document.getElementById("menu")?.offsetWidth;
-    if (!left) {
+    const left = document.getElementById("menu")?.clientWidth;
+    const right = document.getElementById("info")?.clientWidth;
+    if (!(left && right)) {
       return;
     }
     this.viewerData.camera = new THREE.PerspectiveCamera(
       75,
-      (window.innerWidth - left) / window.innerHeight,
+      (window.innerWidth - left - right) / window.innerHeight,
       0.1,
       3000
     );
+
     // this.viewerData.light = new THREE.AmbientLight();
     this.viewerData.light = new THREE.DirectionalLight(
       new THREE.Color("hsl(30,100%,75%)"),
