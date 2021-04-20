@@ -88,20 +88,23 @@ class ModelViewer extends Component<Props, State> {
   loadViewer = (scene, axesHelper, light, renderer, camera, highlightData) => {
     scene.add(axesHelper);
 
-    const ambientLight = new THREE.AmbientLight();
-    const directionalLight1 = new THREE.DirectionalLight(
-      new THREE.Color("hsl(64, 33%, 83%)"),
-      0.8
+    const ambient = new THREE.AmbientLight(0xffffff, 0.4);
+    const keyLight = new THREE.DirectionalLight(
+      new THREE.Color("hsl(30, 100%, 75%)"),
+      1.0
     );
-    directionalLight1.position.set(-100, 0, -100);
+    keyLight.position.set(-100, 0, 100);
 
-    const directionalLight2 = new THREE.DirectionalLight(
-      new THREE.Color("hsl(64, 33%, 83%)"),
-      0.8
+    const fillLight = new THREE.DirectionalLight(
+      new THREE.Color("hsl(240, 100%, 75%)"),
+      0.75
     );
-    directionalLight2.position.set(100, 100, -100);
+    fillLight.position.set(100, 0, 100);
 
-    scene.add(ambientLight, directionalLight1, directionalLight2);
+    const backLight = new THREE.DirectionalLight(0xffffff, 1.0);
+    backLight.position.set(100, 0, -100).normalize();
+
+    scene.add(ambient, keyLight, fillLight, backLight);
 
     camera.position.z = 250;
     camera.position.x = 250;
