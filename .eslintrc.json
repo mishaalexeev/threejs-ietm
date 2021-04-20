@@ -1,13 +1,14 @@
 {
   "extends": [
-    "react-app",
-    "airbnb",
-    "airbnb-typescript",
-    "plugin:jsx-a11y/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:@typescript-eslint/recommended",
     "plugin:import/errors",
     "plugin:import/warnings",
     "plugin:import/typescript",
-    "prettier"
+    "plugin:jsx-a11y/recommended",
+    "prettier",
+    "plugin:prettier/recommended"
   ],
   "plugins": [
     "jsx-a11y",
@@ -44,6 +45,8 @@
     "no-param-reassign": ["off"],
     "no-console": ["off"],
     "import/no-unresolved": ["off"],
-    "@typescript-eslint/no-unused-vars": ["off"]
+    "@typescript-eslint/no-unused-vars": ["off"],
+    "@typescript-eslint/ban-ts-comment": ["off"],
+    "@typescript-eslint/explicit-module-boundary-types": ["off"]
   }
 }

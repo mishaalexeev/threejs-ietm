@@ -24,7 +24,7 @@ type State = {
 class ModelViewer extends Component<Props, State> {
   private readonly store: ModelStore;
 
-  private mount: any;
+  private mount: HTMLDivElement = {} as HTMLDivElement;
 
   constructor(props) {
     super(props);
@@ -61,17 +61,22 @@ class ModelViewer extends Component<Props, State> {
 
     // Добавление слушателя на изменения размера окна для изменения aspect камеры и размеров viewer.
     const onWindowResize = () => {
-      camera.aspect =
-        (window.innerWidth * this.state.widthCoefficient) / window.innerHeight;
+      const left = document.getElementById("menu")?.offsetWidth;
+      const right = document.getElementById("info")?.offsetWidth;
+      if (!(left && right)) {
+        return;
+      }
+
+      this.store.setOffset(left);
+
+      camera.aspect = (window.innerWidth - left - right) / window.innerHeight;
       camera.updateProjectionMatrix();
-      renderer.setSize(
-        window.innerWidth * this.state.widthCoefficient,
-        window.innerHeight
-      );
+      renderer.setSize(window.innerWidth - left - right, window.innerHeight);
       render();
     };
     window.addEventListener("resize", onWindowResize, false);
 
+    onWindowResize();
     const clock: THREE.Clock = new THREE.Clock();
     // Three js loop
     const animate = () => {
@@ -296,7 +301,7 @@ class ModelViewer extends Component<Props, State> {
         <ContextMenu menuItemClicked={this.menuItemClicked}>
           <div
             ref={(el) => {
-              this.mount = el;
+              this.mount = el as HTMLDivElement;
             }}
             onMouseMove={this.onMouseMove}
             onDoubleClick={this.onModelClick}

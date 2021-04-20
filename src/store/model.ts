@@ -22,7 +22,6 @@ type HighlightData = {
 };
 type Offsets = {
   left: number;
-  right: number;
 };
 export default class ModelStore {
   @observable viewerData: ViewerData = {
@@ -43,8 +42,7 @@ export default class ModelStore {
   };
 
   @observable offset: Offsets = {
-    left: 0,
-    right: 0,
+    left: document.getElementById("menu")?.offsetWidth as number,
   };
 
   // anim
@@ -58,33 +56,39 @@ export default class ModelStore {
 
   @observable hiddenObjects: THREE.Mesh[] = [];
 
-  @observable animationPlaying: boolean = false;
+  @observable animationPlaying = false;
 
   private rootStore: RootStore;
+
+  @action setOffset(left: number) {
+    this.offset = {
+      left,
+    };
+  }
 
   @action initializeViewer(window) {
     this.viewerData.scene = new THREE.Scene();
     this.viewerData.axesHelper = new THREE.AxesHelper(100);
+    const left = document.getElementById("menu")?.clientWidth;
+    const right = document.getElementById("info")?.clientWidth;
+    if (!(left && right)) {
+      return;
+    }
     this.viewerData.camera = new THREE.PerspectiveCamera(
       75,
-      (0.625 * window.innerWidth) / window.innerHeight,
+      (window.innerWidth - left - right) / window.innerHeight,
       0.1,
       3000
     );
+
     // this.viewerData.light = new THREE.AmbientLight();
     this.viewerData.light = new THREE.DirectionalLight(
       new THREE.Color("hsl(30,100%,75%)"),
       0.8
     );
     this.viewerData.light.position.set(-100, 0, -100);
-    this.offset = {
-      // @ts-ignore
-      left: document.querySelector(".ant-col-4")!.offsetWidth,
-      // @ts-ignore
-      right: document.querySelector(".ant-col-5")!.offsetWidth,
-    };
 
-    this.viewerData.renderer = new THREE.WebGLRenderer();
+    this.viewerData.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.viewerData.renderer.setPixelRatio(
       window.devicePixelRatio > 1 ? 1 : window.devicePixelRatio
     );
@@ -145,7 +149,6 @@ export default class ModelStore {
     const selectedPart = this.viewerData.scene.children[4].children[0].getObjectById(
       id
     );
-    console.log(selectedPart);
     if (selectedPart) {
       this.selectedPart = selectedPart;
       this.highlightPart(this.selectedPart);
