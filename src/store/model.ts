@@ -88,7 +88,7 @@ export default class ModelStore {
     );
     this.viewerData.light.position.set(-100, 0, -100);
 
-    this.viewerData.renderer = new THREE.WebGLRenderer();
+    this.viewerData.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.viewerData.renderer.setPixelRatio(
       window.devicePixelRatio > 1 ? 1 : window.devicePixelRatio
     );
