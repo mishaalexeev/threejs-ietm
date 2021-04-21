@@ -61,17 +61,14 @@ class ModelViewer extends Component<Props, State> {
 
     // Добавление слушателя на изменения размера окна для изменения aspect камеры и размеров viewer.
     const onWindowResize = () => {
-      const left = document.getElementById("menu")?.offsetWidth;
       const right = document.getElementById("info")?.offsetWidth;
-      if (!(left && right)) {
+      if (!right) {
         return;
       }
 
-      this.store.setOffset(left);
-
-      camera.aspect = (window.innerWidth - left - right) / window.innerHeight;
+      camera.aspect = (window.innerWidth - right) / window.innerHeight;
       camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth - left - right, window.innerHeight);
+      renderer.setSize(window.innerWidth - right, window.innerHeight);
       render();
     };
     window.addEventListener("resize", onWindowResize, false);
@@ -183,7 +180,7 @@ class ModelViewer extends Component<Props, State> {
     this.store.setIntersectedObject(intersects);
     this.mount.style.cursor = intersectedObject ? "pointer" : "default";
 
-    pickableObjects!.forEach((o) => {
+    pickableObjects?.forEach((o) => {
       const isSelected = o === selectedPart;
       if (isSelected) {
         // o.material.transparent = false;
@@ -196,6 +193,7 @@ class ModelViewer extends Component<Props, State> {
         o.material = new THREE.MeshBasicMaterial();
         o.material.transparent = true;
         o.material.opacity = 0.7;
+        o.material;
         o.material.color = new THREE.Color("#000128");
       } else {
         if (o === selectedPart) {

@@ -41,10 +41,6 @@ export default class ModelStore {
     raycaster: null,
   };
 
-  @observable offset: Offsets = {
-    left: document.getElementById("menu")?.offsetWidth as number,
-  };
-
   // anim
   @observable mixer: THREE.Mixer | null = null;
 
@@ -60,23 +56,16 @@ export default class ModelStore {
 
   private rootStore: RootStore;
 
-  @action setOffset(left: number) {
-    this.offset = {
-      left,
-    };
-  }
-
   @action initializeViewer(window) {
     this.viewerData.scene = new THREE.Scene();
     this.viewerData.axesHelper = new THREE.AxesHelper(100);
-    const left = document.getElementById("menu")?.clientWidth;
     const right = document.getElementById("info")?.clientWidth;
-    if (!(left && right)) {
+    if (!right) {
       return;
     }
     this.viewerData.camera = new THREE.PerspectiveCamera(
       75,
-      (window.innerWidth - left - right) / window.innerHeight,
+      (window.innerWidth - right) / window.innerHeight,
       0.1,
       3000
     );
@@ -164,9 +153,7 @@ export default class ModelStore {
     const { renderer, camera } = this.viewerData;
     raycaster.setFromCamera(
       {
-        x:
-          ((clientX - this.offset.left) / renderer.domElement.clientWidth) * 2 -
-          1,
+        x: (clientX / renderer.domElement.clientWidth) * 2 - 1,
         y: -(clientY / renderer.domElement.clientHeight) * 2 + 1,
         z: 0.5,
       },
@@ -202,7 +189,6 @@ export default class ModelStore {
     makeObservable(this, {
       viewerData: observable,
       selectedPart: observable,
-      offset: observable,
       hiddenObjects: observable,
       getIntersects: action,
       setIntersectedObject: action,

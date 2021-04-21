@@ -25,7 +25,7 @@ const ContextMenu: FunctionComponent<Props> = (props) => {
       event.clientY
     );
 
-    setXPos(event.clientX - props.stores.modelStore.offset.left);
+    setXPos(event.clientX);
     setYPos(event.clientY);
     setOpen(intersects.length > 0);
   };
@@ -33,11 +33,7 @@ const ContextMenu: FunctionComponent<Props> = (props) => {
   const menuItemClicked = (event): void => {
     setOpen(false);
     // ToDo исправить сложение и вычитания offset
-    props.menuItemClicked(
-      event.key,
-      xPos + props.stores.modelStore.offset.left,
-      yPos
-    );
+    props.menuItemClicked(event.key, xPos, yPos);
   };
 
   return (
