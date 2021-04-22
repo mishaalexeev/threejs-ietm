@@ -1,11 +1,17 @@
 import React from "react";
+import Icon from "@ant-design/icons";
+import Cube3D from "assets/icons/cube3D";
 
 type TreeItem = {
   title: string;
   key: string | number;
   icon?: React.ReactNode;
+  switcherIcon?: React.ReactNode;
   children?: TreeItem[];
 };
+
+const Item3DIcon = (props) => <Icon component={Cube3D} {...props} />;
+
 const treeData: TreeItem[] = [
   {
     title: "Назначение и описание",
@@ -22,26 +28,32 @@ const treeData: TreeItem[] = [
               {
                 key: 362,
                 title: "Верхняя часть корпуса",
+                switcherIcon: <Item3DIcon />,
               },
               {
                 key: 357,
                 title: "Крышка промежуточная верхняя",
+                switcherIcon: <Item3DIcon />,
               },
               {
                 key: 352,
                 title: "Средняя часть корпуса",
+                switcherIcon: <Item3DIcon />,
               },
               {
                 key: 401,
                 title: "Крышка промежуточная средняя",
+                switcherIcon: <Item3DIcon />,
               },
               {
                 key: 447,
                 title: "Нижняя часть корпуса",
+                switcherIcon: <Item3DIcon />,
               },
               {
                 key: 358,
                 title: "Крышка промежуточная нижняя",
+                switcherIcon: <Item3DIcon />,
               },
             ],
           },
