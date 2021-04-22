@@ -1,13 +1,13 @@
-import Cube3D from "assets/icons/cube3D";
-import Gears from "assets/icons/gears";
-import Bearing from "assets/icons/ballbearing";
-import OilChange from "assets/icons/oilchange";
-import Wrench from "assets/icons/wrench";
-import Bolt from "assets/icons/bolt";
-import Nut from "assets/icons/nut";
-import Pack from "assets/icons/pack";
-import Pack2 from "assets/icons/pack2";
-import Truck from "assets/icons/truck";
+import Cube3D from "assets/icons/components/cube3D";
+import Gears from "assets/icons/components/gears";
+import Bearing from "assets/icons/components/ballbearing";
+import OilChange from "assets/icons/components/oilchange";
+import Wrench from "assets/icons/components/wrench";
+import Bolt from "assets/icons/components/bolt";
+import Nut from "assets/icons/components/nut";
+import Pack from "assets/icons/components/pack";
+import Pack2 from "assets/icons/components/pack2";
+import Truck from "assets/icons/components/truck";
 import Icon from "@ant-design/icons";
 import React, { FC } from "react";
 
