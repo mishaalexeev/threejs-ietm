@@ -18,6 +18,7 @@ type TreeItem = {
   key: string | number;
   icon?: React.ReactNode;
   switcherIcon?: React.ReactNode;
+  selectable?: boolean;
   children?: TreeItem[];
 };
 
@@ -25,14 +26,17 @@ const treeData: TreeItem[] = [
   {
     title: "Назначение и описание",
     key: "0-0",
+    selectable: false,
     children: [
       {
         title: "Дерево модели",
         key: "0-0-0",
+        selectable: false,
         children: [
           {
             title: "Корпус",
             key: "0-0-0-0",
+            selectable: false,
             children: [
               {
                 key: 362,
@@ -69,6 +73,7 @@ const treeData: TreeItem[] = [
           {
             key: "Поменять тут",
             title: "Зубчатые зацепления",
+            selectable: false,
             children: [
               {
                 key: 365,
@@ -90,6 +95,7 @@ const treeData: TreeItem[] = [
           {
             key: "Поменять тут тоже",
             title: "Валы",
+            selectable: false,
             children: [
               {
                 key: 346,
@@ -108,6 +114,7 @@ const treeData: TreeItem[] = [
           {
             key: "Подшипники",
             title: "Подшипники",
+            selectable: false,
             children: [
               {
                 key: 507,
@@ -124,6 +131,7 @@ const treeData: TreeItem[] = [
           {
             key: 449,
             title: "Крепежные детали",
+            selectable: false,
             children: [
               {
                 key: "Болты",
@@ -144,6 +152,7 @@ const treeData: TreeItem[] = [
               {
                 key: "Гайки",
                 title: "Гайки",
+                selectable: false,
                 children: [
                   {
                     key: 438,
@@ -161,6 +170,7 @@ const treeData: TreeItem[] = [
   {
     key: "sub2",
     title: "Эксплуатация",
+    selectable: false,
     children: [
       {
         key: "Процедуры обслуживания",
@@ -185,6 +195,7 @@ const treeData: TreeItem[] = [
           {
             key: "Транспортировка",
             title: "Транспортировка",
+            selectable: false,
             children: [
               {
                 key: "Упаковка",
@@ -206,6 +217,7 @@ const treeData: TreeItem[] = [
           {
             key: "Демонтаж и установка",
             title: "Демонтаж и установка",
+            selectable: false,
             children: [
               {
                 key: "Установка",
@@ -228,6 +240,7 @@ const treeData: TreeItem[] = [
   {
     key: "sub3",
     title: "Демонтаж и установка",
+    selectable: false,
     children: [
       {
         key: "Разборка редуктора",
@@ -238,7 +251,7 @@ const treeData: TreeItem[] = [
   {
     key: "sub4",
     title: "Типовые неисправности",
-
+    selectable: false,
     children: [
       {
         key: "Необычные неравномерные шумы при работе",
