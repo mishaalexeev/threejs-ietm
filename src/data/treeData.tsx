@@ -1,15 +1,18 @@
 import React from "react";
-import Icon from "@ant-design/icons";
-import Cube3D from "assets/icons/cube3D";
-import Gears from "assets/icons/gears";
-import Bearing from "assets/icons/ballbearing";
-import Oilchange from "assets/icons/oilchange";
-import Wrench from "assets/icons/wrench";
-import Bolt from "assets/icons/bolt";
-import Nut from "assets/icons/nut";
-import Pack from "assets/icons/pack";
-import Pack2 from "assets/icons/pack2";
-import Truck from "assets/icons/truck";
+
+import {
+  Cube3DIcon,
+  GearsIcon,
+  BoltIcon,
+  NutIcon,
+  OilChangeIcon,
+  BearingIcon,
+  PackIcon,
+  Pack2Icon,
+  TruckIcon,
+  WrenchIcon,
+} from "assets/icons";
+
 type TreeItem = {
   title: string;
   key: string | number;
@@ -17,8 +20,6 @@ type TreeItem = {
   switcherIcon?: React.ReactNode;
   children?: TreeItem[];
 };
-
-const Item3DIcon = (props) => <Icon component={Cube3D} {...props} />;
 
 const treeData: TreeItem[] = [
   {
@@ -36,32 +37,32 @@ const treeData: TreeItem[] = [
               {
                 key: 362,
                 title: "Верхняя часть корпуса",
-                switcherIcon: <Item3DIcon />,
+                switcherIcon: <Cube3DIcon />,
               },
               {
                 key: 357,
                 title: "Крышка промежуточная верхняя",
-                switcherIcon: <Item3DIcon />,
+                switcherIcon: <Cube3DIcon />,
               },
               {
                 key: 352,
                 title: "Средняя часть корпуса",
-                switcherIcon: <Item3DIcon />,
+                switcherIcon: <Cube3DIcon />,
               },
               {
                 key: 401,
                 title: "Крышка промежуточная средняя",
-                switcherIcon: <Item3DIcon />,
+                switcherIcon: <Cube3DIcon />,
               },
               {
                 key: 447,
                 title: "Нижняя часть корпуса",
-                switcherIcon: <Item3DIcon />,
+                switcherIcon: <Cube3DIcon />,
               },
               {
                 key: 358,
                 title: "Крышка промежуточная нижняя",
-                switcherIcon: <Item3DIcon />,
+                switcherIcon: <Cube3DIcon />,
               },
             ],
           },
@@ -72,17 +73,17 @@ const treeData: TreeItem[] = [
               {
                 key: 365,
                 title: "Шестерни",
-                switcherIcon: <Gears />,
+                switcherIcon: <GearsIcon />,
               },
               {
                 key: 366,
                 title: "Зубчатые колеса",
-                switcherIcon: <Gears />,
+                switcherIcon: <GearsIcon />,
               },
               {
                 key: 351,
                 title: "Колесо для подачи масла",
-                switcherIcon: <Gears />,
+                switcherIcon: <GearsIcon />,
               },
             ],
           },
@@ -111,12 +112,12 @@ const treeData: TreeItem[] = [
               {
                 key: 507,
                 title: "Подшипник 206 ГОСТ 8338-75",
-                switcherIcon: <Bearing />,
+                switcherIcon: <BearingIcon />,
               },
               {
                 key: 531,
                 title: "Подшипник 208 ГОСТ 8338-75",
-                switcherIcon: <Bearing />,
+                switcherIcon: <BearingIcon />,
               },
             ],
           },
@@ -131,12 +132,12 @@ const treeData: TreeItem[] = [
                   {
                     key: 400,
                     title: "Болт ГОСТ 7796-70 М10-6gx70>",
-                    switcherIcon: <Bolt />,
+                    switcherIcon: <BoltIcon />,
                   },
                   {
                     key: 385,
                     title: "Болт ГОСТ 7796-70 М10-6gx30",
-                    switcherIcon: <Bolt />,
+                    switcherIcon: <BoltIcon />,
                   },
                 ],
               },
@@ -147,7 +148,7 @@ const treeData: TreeItem[] = [
                   {
                     key: 438,
                     title: "Гайка ISO 4035-М10BS",
-                    switcherIcon: <Nut />,
+                    switcherIcon: <NutIcon />,
                   },
                 ],
               },
@@ -172,12 +173,12 @@ const treeData: TreeItem[] = [
               {
                 key: "Разборка редуктораа",
                 title: "Сборка, разборка (анимация)",
-                switcherIcon: <Wrench />,
+                switcherIcon: <WrenchIcon />,
               },
               {
                 key: "Замена масла (анимация)",
                 title: "Замена масла (анимация)",
-                switcherIcon: <Oilchange />,
+                switcherIcon: <OilChangeIcon />,
               },
             ],
           },
@@ -188,17 +189,17 @@ const treeData: TreeItem[] = [
               {
                 key: "Упаковка",
                 title: "Упаковка",
-                switcherIcon: <Pack />,
+                switcherIcon: <PackIcon />,
               },
               {
                 key: "Комплектность поставки",
                 title: "Комплектность поставки",
-                switcherIcon: <Pack2 />,
+                switcherIcon: <Pack2Icon />,
               },
               {
                 key: "Перевозка",
                 title: "Перевозка",
-                switcherIcon: <Truck />,
+                switcherIcon: <TruckIcon />,
               },
             ],
           },
