@@ -1,7 +1,15 @@
 import React from "react";
 import Icon from "@ant-design/icons";
 import Cube3D from "assets/icons/cube3D";
-
+import Gears from "assets/icons/gears";
+import Bearing from "assets/icons/ballbearing";
+import Oilchange from "assets/icons/oilchange";
+import Wrench from "assets/icons/wrench";
+import Bolt from "assets/icons/bolt";
+import Nut from "assets/icons/nut";
+import Pack from "assets/icons/pack";
+import Pack2 from "assets/icons/pack2";
+import Truck from "assets/icons/truck";
 type TreeItem = {
   title: string;
   key: string | number;
@@ -64,14 +72,17 @@ const treeData: TreeItem[] = [
               {
                 key: 365,
                 title: "Шестерни",
+                switcherIcon: <Gears />,
               },
               {
                 key: 366,
                 title: "Зубчатые колеса",
+                switcherIcon: <Gears />,
               },
               {
                 key: 351,
                 title: "Колесо для подачи масла",
+                switcherIcon: <Gears />,
               },
             ],
           },
@@ -100,10 +111,12 @@ const treeData: TreeItem[] = [
               {
                 key: 507,
                 title: "Подшипник 206 ГОСТ 8338-75",
+                switcherIcon: <Bearing />,
               },
               {
                 key: 531,
                 title: "Подшипник 208 ГОСТ 8338-75",
+                switcherIcon: <Bearing />,
               },
             ],
           },
@@ -118,10 +131,12 @@ const treeData: TreeItem[] = [
                   {
                     key: 400,
                     title: "Болт ГОСТ 7796-70 М10-6gx70>",
+                    switcherIcon: <Bolt />,
                   },
                   {
                     key: 385,
                     title: "Болт ГОСТ 7796-70 М10-6gx30",
+                    switcherIcon: <Bolt />,
                   },
                 ],
               },
@@ -132,6 +147,7 @@ const treeData: TreeItem[] = [
                   {
                     key: 438,
                     title: "Гайка ISO 4035-М10BS",
+                    switcherIcon: <Nut />,
                   },
                 ],
               },
@@ -156,10 +172,12 @@ const treeData: TreeItem[] = [
               {
                 key: "Разборка редуктораа",
                 title: "Сборка, разборка (анимация)",
+                switcherIcon: <Wrench />,
               },
               {
                 key: "Замена масла (анимация)",
                 title: "Замена масла (анимация)",
+                switcherIcon: <Oilchange />,
               },
             ],
           },
@@ -170,14 +188,17 @@ const treeData: TreeItem[] = [
               {
                 key: "Упаковка",
                 title: "Упаковка",
+                switcherIcon: <Pack />,
               },
               {
                 key: "Комплектность поставки",
                 title: "Комплектность поставки",
+                switcherIcon: <Pack2 />,
               },
               {
                 key: "Перевозка",
                 title: "Перевозка",
+                switcherIcon: <Truck />,
               },
             ],
           },
