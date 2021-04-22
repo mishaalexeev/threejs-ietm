@@ -135,7 +135,7 @@ export default class ModelStore {
   };
 
   @action setSelectedPartById = (id: number) => {
-    const selectedPart = this.viewerData.scene.children[4].children[0].getObjectById(
+    const selectedPart = this.viewerData.scene.children[5].children[0].getObjectById(
       id
     );
     if (selectedPart) {
