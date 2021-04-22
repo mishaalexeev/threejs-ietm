@@ -63,6 +63,7 @@ const MenuMain: FC<Props> = ({ stores }) => {
       switcherIcon={<DownOutlined />}
       onSelect={handleItemSelect}
       onClick={handleItemClick}
+      height={window.innerHeight}
       ref={treeRef}
       treeData={treeData}
       className="tree-view"
