@@ -8,7 +8,11 @@ import Nut from "assets/icons/nut";
 import Pack from "assets/icons/pack";
 import Pack2 from "assets/icons/pack2";
 import Truck from "assets/icons/truck";
+import Wrench2 from "assets/icons/wrench2";
 import Icon from "@ant-design/icons";
+import Recycle from "assets/icons/recycle";
+import Alert from "assets/icons/alert";
+import Shaft from "assets/icons/shaft";
 import React, { FC } from "react";
 
 const DefaultProps = {
@@ -47,6 +51,18 @@ const Pack2Icon: FC = (props) => (
 const TruckIcon: FC = (props) => (
   <Icon component={Truck} {...DefaultProps} {...props} />
 );
+const RecycleIcon: FC = (props) => (
+  <Icon component={Recycle} {...DefaultProps} {...props} />
+);
+const AlertIcon: FC = (props) => (
+  <Icon component={Alert} {...DefaultProps} {...props} />
+);
+const Wrench2Icon: FC = (props) => (
+  <Icon component={Wrench2} {...DefaultProps} {...props} />
+);
+const ShaftIcon: FC = (props) => (
+  <Icon component={Shaft} {...DefaultProps} {...props} />
+);
 
 export {
   Cube3DIcon,
@@ -59,4 +75,8 @@ export {
   PackIcon,
   Pack2Icon,
   TruckIcon,
+  RecycleIcon,
+  AlertIcon,
+  Wrench2Icon,
+  ShaftIcon,
 };

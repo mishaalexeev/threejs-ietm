@@ -11,6 +11,10 @@ import {
   Pack2Icon,
   TruckIcon,
   WrenchIcon,
+  RecycleIcon,
+  AlertIcon,
+  Wrench2Icon,
+  ShaftIcon,
 } from "assets/icons";
 
 type TreeItem = {
@@ -94,14 +98,17 @@ const treeData: TreeItem[] = [
               {
                 key: 346,
                 title: "Ведущий вал",
+                switcherIcon: <ShaftIcon />,
               },
               {
                 key: 347,
                 title: "Промежуточный вал",
+                switcherIcon: <ShaftIcon />,
               },
               {
                 key: 345,
                 title: "Ведомый вал",
+                switcherIcon: <ShaftIcon />,
               },
             ],
           },
@@ -210,14 +217,17 @@ const treeData: TreeItem[] = [
               {
                 key: "Установка",
                 title: "Установка",
+                switcherIcon: <WrenchIcon />,
               },
               {
                 key: "Демонтаж",
                 title: "Демонтаж",
+                switcherIcon: <Wrench2Icon />,
               },
               {
                 key: "Утилизация",
                 title: "Утилизация",
+                switcherIcon: <RecycleIcon />,
               },
             ],
           },
@@ -243,22 +253,27 @@ const treeData: TreeItem[] = [
       {
         key: "Необычные неравномерные шумы при работе",
         title: "Необычные неравномерные шумы при работе",
+        switcherIcon: <AlertIcon />,
       },
       {
         key: "Равномерный повышенный уровень шума при работе",
         title: "Равномерный повышенный уровень шума при работе",
+        switcherIcon: <AlertIcon />,
       },
       {
         key: "Пробивание масла в местах соединения частей корпуса",
         title: "Пробивание масла в местах соединения частей корпуса",
+        switcherIcon: <AlertIcon />,
       },
       {
         key: "Перегрев подшипников",
         title: "Перегрев подшипников",
+        switcherIcon: <AlertIcon />,
       },
       {
         key: "При включении привода валы редуктора не вращаются",
         title: "При включении привода валы редуктора не вращаются",
+        switcherIcon: <AlertIcon />,
       },
     ],
   },
