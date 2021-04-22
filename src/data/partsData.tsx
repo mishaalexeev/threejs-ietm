@@ -1,6 +1,12 @@
 import React from "react";
 
-const partsData = {
+type PartsData = {
+  [key: string]: {
+    title: string;
+    jsx: JSX.Element;
+  };
+};
+const partsData: PartsData = {
   "Верхняя часть корпуса": {
     title: "Верхняя часть корпуса",
     jsx: (

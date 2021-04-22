@@ -17,7 +17,7 @@ const Info: FC<Props> = ({ stores }) => {
       ? "Объект не выбран"
       : stores.modelStore.selectedPart.userData.name;
 
-  let jsx = null;
+  let jsx: JSX.Element | null = null;
   if (partData[name]) {
     jsx = partData[name].jsx;
   }
