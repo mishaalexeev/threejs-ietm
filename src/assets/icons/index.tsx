@@ -1,16 +1,5 @@
-<<<<<<< HEAD
-import Cube3D from "assets/icons/cube3D";
-import Gears from "assets/icons/gears";
-import Bearing from "assets/icons/ballbearing";
-import OilChange from "assets/icons/oilchange";
-import Wrench from "assets/icons/wrench";
-import Bolt from "assets/icons/bolt";
-import Nut from "assets/icons/nut";
-import Pack from "assets/icons/pack";
-import Pack2 from "assets/icons/pack2";
-import Truck from "assets/icons/truck";
-import Wrench2 from "assets/icons/wrench2";
-=======
+import Wrench2 from "assets/icons/components/wrench2";
+
 import Cube3D from "assets/icons/components/cube3D";
 import Gears from "assets/icons/components/gears";
 import Bearing from "assets/icons/components/ballbearing";
@@ -21,11 +10,11 @@ import Nut from "assets/icons/components/nut";
 import Pack from "assets/icons/components/pack";
 import Pack2 from "assets/icons/components/pack2";
 import Truck from "assets/icons/components/truck";
->>>>>>> animation
+
 import Icon from "@ant-design/icons";
-import Recycle from "assets/icons/recycle";
-import Alert from "assets/icons/alert";
-import Shaft from "assets/icons/shaft";
+import Recycle from "assets/icons/components/recycle";
+import Alert from "assets/icons/components/alert";
+import Shaft from "assets/icons/components/shaft";
 import React, { FC } from "react";
 
 const DefaultProps = {
