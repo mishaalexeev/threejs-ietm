@@ -21,7 +21,9 @@ const Info: FC<Props> = ({ stores }) => {
   if (partData[name]) {
     jsx = partData[name].jsx;
   }
-
+  const handleClick = () => {
+    stores.modelStore.modelName = "/models/1.glb";
+  };
   return (
     <Typography>
       <Title>{name}</Title>
@@ -33,6 +35,7 @@ const Info: FC<Props> = ({ stores }) => {
         might cause designers and developers difficulties and duplication and
         reduce the efficiency of development.
       </Paragraph>
+      <button onClick={handleClick}>Start</button>
     </Typography>
   );
 };
