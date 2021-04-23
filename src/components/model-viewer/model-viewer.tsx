@@ -125,7 +125,7 @@ class ModelViewer extends Component<Props, State> {
     );
     new Promise((res, rej) => {
       loader.load(
-        "/models/gearboxAnimated.glb",
+        "/models/gearboxAnimatedAll_In_One.glb",
         (gltf) => {
           gltf.scene.traverse((child) => {
             if (child.isMesh) {
