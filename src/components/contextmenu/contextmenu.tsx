@@ -32,7 +32,6 @@ const ContextMenu: FunctionComponent<Props> = (props) => {
 
   const menuItemClicked = (event): void => {
     setOpen(false);
-    // ToDo исправить сложение и вычитания offset
     props.menuItemClicked(event.key, xPos, yPos);
   };
 

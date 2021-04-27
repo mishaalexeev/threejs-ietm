@@ -217,7 +217,7 @@ class ModelViewer extends Component<Props, State> {
     this.store.setSelectedObject(intersects);
     this.mount.style.cursor = intersectedObject ? "pointer" : "default";
 
-    pickableObjects!.forEach((o, i) => {
+    pickableObjects?.forEach((o) => {
       if (selectedPart && intersectedObject.name === o.name) {
         if (pickableObjects) {
           o.material = new THREE.MeshBasicMaterial();
@@ -259,14 +259,14 @@ class ModelViewer extends Component<Props, State> {
           } else {
             this.mount.style.cursor = "pointer";
             highlightData.intersectedObject = intersect.object;
-            hiddenObjects.push(highlightData.intersectedObject);
+            this.store.hiddenObjects.push(highlightData.intersectedObject);
           }
         } else {
           highlightData.intersectedObject = null;
           return;
         }
 
-        pickableObjects!.forEach((o, i) => {
+        pickableObjects?.forEach((o, i) => {
           if (
             highlightData.intersectedObject &&
             highlightData.intersectedObject.name === o.name
@@ -274,7 +274,7 @@ class ModelViewer extends Component<Props, State> {
             if (pickableObjects) {
               pickableObjects[i].parent.visible = false;
             }
-            this.store.hiddenObjects.push(o);
+            this.store.hiddenObjects.push(o.parent);
           } else if (highlightData.originalMaterials) {
             o.material = highlightData.originalMaterials[o.id];
             o.material.color = highlightData.originalMaterials[o.id].color;
@@ -284,6 +284,44 @@ class ModelViewer extends Component<Props, State> {
       }
       // Изоляция детали
       case "2":
+        const intersects: THREE.Intersection[] = this.store.getIntersects(
+          xPos,
+          yPos
+        );
+
+        const visibleObjects: THREE.Object3D[] = [];
+
+        this.store.setIntersectedObject(intersects);
+        this.mount.style.cursor = highlightData.intersectedObject
+          ? "pointer"
+          : "default";
+
+        if (intersects.length > 0) {
+          const intersect = intersects.find(
+            (el) => hiddenObjects.indexOf(el.object) === -1
+          );
+
+          intersect.object.traverse((n) => {
+            if (n.type === "Mesh" || n.type === "LineSegments")
+              visibleObjects.push(n);
+          });
+
+          this.store.viewerData.scene.children[5].children[0].traverse((n) => {
+            if (n.type === "Mesh" || n.type === "LineSegments") {
+              if (visibleObjects.indexOf(n) < 0) {
+                n.visible = false;
+                this.store.hiddenObjects.push(n);
+              }
+            }
+          });
+
+          visibleObjects.forEach((n) => {
+            n.visible = true;
+          });
+        } else {
+          highlightData.intersectedObject = null;
+          return;
+        }
         break;
       // Выделение детали
       case "3":
