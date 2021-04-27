@@ -60,7 +60,7 @@ export default class ModelStore {
 
   @action initializeViewer(window) {
     this.viewerData.scene = new THREE.Scene();
-    this.viewerData.axesHelper = new THREE.AxesHelper(100);
+    this.viewerData.axesHelper = new THREE.AxesHelper(0);
     const right = document.getElementById("info")?.clientWidth;
     if (!right) {
       return;
