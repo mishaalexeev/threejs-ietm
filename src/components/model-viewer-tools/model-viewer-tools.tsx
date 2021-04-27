@@ -13,6 +13,7 @@ const ModelViewerTools: FC<Props> = ({ stores }) => {
   const handleRestoreVisibilityClicked = (): void => {
     const { pickableObjects } = store.highlightData;
     if (pickableObjects) {
+      store.viewerData.controls?.reset();
       store.hiddenObjects.forEach((el) => {
         el.visible = true;
       });

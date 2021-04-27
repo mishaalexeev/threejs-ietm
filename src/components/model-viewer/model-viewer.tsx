@@ -155,6 +155,7 @@ class ModelViewer extends Component<Props, State> {
             this.props.stores.modelStore.actions.push(el);
           });
 
+          this.props.stores.modelStore.viewerData.controls?.saveState();
           res(1);
         },
         (xhr) => {
