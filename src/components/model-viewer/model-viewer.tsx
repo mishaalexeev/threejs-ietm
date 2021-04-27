@@ -89,7 +89,6 @@ class ModelViewer extends Component<Props, State> {
 
   loadViewer = (scene, axesHelper, light, renderer, camera, highlightData) => {
     scene.add(axesHelper);
-
     const ambient = new THREE.AmbientLight(0xffffff, 0.4);
     const keyLight = new THREE.DirectionalLight(
       new THREE.Color("hsl(30, 100%, 75%)"),
@@ -107,9 +106,9 @@ class ModelViewer extends Component<Props, State> {
     backLight.position.set(100, 0, -100).normalize();
 
     scene.add(ambient, keyLight, fillLight, backLight);
-
-    camera.position.z = 250;
-    camera.position.x = 250;
+    console.log(scene.position);
+    // scene.position.set(100, 50, 80);
+    camera.position.set(180, 50, 500);
 
     renderer.outputEncoding = THREE.sRGBEncoding;
     renderer.setSize(
@@ -127,6 +126,9 @@ class ModelViewer extends Component<Props, State> {
       loader.load(
         this.props.stores.modelStore.modelName,
         (gltf) => {
+          // gltf.scene.children[0].position.set(100, 50, 80);
+          console.log(gltf.scene.children);
+
           gltf.scene.traverse((child) => {
             if (child.isMesh) {
               const m = child;
@@ -138,7 +140,6 @@ class ModelViewer extends Component<Props, State> {
               m.material.polygonOffsetFactor = 0.5;
               m.material.polygonOffsetUnits = 1;
               m.material.color.convertSRGBToLinear();
-
               const mat = m.material.clone();
               m.material = mat.clone();
 
@@ -150,7 +151,6 @@ class ModelViewer extends Component<Props, State> {
           this.props.stores.modelStore.mixer = new THREE.AnimationMixer(
             gltf.scene
           );
-
           gltf.animations.forEach((el) => {
             this.props.stores.modelStore.actions.push(el);
           });

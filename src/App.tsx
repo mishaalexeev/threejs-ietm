@@ -14,10 +14,10 @@ const App: FC = () => (
       <Menu />
     </div>
     <Row>
-      <Col span={18} style={{ overflow: "hidden" }}>
+      <Col span={17} style={{ overflow: "hidden" }}>
         <ModelViewer />
       </Col>
-      <Col span={5} id="info">
+      <Col span={6} id="info">
         <Info />
       </Col>
     </Row>
