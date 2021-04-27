@@ -3,7 +3,7 @@ import { Typography } from "antd";
 import { RootStore } from "store";
 import withStore from "hocs/withStores";
 import partData from "data/partsData";
-
+import "./info.css";
 const { Title, Paragraph } = Typography;
 
 type Props = {
@@ -24,17 +24,11 @@ const Info: FC<Props> = ({ stores }) => {
   const handleClick = () => {
     stores.modelStore.modelName = "/models/1.glb";
   };
+
   return (
     <Typography>
       <Title>{name}</Title>
-      <Paragraph>
-        {jsx}
-        <hr />
-        In the process of internal desktop applications development, many
-        different design specs and implementations would be involved, which
-        might cause designers and developers difficulties and duplication and
-        reduce the efficiency of development.
-      </Paragraph>
+      <Paragraph>{jsx}</Paragraph>
       <button onClick={handleClick}>Start</button>
     </Typography>
   );

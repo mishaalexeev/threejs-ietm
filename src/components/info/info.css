@@ -1,0 +1,6 @@
+.ant-image-mask-info{
+    display: none;
+}
+.ant-image-mask:after {
+    content: 'Открыть';
+}

@@ -1,4 +1,5 @@
 import React from "react";
+import { Image } from "antd";
 
 type PartsData = {
   [key: string]: {
@@ -60,10 +61,11 @@ const partsData: PartsData = {
     jsx: (
       <>
         ВАЛЫ КРУТЫЕ <hr />
-        <img
+        <Image
           src="https://static.probusiness.io/n/03/d/38097027_439276526579800_2735888197547458560_n.jpg"
           width={200}
-          alt=""
+          alt="helelo"
+          placeholder="СОСИ"
         />
       </>
     ),
