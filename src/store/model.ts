@@ -44,6 +44,8 @@ export default class ModelStore {
   // anim
   @observable mixer: THREE.Mixer | null = null;
 
+  @observable modelName = "/models/gearboxAnimatedAll_In_One2.glb";
+
   @observable actions: Array<any> = [];
 
   public selectedPart: THREE.Mesh = {};

@@ -125,7 +125,7 @@ class ModelViewer extends Component<Props, State> {
     );
     new Promise((res, rej) => {
       loader.load(
-        "/models/gearboxAnimatedAll_In_One.glb",
+        this.props.stores.modelStore.modelName,
         (gltf) => {
           gltf.scene.traverse((child) => {
             if (child.isMesh) {
@@ -257,6 +257,7 @@ class ModelViewer extends Component<Props, State> {
             this.mount.style.cursor = "default";
             highlightData.intersectedObject = null;
           } else {
+            this.mount.style.cursor = "pointer";
             this.mount.style.cursor = "pointer";
             highlightData.intersectedObject = intersect.object;
             this.store.hiddenObjects.push(highlightData.intersectedObject);
