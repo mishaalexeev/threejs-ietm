@@ -8,16 +8,14 @@ import { FC } from "react";
 
 const App: FC = () => (
   <div className="App">
-    <div
-      style={{ position: "absolute", zIndex: 100, background: "transparent" }}
-    >
+    <div className="menu">
       <Menu />
     </div>
     <Row>
       <Col span={17} style={{ overflow: "hidden" }}>
         <ModelViewer />
       </Col>
-      <Col span={6} id="info">
+      <Col span={7} id="info">
         <Info />
       </Col>
     </Row>

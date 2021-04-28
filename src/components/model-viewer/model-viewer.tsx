@@ -106,7 +106,7 @@ class ModelViewer extends Component<Props, State> {
     backLight.position.set(100, 0, -100).normalize();
 
     scene.add(ambient, keyLight, fillLight, backLight);
-    console.log(scene.position);
+
     // scene.position.set(100, 50, 80);
     camera.position.set(180, 50, 500);
 
@@ -127,7 +127,6 @@ class ModelViewer extends Component<Props, State> {
         this.props.stores.modelStore.modelName,
         (gltf) => {
           // gltf.scene.children[0].position.set(100, 50, 80);
-          console.log(gltf.scene.children);
 
           gltf.scene.traverse((child) => {
             if (child.isMesh) {
@@ -374,8 +373,7 @@ class ModelViewer extends Component<Props, State> {
               [...cam.position.toArray(), ...finalPose.toArray()],
               THREE.InterpolateSmooth
             );
-            console.log([...cam.position.toArray(), ...finalPose.toArray()]);
-            console.log(finalPose.toArray());
+
             const clip2 = new THREE.AnimationClip(null, 0.3, [track2]);
             const action2 = this.store.mixer.clipAction(clip2, cam);
 
