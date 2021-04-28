@@ -214,7 +214,10 @@ class ModelViewer extends Component<Props, State> {
     const { pickableObjects } = highlightData;
 
     const intersects = this.store.getIntersects(event.clientX, event.clientY);
-
+    console.log(intersects);
+    if (intersects.length < 1) {
+      return;
+    }
     this.store.setSelectedObject(intersects);
     this.mount.style.cursor = intersectedObject ? "pointer" : "default";
 
