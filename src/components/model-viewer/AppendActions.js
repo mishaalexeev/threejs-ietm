@@ -51,7 +51,7 @@ function appendActions(scene, mixer) {
 
   anims.forEach((a) => {
     a.name.forEach((objName) => {
-      scene.children[4].children[0].getObjectByName(objName).traverse((n) => {
+      scene.children[5].children[0].getObjectByName(objName).traverse((n) => {
         if (n.type === "Mesh" || n.type === "LineSegments") {
           const clip = new THREE.AnimationClip(null, -1, []);
 
