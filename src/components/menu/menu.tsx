@@ -42,7 +42,7 @@ const MenuMain: FC<Props> = ({ stores }) => {
 
     // Call internal rc-tree expand function
     // https://github.com/ant-design/ant-design/issues/12567
-    treeRef.current!.onNodeExpand(event as any, node);
+    treeRef.current?.onNodeExpand(event as any, node);
   };
 
   const onDebounceExpand = debounce(expandFolderNode, 200, {

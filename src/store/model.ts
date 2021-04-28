@@ -44,7 +44,7 @@ export default class ModelStore {
   // anim
   @observable mixer: THREE.Mixer | null = null;
 
-  @observable modelName = "/models/gearboxAnimatedCamera4.glb";
+  @observable modelName = "/models/gearboxAnimatedCamera5.glb";
 
   @observable actions: Array<any> = [];
 
