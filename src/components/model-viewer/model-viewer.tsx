@@ -37,26 +37,19 @@ class ModelViewer extends Component<Props, State> {
 
   componentDidMount() {
     this.store.initializeViewer(window);
-    const {
-      scene,
-      axesHelper,
-      light,
-      renderer,
-      controls,
-      camera,
-    } = this.store.viewerData;
+    const { viewerData } = this.store;
     this.loadViewer(
-      scene,
-      axesHelper,
-      light,
-      renderer,
-      camera,
+      viewerData.scene,
+      viewerData.axesHelper,
+      viewerData.light,
+      viewerData.renderer,
+      viewerData.camera,
       this.store.highlightData
     );
 
     // Вывод сцены на экран
     const render = () => {
-      renderer.render(scene, camera);
+      viewerData.renderer.render(viewerData.scene, viewerData.camera);
     };
 
     // Добавление слушателя на изменения размера окна для изменения aspect камеры и размеров viewer.
@@ -66,9 +59,13 @@ class ModelViewer extends Component<Props, State> {
         return;
       }
 
-      camera.aspect = (window.innerWidth - right) / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth - right, window.innerHeight);
+      viewerData.camera.aspect =
+        (window.innerWidth - right) / window.innerHeight;
+      viewerData.camera.updateProjectionMatrix();
+      viewerData.renderer.setSize(
+        window.innerWidth - right,
+        window.innerHeight
+      );
       render();
     };
     window.addEventListener("resize", onWindowResize, false);
@@ -78,7 +75,7 @@ class ModelViewer extends Component<Props, State> {
     // Three js loop
     const animate = () => {
       requestAnimationFrame(animate);
-      controls.update();
+      viewerData.controls.update();
       if (!this.state.isLoading)
         this.props.stores.modelStore.mixer.update(clock.getDelta());
       render();
@@ -108,7 +105,7 @@ class ModelViewer extends Component<Props, State> {
     scene.add(ambient, keyLight, fillLight, backLight);
 
     // scene.position.set(100, 50, 80);
-    camera.position.set(180, 50, 500);
+    camera.position.set(180, 50, 100);
 
     renderer.outputEncoding = THREE.sRGBEncoding;
     renderer.setSize(
@@ -150,11 +147,36 @@ class ModelViewer extends Component<Props, State> {
           this.props.stores.modelStore.mixer = new THREE.AnimationMixer(
             gltf.scene
           );
-          gltf.animations.forEach((el) => {
-            this.props.stores.modelStore.actions.push(el);
+
+          let totalDuration = 0;
+          const clips = gltf.animations;
+          clips.forEach((clip) => {
+            totalDuration = Math.max(totalDuration, clip.duration);
+            const action = this.store.mixer.clipAction(
+              clip.optimize(),
+              this.store.viewerData.scene
+            );
+            action.loop = THREE.LoopOnce;
+            this.store.actions.push(action);
+            if (clips.length === 1) {
+              this.store.mixer.addEventListener("finished", (e) => {
+                if (e.action === action) {
+                  this.store.mixer.setTime(0.1);
+                  this.store.actions.forEach((a) => {
+                    a.reset();
+                    a.time = this.store.mixer.time;
+                    a.play();
+                  });
+                  this.store.mixer.timeScale = 1.0;
+                  this.store.mixer.update(0.00001);
+                }
+              });
+            }
           });
+          console.log(this.store.actions);
 
           this.props.stores.modelStore.viewerData.controls?.saveState();
+
           res(1);
         },
         (xhr) => {

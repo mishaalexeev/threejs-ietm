@@ -44,7 +44,7 @@ export default class ModelStore {
   // anim
   @observable mixer: THREE.Mixer | null = null;
 
-  @observable modelName = "/models/gearboxAnimatedCamera5.glb";
+  @observable modelName = "/models/gearboxAnimatedCamera8.glb";
 
   @observable actions: Array<any> = [];
 
@@ -103,22 +103,17 @@ export default class ModelStore {
   }
 
   @action startAnimation() {
-    const act: THREE.AnimationAction[] = appendActions(
+    const appActions: THREE.AnimationAction[] = appendActions(
       this.viewerData.scene,
       this.mixer
     );
+    this.actions.push(...appActions);
 
-    act.forEach((el) => {
-      el.clampWhenFinished = true;
-      el.repetitions = 1;
-      el.play();
-    });
-
-    this.actions.forEach((a: THREE.AnimationClip, i) => {
-      const animAction: THREE.AnimationAction = this.mixer.clipAction(a);
-      animAction.clampWhenFinished = true;
-      animAction.repetitions = 1;
-      animAction.play();
+    this.viewerData.camera = this.viewerData.scene.getObjectByName(
+      "ManualCamera_Orientation"
+    );
+    this.actions.forEach((a: THREE.AnimationAction) => {
+      a.play();
     });
   }
 
