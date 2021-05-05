@@ -78,6 +78,7 @@ class ModelViewer extends Component<Props, State> {
       viewerData.controls.update();
       if (!this.state.isLoading)
         this.props.stores.modelStore.mixer.update(clock.getDelta());
+      this.store.setTime();
       render();
     };
 
@@ -173,11 +174,10 @@ class ModelViewer extends Component<Props, State> {
               });
             }
           });
-          console.log(this.store.actions);
 
           this.props.stores.modelStore.viewerData.controls?.saveState();
 
-          res(1);
+          res(true);
         },
         (xhr) => {
           console.log(`${(xhr.loaded / xhr.total) * 100}% loaded`);
@@ -188,6 +188,8 @@ class ModelViewer extends Component<Props, State> {
         }
       );
     }).then(() => {
+      this.props.stores.modelStore.setModelReady();
+      console.log(this.store.modelReady);
       this.setState({
         isLoading: false,
       });

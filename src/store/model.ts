@@ -32,6 +32,11 @@ export default class ModelStore {
     renderer: null,
     controls: null,
   };
+  @observable modelReady = false;
+  @observable time = 0;
+  @action setTime() {
+    this.time = this.mixer.time;
+  }
 
   @observable highlightData: HighlightData = {
     pickableObjects: null,
@@ -58,6 +63,9 @@ export default class ModelStore {
 
   private rootStore: RootStore;
 
+  @action setModelReady() {
+    this.modelReady = true;
+  }
   @action initializeViewer(window) {
     this.viewerData.scene = new THREE.Scene();
     this.viewerData.axesHelper = new THREE.AxesHelper(0);
@@ -112,6 +120,7 @@ export default class ModelStore {
     this.viewerData.camera = this.viewerData.scene.getObjectByName(
       "ManualCamera_Orientation"
     );
+    this.mixer.setTime(0);
     this.actions.forEach((a: THREE.AnimationAction) => {
       a.play();
     });
@@ -194,6 +203,10 @@ export default class ModelStore {
       startAnimation: action,
       mixer: observable,
       actions: observable,
+      modelReady: observable,
+      setModelReady: action,
+      time: observable,
+      setTime: action,
     });
   }
 }
