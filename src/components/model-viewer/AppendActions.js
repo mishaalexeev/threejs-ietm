@@ -51,52 +51,55 @@ function appendActions(scene, mixer) {
 
   anims.forEach((a) => {
     a.name.forEach((objName) => {
-      scene.children[5].children[0].getObjectByName(objName).traverse((n) => {
-        if (n.type === "Mesh" || n.type === "LineSegments") {
-          const clip = new THREE.AnimationClip(null, -1, []);
+      scene
+        .getObjectByName("gearboxFusion")
+        .getObjectByName(objName)
+        .traverse((n) => {
+          if (n.type === "Mesh" || n.type === "LineSegments") {
+            const clip = new THREE.AnimationClip(null, -1, []);
 
-          if (a.highlight) {
-            const origCol = n.material.color.clone();
+            if (a.highlight) {
+              const origCol = n.material.color.clone();
 
-            const colorTrackVals = a.highlight.values.flatMap((c) => {
-              const color = c === null ? origCol : c;
-              return [color.r, color.g, color.b];
-            });
+              const colorTrackVals = a.highlight.values.flatMap((c) => {
+                const color = c === null ? origCol : c;
+                return [color.r, color.g, color.b];
+              });
 
-            const colorTrack = new THREE.ColorKeyframeTrack(
-              ".color",
-              a.highlight.times,
-              colorTrackVals
-            );
-            clip.tracks.push(colorTrack);
+              const colorTrack = new THREE.ColorKeyframeTrack(
+                ".color",
+                a.highlight.times,
+                colorTrackVals
+              );
+              clip.tracks.push(colorTrack);
+            }
+
+            if (a.visible) {
+              const opacityTrack = new THREE.NumberKeyframeTrack(
+                ".opacity",
+                a.visible.times,
+                a.visible.values
+              );
+              clip.tracks.push(opacityTrack);
+            }
+
+            if (a.transparent) {
+              const transparentTrack = new THREE.BooleanKeyframeTrack(
+                ".transparent",
+                a.transparent.times,
+                a.transparent.values
+              );
+              clip.tracks.push(transparentTrack);
+            }
+
+            clip.resetDuration();
+
+            // clip.duration = 200;
+            const action = mixer.clipAction(clip, n.material);
+            action.loop = THREE.LoopOnce;
+            a.actions.push(action);
           }
-
-          if (a.visible) {
-            const opacityTrack = new THREE.NumberKeyframeTrack(
-              ".opacity",
-              a.visible.times,
-              a.visible.values
-            );
-            clip.tracks.push(opacityTrack);
-          }
-
-          if (a.transparent) {
-            const transparentTrack = new THREE.BooleanKeyframeTrack(
-              ".transparent",
-              a.transparent.times,
-              a.transparent.values
-            );
-            clip.tracks.push(transparentTrack);
-          }
-
-          clip.resetDuration();
-
-          // clip.duration = 200;
-          const action = mixer.clipAction(clip, n.material);
-          action.loop = THREE.LoopOnce;
-          a.actions.push(action);
-        }
-      });
+        });
     });
   });
 

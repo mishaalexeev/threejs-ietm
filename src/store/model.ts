@@ -4,6 +4,7 @@ import { Scene } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { RootStore } from "store/index";
 import appendActions from "components/model-viewer/AppendActions";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 type ViewerData = {
   scene: Scene;
@@ -66,6 +67,39 @@ export default class ModelStore {
   @action setModelReady() {
     this.modelReady = true;
   }
+  @action loadAnimation(modelPath: string) {
+    const loader = new GLTFLoader();
+    this.actions = [];
+    return new Promise((res) => {
+      loader.load(modelPath, (gltf) => {
+        const clips = gltf.animations;
+        clips.forEach((clip) => {
+          const action = this.mixer.clipAction(
+            clip.optimize(),
+            this.viewerData.scene
+          );
+          action.loop = THREE.LoopOnce;
+          this.actions.push(action);
+          if (clips.length === 1) {
+            this.mixer.addEventListener("finished", (e) => {
+              if (e.action === action) {
+                this.mixer.setTime(0.1);
+                this.actions.forEach((a) => {
+                  a.reset();
+                  a.time = this.mixer.time;
+                  a.play();
+                });
+                this.mixer.timeScale = 1.0;
+                this.mixer.update(0.00001);
+              }
+            });
+          }
+        });
+        res(clips);
+      });
+    });
+  }
+
   @action initializeViewer(window) {
     this.viewerData.scene = new THREE.Scene();
     this.viewerData.axesHelper = new THREE.AxesHelper(0);
@@ -73,12 +107,14 @@ export default class ModelStore {
     if (!right) {
       return;
     }
+
     this.viewerData.camera = new THREE.PerspectiveCamera(
       75,
       (window.innerWidth - right) / window.innerHeight,
       0.1,
       3000
     );
+    this.viewerData.camera.name = "MainFreePerspectiveCamera";
 
     // this.viewerData.light = new THREE.AmbientLight();
     this.viewerData.light = new THREE.DirectionalLight(

@@ -8,7 +8,7 @@ import { RootStore } from "store";
 import { treeData } from "data/treeData";
 import { Key } from "antd/es/table/interface";
 import debounce from "lodash.debounce";
-import { EventDataNode, DataNode } from "rc-tree/lib/interface";
+import { EventDataNode } from "rc-tree/lib/interface";
 
 type Props = {
   stores: RootStore;
@@ -23,6 +23,12 @@ const MenuMain: FC<Props> = ({ stores }) => {
     switch (key) {
       case "Разборка редуктора":
         stores.modelStore.startAnimation();
+        break;
+      case "Необычные неравномерные шумы при работе":
+        const modelName = "/models/gearboxAnimationTest2.glb";
+        stores.modelStore.loadAnimation(modelName).then(() => {
+          stores.modelStore.startAnimation();
+        });
         break;
       default:
         stores.modelStore.setSelectedPartById(+key);

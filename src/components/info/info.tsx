@@ -1,4 +1,4 @@
-import React, { FunctionComponent as FC } from "react";
+import React, { FunctionComponent as FC, useState } from "react";
 import { Slider, Typography } from "antd";
 import { RootStore } from "store";
 import withStore from "hocs/withStores";
@@ -11,6 +11,7 @@ type Props = {
 };
 
 const Info: FC<Props> = ({ stores }) => {
+  const [pause, setPause] = useState(false);
   if (!stores.modelStore.modelReady) {
     return null;
   }
@@ -29,6 +30,21 @@ const Info: FC<Props> = ({ stores }) => {
     const secs = ~~(ms / 1000) % 60;
     return `${mins}:${secs < 10 ? `0${secs}` : secs}`;
   }
+  const handleMixerPause = () => {
+    stores.modelStore.mixer.timeScale = 0;
+    setPause(true);
+  };
+
+  const handleMixerPlay = () => {
+    stores.modelStore.mixer.timeScale = 1;
+    setPause(false);
+  };
+  const handleSliderChange = (value: number) => {
+    const { timeScale } = stores.modelStore.mixer;
+    if (timeScale === 0) handleMixerPlay();
+    stores.modelStore.mixer.setTime(value);
+    if (timeScale === 0) handleMixerPause();
+  };
   return (
     <Typography>
       <Title>{name}</Title>
@@ -38,11 +54,16 @@ const Info: FC<Props> = ({ stores }) => {
         min={0}
         step={0.1}
         tooltipVisible={false}
-        onChange={(value) => stores.modelStore.mixer.setTime(value)}
+        onChange={handleSliderChange}
         max={stores.modelStore.mixer._actions[0]._clip.duration}
       />
       {millisToMinutesAndSeconds(+stores.modelStore.time * 1000)} /
       {stores.modelStore.mixer._actions[0]._clip.duration}
+      {pause ? (
+        <button onClick={handleMixerPlay}>Start</button>
+      ) : (
+        <button onClick={handleMixerPause}>Stop</button>
+      )}
     </Typography>
   );
 };

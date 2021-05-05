@@ -108,6 +108,7 @@ class ModelViewer extends Component<Props, State> {
     // scene.position.set(100, 50, 80);
     camera.position.set(180, 50, 100);
 
+    scene.add(camera);
     renderer.outputEncoding = THREE.sRGBEncoding;
     renderer.setSize(
       window.innerWidth * this.state.widthCoefficient,
