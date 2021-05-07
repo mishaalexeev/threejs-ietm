@@ -19,28 +19,40 @@ type Props = {
 const ModelViewerSlider: FC<Props> = ({ stores }) => {
   const store: ModelStore = stores.modelStore;
   const [paused, setPaused] = useState(false);
-  useEffect(() => {
-    store.mixer.timeScale = +!paused;
-  }, [paused, store.mixer]);
 
-  const handlePlayPauseClick = (): void => {
-    setPaused((prev) => !prev);
+  const handleMixerPause = () => {
+    stores.modelStore.mixer.timeScale = 0;
+    setPaused(true);
+  };
+
+  const handleMixerPlay = () => {
+    stores.modelStore.mixer.timeScale = 1;
+    setPaused(false);
   };
   const handleSliderChange = (value: number) => {
-    const initialPaused = paused;
-    if (initialPaused) handlePlayPauseClick();
-    store.mixer.setTime(value);
-    if (initialPaused) handlePlayPauseClick();
+    const { timeScale } = stores.modelStore.mixer;
+    if (timeScale === 0) handleMixerPlay();
+    stores.modelStore.mixer.setTime(value);
+    if (timeScale === 0) handleMixerPause();
   };
 
   return (
     <Space>
-      <Button
-        onClick={handlePlayPauseClick}
-        type="primary"
-        shape="circle"
-        icon={paused ? <PlayButton /> : <PauseButton />}
-      />
+      {paused ? (
+        <Button
+          onClick={handleMixerPlay}
+          type="primary"
+          shape="circle"
+          icon={<PlayButton />}
+        />
+      ) : (
+        <Button
+          onClick={handleMixerPause}
+          type="primary"
+          shape="circle"
+          icon={<PauseButton />}
+        />
+      )}
       <Slider
         value={store.time}
         className="viewer-tools__slider"

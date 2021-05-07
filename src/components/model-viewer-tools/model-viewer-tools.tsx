@@ -3,7 +3,7 @@ import { Button, Slider, Space } from "antd";
 import { EyeOutlined, SyncOutlined } from "@ant-design/icons";
 import { RootStore, ModelStore } from "store";
 import withStores from "hocs/withStores";
-import ModelViewerSlider from "components/model-viewer-slider/model-viewer-tools";
+import ModelViewerSlider from "components/model-viewer-slider/model-viewer-slider";
 
 type Props = {
   stores: RootStore;
