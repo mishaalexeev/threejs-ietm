@@ -21,9 +21,6 @@ type HighlightData = {
   highlightedMaterial: THREE.Material | null;
   raycaster: THREE.Raycaster | null;
 };
-type Offsets = {
-  left: number;
-};
 export default class ModelStore {
   @observable viewerData: ViewerData = {
     scene: null,
@@ -34,6 +31,7 @@ export default class ModelStore {
     controls: null,
   };
   @observable modelReady = false;
+  @observable isAnimationPlaying = false;
   @observable time = 0;
   @action setTime() {
     this.time = this.mixer.time;
@@ -59,8 +57,6 @@ export default class ModelStore {
   @observable intersectedObject: THREE.Mesh = {};
 
   @observable hiddenObjects: THREE.Mesh[] = [];
-
-  @observable animationPlaying = false;
 
   private rootStore: RootStore;
 
@@ -147,6 +143,8 @@ export default class ModelStore {
   }
 
   @action startAnimation() {
+    this.isAnimationPlaying = true;
+
     const appActions: THREE.AnimationAction[] = appendActions(
       this.viewerData.scene,
       this.mixer
@@ -243,6 +241,7 @@ export default class ModelStore {
       setModelReady: action,
       time: observable,
       setTime: action,
+      isAnimationPlaying: observable,
     });
   }
 }

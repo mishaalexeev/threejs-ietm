@@ -1,14 +1,18 @@
 import React, { FunctionComponent as FC } from "react";
-import { Button, Space } from "antd";
+import { Button, Slider, Space } from "antd";
 import { EyeOutlined, SyncOutlined } from "@ant-design/icons";
 import { RootStore, ModelStore } from "store";
 import withStores from "hocs/withStores";
+import ModelViewerSlider from "components/model-viewer-slider/model-viewer-tools";
 
 type Props = {
   stores: RootStore;
 };
 const ModelViewerTools: FC<Props> = ({ stores }) => {
   const store: ModelStore = stores.modelStore;
+  if (!store.modelReady) {
+    return null;
+  }
 
   const handleRestoreVisibilityClicked = (): void => {
     const { pickableObjects } = store.highlightData;
@@ -26,20 +30,23 @@ const ModelViewerTools: FC<Props> = ({ stores }) => {
   };
 
   return (
-    <Space className="viewer-tools">
-      <Button
-        type="default"
-        icon={<EyeOutlined />}
-        size="large"
-        onClick={handleRestoreVisibilityClicked}
-      />
-      <Button
-        type="default"
-        icon={<SyncOutlined />}
-        size="large"
-        onClick={handleRotateClicked}
-      />
-    </Space>
+    <section className="viewer-tools">
+      <Space className="viewer-tools__buttons">
+        <Button
+          type="default"
+          icon={<EyeOutlined />}
+          size="large"
+          onClick={handleRestoreVisibilityClicked}
+        />
+        <Button
+          type="default"
+          icon={<SyncOutlined />}
+          size="large"
+          onClick={handleRotateClicked}
+        />
+      </Space>
+      {store.isAnimationPlaying ? <ModelViewerSlider /> : null}
+    </section>
   );
 };
 
