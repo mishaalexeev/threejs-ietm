@@ -32,6 +32,7 @@ export default class ModelStore {
   };
   @observable modelReady = false;
   @observable isAnimationPlaying = false;
+  @observable isAnimationActive = false;
   @observable time = 0;
   @action setTime() {
     this.time = this.mixer.time;
@@ -145,6 +146,7 @@ export default class ModelStore {
 
   @action startAnimation() {
     this.isAnimationPlaying = true;
+    this.isAnimationActive = true;
     const appActions: THREE.AnimationAction[] = appendActions(
       this.viewerData.scene,
       this.mixer
@@ -264,6 +266,7 @@ export default class ModelStore {
       onWindowResize: action,
       changeCamera: action,
       currentStep: observable,
+      isAnimationActive: observable,
     });
   }
 }

@@ -20,6 +20,10 @@ const ModelViewerSlider: FC<Props> = ({ stores }) => {
   const store: ModelStore = stores.modelStore;
   const [paused, setPaused] = useState(false);
 
+  useEffect(() => {
+    stores.modelStore.isAnimationPlaying = !paused;
+  }, [paused]);
+
   const changeToFreeCamera = () => {
     const manualFreeCam = stores.modelStore.viewerData.scene.getObjectByName(
       "ManualFreeCamera"
