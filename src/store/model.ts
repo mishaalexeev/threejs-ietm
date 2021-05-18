@@ -36,6 +36,7 @@ export default class ModelStore {
   @action setTime() {
     this.time = this.mixer.time;
   }
+  @observable currentStep = 0;
 
   @observable highlightData: HighlightData = {
     pickableObjects: null,
@@ -48,7 +49,7 @@ export default class ModelStore {
   // anim
   @observable mixer: THREE.Mixer | null = null;
 
-  @observable modelName = "/models/gearboxDissassemblingSlowly_unfinished.glb";
+  @observable modelName = "/models/gearboxDissassemblingSlowly_unfinished2.glb";
 
   @observable actions: Array<any> = [];
 
@@ -144,11 +145,11 @@ export default class ModelStore {
 
   @action startAnimation() {
     this.isAnimationPlaying = true;
-    // const appActions: THREE.AnimationAction[] = appendActions(
-    //   this.viewerData.scene,
-    //   this.mixer
-    // );
-    // this.actions.push(...appActions);
+    const appActions: THREE.AnimationAction[] = appendActions(
+      this.viewerData.scene,
+      this.mixer
+    );
+    this.actions.push(...appActions);
 
     this.viewerData.camera = this.viewerData.scene.getObjectByName(
       "ManualCamera_Orientation"
@@ -262,6 +263,7 @@ export default class ModelStore {
       isAnimationPlaying: observable,
       onWindowResize: action,
       changeCamera: action,
+      currentStep: observable,
     });
   }
 }

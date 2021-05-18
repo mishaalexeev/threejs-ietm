@@ -5,8 +5,14 @@ import ModelViewer from "components/model-viewer";
 import Menu from "./components/menu";
 import Info from "./components/info";
 import { FC } from "react";
+import withStores from "hocs/withStores";
+import { RootStore } from "store";
+import StepView from "components/step-view/step-view";
 
-const App: FC = () => (
+type Props = {
+  stores: RootStore;
+};
+const App: FC<Props> = ({ stores }) => (
   <div className="App">
     <div className="menu">
       <Menu />
@@ -16,10 +22,10 @@ const App: FC = () => (
         <ModelViewer />
       </Col>
       <Col span={7} id="info">
-        <Info />
+        {stores.modelStore.isAnimationPlaying ? <StepView /> : <Info />}
       </Col>
     </Row>
   </div>
 );
 
-export default App;
+export default withStores(App);

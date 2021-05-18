@@ -26,7 +26,7 @@ function isolateParts(root, partsNames) {
 function appendActions(scene, mixer) {
   const anims = [
     {
-      name: ["Крышка_промежуточная_верхняя"],
+      name: ["Верхняя_часть_корпуса"],
       visible: {
         times: [0, 2, 999],
         values: [1, 0, 0],
@@ -50,6 +50,7 @@ function appendActions(scene, mixer) {
   ];
 
   anims.forEach((a) => {
+    console.log(scene);
     a.name.forEach((objName) => {
       scene
         .getObjectByName("Редуктор")
@@ -107,6 +108,7 @@ function appendActions(scene, mixer) {
   const helper = new THREE.Object3D();
   helper.name = "__StepHelper";
   scene.add(helper);
+
   const vals = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 
   const track = new THREE.NumberKeyframeTrack(".x", times, vals);

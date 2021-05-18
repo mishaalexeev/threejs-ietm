@@ -1,0 +1,39 @@
+.current {
+    background: #ffeaa7;
+}
+
+.current > .step-number {
+    background: #fdcb6e;
+}
+
+.step,
+.current {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+    scroll-margin-top: 10px;
+    scroll-snap-margin-top: 10px;
+    padding: 16px;
+    border-radius: 4px;
+}
+
+.step-number {
+    display: inline-block;
+    width     : 42px;
+
+    text-align: center;
+    background: #dfe6e9;
+    border-radius: 4px;
+}
+
+.step-content {
+    position: relative;
+
+    display: inline-block;
+    margin-left: 32px;
+    width: 80%;
+}
+.step-menu{
+    overflow: scroll;
+    height: 100vh;
+}

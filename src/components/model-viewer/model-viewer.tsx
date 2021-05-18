@@ -65,8 +65,13 @@ class ModelViewer extends Component<Props, State> {
     const animate = () => {
       requestAnimationFrame(animate);
       viewerData.controls.update();
-      if (!this.state.isLoading)
-        this.props.stores.modelStore.mixer.update(clock.getDelta());
+      const { modelStore: store } = this.props.stores;
+      if (store.isAnimationPlaying) {
+        store.currentStep = store.viewerData.scene.getObjectByName(
+          "__StepHelper"
+        ).position.x;
+      }
+      if (!this.state.isLoading) store.mixer.update(clock.getDelta());
       this.store.setTime();
       render();
     };
