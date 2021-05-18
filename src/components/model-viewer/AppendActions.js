@@ -24,26 +24,39 @@ function isolateParts(root, partsNames) {
 }
 
 function appendActions(scene, mixer) {
+  const infinity = 999999999999999;
   const anims = [
     {
-      name: ["Верхняя_часть_корпуса"],
+      name: ["Пробка"],
       visible: {
-        times: [0, 2, 999],
+        times: [0, 6, infinity],
         values: [1, 0, 0],
       },
       transparent: {
-        times: [0, 2, 999],
-        values: [false, true, true],
+        times: [0, 4, 6, infinity],
+        values: [false, true, true, true],
       },
-      highlight: {
-        times: [2, 2.5, 3, 3.5, 4],
-        values: [
-          null,
-          new THREE.Color("#ff0202"),
-          null,
-          new THREE.Color("#f80606"),
-          null,
-        ],
+      // highlight: {
+      //   times: [2, 2.5, 3, 3.5, 4],
+      //   values: [
+      //     null,
+      //     new THREE.Color("#ff0202"),
+      //     null,
+      //     new THREE.Color("#f80606"),
+      //     null,
+      //   ],
+      // },
+      actions: [],
+    },
+    {
+      name: ["Прокладка"],
+      visible: {
+        times: [6, 10, infinity],
+        values: [1, 0, 0],
+      },
+      transparent: {
+        times: [6, 8, 10, infinity],
+        values: [false, true, true, true],
       },
       actions: [],
     },

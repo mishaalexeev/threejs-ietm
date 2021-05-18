@@ -19,7 +19,7 @@ const Info: FC<Props> = ({ stores }) => {
   const name =
     Object.keys(stores.modelStore.selectedPart).length === 0
       ? "Объект не выбран"
-      : stores.modelStore.selectedPart.userData.name;
+      : stores.modelStore.selectedPart.name;
 
   let jsx: JSX.Element | null = null;
   if (partData[name]) {
