@@ -49,7 +49,7 @@ export default class ModelStore {
   // anim
   @observable mixer: THREE.Mixer | null = null;
 
-  @observable modelName = "/models/gearboxDissassemblingSlowly_unfinished2.glb";
+  @observable modelName = "/models/gearboxDissassemblingSlowlyLAST.glb";
 
   @observable actions: Array<any> = [];
 
