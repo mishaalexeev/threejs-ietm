@@ -45,7 +45,7 @@ const ModelViewerTools: FC<Props> = ({ stores }) => {
           onClick={handleRotateClicked}
         />
       </Space>
-      {store.isAnimationPlaying ? <ModelViewerSlider /> : null}
+      {store.isAnimationActive ? <ModelViewerSlider /> : null}
     </section>
   );
 };

@@ -22,7 +22,7 @@ const App: FC<Props> = ({ stores }) => (
         <ModelViewer />
       </Col>
       <Col span={7} id="info">
-        {stores.modelStore.isAnimationPlaying ? <StepView /> : <Info />}
+        {stores.modelStore.isAnimationActive ? <StepView /> : <Info />}
       </Col>
     </Row>
   </div>

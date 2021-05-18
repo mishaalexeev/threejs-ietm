@@ -66,7 +66,7 @@ class ModelViewer extends Component<Props, State> {
       requestAnimationFrame(animate);
       viewerData.controls.update();
       const { modelStore: store } = this.props.stores;
-      if (store.isAnimationPlaying) {
+      if (store.isAnimationActive) {
         store.currentStep = store.viewerData.scene.getObjectByName(
           "__StepHelper"
         ).position.x;
@@ -204,6 +204,9 @@ class ModelViewer extends Component<Props, State> {
   };
 
   onMouseMove = (event) => {
+    if (this.props.stores.modelStore.isAnimationPlaying) {
+      return;
+    }
     const { selectedPart, highlightData, intersectedObject } = this.store;
     const { pickableObjects } = highlightData;
 
