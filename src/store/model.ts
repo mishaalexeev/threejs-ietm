@@ -48,7 +48,7 @@ export default class ModelStore {
   // anim
   @observable mixer: THREE.Mixer | null = null;
 
-  @observable modelName = "/models/gearboxAnimatedCamera8.glb";
+  @observable modelName = "/models/gearboxDissassemblingSlowly_unfinished.glb";
 
   @observable actions: Array<any> = [];
 
@@ -144,12 +144,11 @@ export default class ModelStore {
 
   @action startAnimation() {
     this.isAnimationPlaying = true;
-
-    const appActions: THREE.AnimationAction[] = appendActions(
-      this.viewerData.scene,
-      this.mixer
-    );
-    this.actions.push(...appActions);
+    // const appActions: THREE.AnimationAction[] = appendActions(
+    //   this.viewerData.scene,
+    //   this.mixer
+    // );
+    // this.actions.push(...appActions);
 
     this.viewerData.camera = this.viewerData.scene.getObjectByName(
       "ManualCamera_Orientation"
@@ -158,6 +157,7 @@ export default class ModelStore {
     this.actions.forEach((a: THREE.AnimationAction) => {
       a.play();
     });
+    this.onWindowResize();
   }
 
   @action highlightPart = (part: THREE.Mesh) => {
@@ -223,6 +223,24 @@ export default class ModelStore {
       this.selectedPart = null;
     }
   }
+  @action onWindowResize() {
+    const right = document.getElementById("info")?.offsetWidth;
+    if (!right) {
+      return;
+    }
+
+    this.viewerData.camera.aspect =
+      (window.innerWidth - right) / window.innerHeight;
+    this.viewerData.camera.updateProjectionMatrix();
+    this.viewerData.renderer.setSize(
+      window.innerWidth - right,
+      window.innerHeight
+    );
+  }
+
+  @action changeCamera(camera: THREE.PerspectiveCamera) {
+    this.viewerData.camera = camera;
+  }
 
   constructor(rootStore) {
     this.rootStore = rootStore;
@@ -242,6 +260,8 @@ export default class ModelStore {
       time: observable,
       setTime: action,
       isAnimationPlaying: observable,
+      onWindowResize: action,
+      changeCamera: action,
     });
   }
 }

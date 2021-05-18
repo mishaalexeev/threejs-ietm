@@ -54,18 +54,7 @@ class ModelViewer extends Component<Props, State> {
 
     // Добавление слушателя на изменения размера окна для изменения aspect камеры и размеров viewer.
     const onWindowResize = () => {
-      const right = document.getElementById("info")?.offsetWidth;
-      if (!right) {
-        return;
-      }
-
-      viewerData.camera.aspect =
-        (window.innerWidth - right) / window.innerHeight;
-      viewerData.camera.updateProjectionMatrix();
-      viewerData.renderer.setSize(
-        window.innerWidth - right,
-        window.innerHeight
-      );
+      this.store.onWindowResize();
       render();
     };
     window.addEventListener("resize", onWindowResize, false);
@@ -149,6 +138,18 @@ class ModelViewer extends Component<Props, State> {
           this.props.stores.modelStore.mixer = new THREE.AnimationMixer(
             gltf.scene
           );
+          //FreeCam
+          const manualCameraObj = scene.getObjectByName("ManualCamera");
+          const manualCamera = manualCameraObj.getObjectByName(
+            "ManualCamera_Orientation"
+          );
+
+          const manualFreeCamera = manualCamera.clone();
+          manualFreeCamera.name = "ManualFreeCamera";
+          manualFreeCamera.position.copy(manualCameraObj.position.clone());
+          manualFreeCamera.rotation.copy(manualCameraObj.rotation.clone());
+          manualFreeCamera.quaternion.copy(manualCameraObj.quaternion.clone());
+          scene.add(manualFreeCamera);
 
           let totalDuration = 0;
           const clips = gltf.animations;

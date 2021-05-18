@@ -52,7 +52,7 @@ function appendActions(scene, mixer) {
   anims.forEach((a) => {
     a.name.forEach((objName) => {
       scene
-        .getObjectByName("gearboxFusion")
+        .getObjectByName("Редуктор")
         .getObjectByName(objName)
         .traverse((n) => {
           if (n.type === "Mesh" || n.type === "LineSegments") {

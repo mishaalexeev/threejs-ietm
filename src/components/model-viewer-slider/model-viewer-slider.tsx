@@ -20,34 +20,70 @@ const ModelViewerSlider: FC<Props> = ({ stores }) => {
   const store: ModelStore = stores.modelStore;
   const [paused, setPaused] = useState(false);
 
-  const handleMixerPause = () => {
+  const changeToFreeCamera = () => {
+    const manualFreeCam = stores.modelStore.viewerData.scene.getObjectByName(
+      "ManualFreeCamera"
+    );
+    const manualCam = stores.modelStore.viewerData.scene.getObjectByName(
+      "ManualCamera"
+    );
+
+    manualFreeCam.position.copy(manualCam.position.clone());
+    manualFreeCam.rotation.copy(manualCam.rotation.clone());
+    manualFreeCam.quaternion.copy(manualCam.quaternion.clone());
+    manualFreeCam.scale.copy(manualCam.scale.clone());
+    stores.modelStore.viewerData.camera = manualFreeCam;
+
+    stores.modelStore.viewerData.controls.object = manualFreeCam;
+    stores.modelStore.viewerData.controls.target.copy(
+      stores.modelStore.viewerData.scene
+        .getObjectByName("TrackTo")
+        .position.clone()
+    );
+    stores.modelStore.mixer.update(1 / 60);
+    stores.modelStore.onWindowResize();
+  };
+  const pauseMixer = () => {
     stores.modelStore.mixer.timeScale = 0;
     setPaused(true);
   };
-
-  const handleMixerPlay = () => {
+  const playMixer = () => {
     stores.modelStore.mixer.timeScale = 1;
     setPaused(false);
   };
+  const handleMixerPauseBtnClicked = () => {
+    pauseMixer();
+    changeToFreeCamera();
+  };
+
+  const handleMixerPlayBtnClicked = () => {
+    playMixer();
+    const { modelStore: store } = stores;
+    const manualCam = store.viewerData.scene.getObjectByName(
+      "ManualCamera_Orientation"
+    );
+    store.onWindowResize();
+    store.changeCamera(manualCam);
+  };
   const handleSliderChange = (value: number) => {
     const { timeScale } = stores.modelStore.mixer;
-    if (timeScale === 0) handleMixerPlay();
+    if (timeScale === 0) playMixer();
     stores.modelStore.mixer.setTime(value);
-    if (timeScale === 0) handleMixerPause();
+    if (timeScale === 0) pauseMixer();
   };
 
   return (
     <Space>
       {paused ? (
         <Button
-          onClick={handleMixerPlay}
+          onClick={handleMixerPlayBtnClicked}
           type="primary"
           shape="circle"
           icon={<PlayButton />}
         />
       ) : (
         <Button
-          onClick={handleMixerPause}
+          onClick={handleMixerPauseBtnClicked}
           type="primary"
           shape="circle"
           icon={<PauseButton />}
