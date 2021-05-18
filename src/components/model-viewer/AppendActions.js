@@ -60,6 +60,114 @@ function appendActions(scene, mixer) {
       },
       actions: [],
     },
+    {
+      name: ["Щуп"],
+      visible: {
+        times: [10, 20, infinity],
+        values: [1, 0, 0],
+      },
+      transparent: {
+        times: [14, 18, 20, infinity],
+        values: [false, true, true, true],
+      },
+      actions: [],
+    },
+    {
+      name: ["Винт_M3x0,5x6__"],
+      visible: {
+        times: [20, 27, infinity],
+        values: [1, 0, 0],
+      },
+      transparent: {
+        times: [20, 25, 27, infinity],
+        values: [false, true, true, true],
+      },
+      actions: [],
+    },
+    {
+      name: ["Винт_M3x0,5x6005"],
+      visible: {
+        times: [20, 27, infinity],
+        values: [1, 0, 0],
+      },
+      transparent: {
+        times: [20, 25, 27, infinity],
+        values: [false, true, true, true],
+      },
+      actions: [],
+    },
+    {
+      name: ["Винт_M3x0,5x6____"],
+      visible: {
+        times: [20, 27, infinity],
+        values: [1, 0, 0],
+      },
+      transparent: {
+        times: [20, 25, 27, infinity],
+        values: [false, true, true, true],
+      },
+      actions: [],
+    },
+    {
+      name: ["Винт_M3x0,5x6_001"],
+      visible: {
+        times: [20, 27, infinity],
+        values: [1, 0, 0],
+      },
+      transparent: {
+        times: [20, 25, 27, infinity],
+        values: [false, true, true, true],
+      },
+      actions: [],
+    },
+    {
+      name: ["Крышка_щупа"],
+      visible: {
+        times: [27, 31, infinity],
+        values: [1, 0, 0],
+      },
+      transparent: {
+        times: [27, 29, 31, infinity],
+        values: [false, true, true, true],
+      },
+      actions: [],
+    },
+    {
+      name: ["Прокладка__"],
+      visible: {
+        times: [31, 36, infinity],
+        values: [1, 0, 0],
+      },
+      transparent: {
+        times: [31, 34, 36, infinity],
+        values: [false, true, true, true],
+      },
+      actions: [],
+    },
+    {
+      name: ["Отдушина"],
+      visible: {
+        times: [38, 43, infinity],
+        values: [1, 0, 0],
+      },
+      transparent: {
+        times: [38, 41, 43, infinity],
+        values: [false, true, true, true],
+      },
+      actions: [],
+    },
+    {
+      name: ["Люк"],
+      visible: {
+        times: [50, 56, infinity],
+        values: [1, 0, 0],
+      },
+      transparent: {
+        times: [50, 54, 56, infinity],
+        values: [false, true, true, true],
+      },
+      actions: [],
+    },
   ];
 
   anims.forEach((a) => {
