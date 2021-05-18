@@ -1,0 +1,11 @@
+.tree-view{
+    background-color: transparent !important;
+}
+
+.tree-view .ant-tree-switcher{
+    background-color: transparent !important;
+}
+
+.tree-view .ant-tree-treenode{
+    pointer-events: auto;
+}
