@@ -31,7 +31,18 @@ const MenuMain: FC<Props> = ({ stores }) => {
         });
         break;
       default:
-        stores.modelStore.setSelectedPartById(+key);
+        const { modelStore: store } = stores;
+        if (store.isAnimationActive) {
+          store.isAnimationActive = false;
+          store.isAnimationPlaying = false;
+          store.mixer.stopAllAction();
+          const mainCam = store.viewerData.scene.getObjectByName(
+            "MainFreePerspectiveCamera"
+          );
+          store.onWindowResize();
+          store.changeCamera(mainCam);
+        }
+        store.setSelectedPartById(+key);
         break;
     }
   };

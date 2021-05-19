@@ -183,9 +183,9 @@ export default class ModelStore {
   };
 
   @action setSelectedPartById = (id: number) => {
-    const selectedPart = this.viewerData.scene.children[5].children[0].getObjectById(
-      id
-    );
+    const selectedPart = this.viewerData.scene
+      .getObjectByName("Редуктор")
+      .getObjectById(id);
     if (selectedPart) {
       this.selectedPart = selectedPart;
       this.highlightPart(this.selectedPart);

@@ -98,7 +98,10 @@ class ModelViewer extends Component<Props, State> {
     scene.add(ambient, keyLight, fillLight, backLight);
 
     // scene.position.set(100, 50, 80);
-    camera.position.set(180, 50, 100);
+
+    camera.translateZ(350);
+    camera.translateX(300);
+    camera.translateY(200);
 
     scene.add(camera);
     renderer.outputEncoding = THREE.sRGBEncoding;
