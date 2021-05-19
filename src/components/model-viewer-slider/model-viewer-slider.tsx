@@ -103,8 +103,10 @@ const ModelViewerSlider: FC<Props> = ({ stores }) => {
         max={store.mixer._actions[0]._clip.duration}
       />
       <div className="viewer-tools__time">
-        {millisToMinutesAndSeconds(+store.time * 1000)} /
-        {store.mixer._actions[0]._clip.duration}
+        {millisToMinutesAndSeconds((+store.time * 1000) / 2)} /
+        {millisToMinutesAndSeconds(
+          (store.mixer._actions[0]._clip.duration * 1000) / 2
+        )}
       </div>
     </Space>
   );

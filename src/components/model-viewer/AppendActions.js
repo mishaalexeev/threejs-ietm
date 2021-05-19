@@ -842,18 +842,64 @@ function appendActions(scene, mixer) {
     });
   });
 
-  const times = [0, 8, 16, 24, 32, 40, 48, 56, 64, 70, 88, 92, 116, 140, 164];
+  const times = [
+    0,
+    10,
+    38,
+    56,
+    77,
+    83,
+    87,
+    95,
+    98,
+    111,
+    135,
+    143,
+    148,
+    154,
+    161,
+    164,
+    180,
+    200,
+    210,
+    216,
+    221,
+    228,
+  ];
   const helper = new THREE.Object3D();
   helper.name = "__StepHelper";
   scene.add(helper);
 
-  const vals = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+  const vals = [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+  ];
 
   const track = new THREE.NumberKeyframeTrack(".x", times, vals);
   track.interpolation = THREE.InterpolateDiscrete;
 
   const clip = new THREE.AnimationClip(null, -1, [track]);
-  clip.duration = 200;
+  clip.duration = 228;
 
   const a = mixer.clipAction(clip, helper.position);
 
