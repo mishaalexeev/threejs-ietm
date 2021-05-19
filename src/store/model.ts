@@ -37,6 +37,11 @@ export default class ModelStore {
   @action setTime() {
     this.time = this.mixer.time;
   }
+  @action setCurrentStep() {
+    this.currentStep = this.viewerData.scene.getObjectByName(
+      "__StepHelper"
+    ).position.x;
+  }
   @observable currentStep = 0;
 
   @observable highlightData: HighlightData = {
@@ -76,7 +81,7 @@ export default class ModelStore {
             clip.optimize(),
             this.viewerData.scene
           );
-          action.loop = THREE.LoopOnce;
+          // action.loop = THREE.LoopOnce;
           this.actions.push(action);
           if (clips.length === 1) {
             this.mixer.addEventListener("finished", (e) => {
@@ -267,6 +272,7 @@ export default class ModelStore {
       changeCamera: action,
       currentStep: observable,
       isAnimationActive: observable,
+      setCurrentStep: action,
     });
   }
 }

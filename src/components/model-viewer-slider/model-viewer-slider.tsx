@@ -75,6 +75,13 @@ const ModelViewerSlider: FC<Props> = ({ stores }) => {
     stores.modelStore.mixer.setTime(value);
     if (timeScale === 0) pauseMixer();
   };
+  const currentTime = millisToMinutesAndSeconds(+store.time * 1000);
+  const allTime = millisToMinutesAndSeconds(
+    store.mixer._actions[0]._clip.duration * 1000
+  );
+  if (+store.time >= +store.mixer._actions[0]._clip.duration) {
+    stores.modelStore.mixer.setTime(0);
+  }
 
   return (
     <Space>
@@ -103,10 +110,7 @@ const ModelViewerSlider: FC<Props> = ({ stores }) => {
         max={store.mixer._actions[0]._clip.duration}
       />
       <div className="viewer-tools__time">
-        {millisToMinutesAndSeconds((+store.time * 1000) / 2)} /
-        {millisToMinutesAndSeconds(
-          (store.mixer._actions[0]._clip.duration * 1000) / 2
-        )}
+        {currentTime} /{allTime}
       </div>
     </Space>
   );

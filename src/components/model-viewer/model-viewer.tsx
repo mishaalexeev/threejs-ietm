@@ -67,9 +67,7 @@ class ModelViewer extends Component<Props, State> {
       viewerData.controls.update();
       const { modelStore: store } = this.props.stores;
       if (store.isAnimationActive) {
-        store.currentStep = store.viewerData.scene.getObjectByName(
-          "__StepHelper"
-        ).position.x;
+        store.setCurrentStep();
       }
       if (!this.state.isLoading) store.mixer.update(clock.getDelta());
       this.store.setTime();
@@ -164,7 +162,7 @@ class ModelViewer extends Component<Props, State> {
               clip.optimize(),
               this.store.viewerData.scene
             );
-            action.loop = THREE.LoopOnce;
+            // action.loop = THREE.LoopRepeat;
             this.store.actions.push(action);
             if (clips.length === 1) {
               this.store.mixer.addEventListener("finished", (e) => {
@@ -204,7 +202,7 @@ class ModelViewer extends Component<Props, State> {
   };
 
   onMouseMove = (event) => {
-    if (this.props.stores.modelStore.isAnimationPlaying) {
+    if (this.props.stores.modelStore.isAnimationActive) {
       return;
     }
     const { selectedPart, highlightData, intersectedObject } = this.store;

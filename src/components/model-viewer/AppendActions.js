@@ -788,7 +788,6 @@ function appendActions(scene, mixer) {
   ];
 
   anims.forEach((a) => {
-    console.log(scene);
     a.name.forEach((objName) => {
       scene
         .getObjectByName("Редуктор")
@@ -835,7 +834,6 @@ function appendActions(scene, mixer) {
 
             // clip.duration = 200;
             const action = mixer.clipAction(clip, n.material);
-            action.loop = THREE.LoopOnce;
             a.actions.push(action);
           }
         });
