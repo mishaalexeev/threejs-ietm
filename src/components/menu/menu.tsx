@@ -42,6 +42,10 @@ const MenuMain: FC<Props> = ({ stores }) => {
           store.onWindowResize();
           store.changeCamera(mainCam);
         }
+        if (store.selectedPart) {
+          store.selectedPart = null;
+        }
+        store.infoKey = key as string;
         store.setSelectedPartById(+key);
         break;
     }
