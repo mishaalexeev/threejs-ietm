@@ -52,7 +52,7 @@ const ModelViewerSlider: FC<Props> = ({ stores }) => {
     setPaused(true);
   };
   const playMixer = () => {
-    stores.modelStore.mixer.timeScale = 2;
+    stores.modelStore.mixer.timeScale = 1;
     setPaused(false);
   };
   const handleMixerPauseBtnClicked = () => {
@@ -71,15 +71,15 @@ const ModelViewerSlider: FC<Props> = ({ stores }) => {
   };
   const handleSliderChange = (value: number) => {
     const { timeScale } = stores.modelStore.mixer;
-    if (timeScale === 0) playMixer();
+    if (timeScale === 0) handleMixerPlayBtnClicked();
     stores.modelStore.mixer.setTime(value);
-    if (timeScale === 0) pauseMixer();
+    if (timeScale === 0) handleMixerPauseBtnClicked();
   };
   const currentTime = millisToMinutesAndSeconds(+store.time * 1000);
   const allTime = millisToMinutesAndSeconds(
     store.mixer._actions[0]._clip.duration * 1000
   );
-  if (+store.time >= +store.mixer._actions[0]._clip.duration) {
+  if (+store.time >= +store.mixer._actions[0]._clip.duration + 0.5) {
     stores.modelStore.mixer.setTime(0);
   }
 
