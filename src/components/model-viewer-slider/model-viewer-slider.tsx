@@ -52,7 +52,7 @@ const ModelViewerSlider: FC<Props> = ({ stores }) => {
     setPaused(true);
   };
   const playMixer = () => {
-    stores.modelStore.mixer.timeScale = 1;
+    stores.modelStore.mixer.timeScale = 2;
     setPaused(false);
   };
   const handleMixerPauseBtnClicked = () => {
