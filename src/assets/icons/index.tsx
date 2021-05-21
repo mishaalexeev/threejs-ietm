@@ -15,6 +15,8 @@ import Icon from "@ant-design/icons";
 import Recycle from "assets/icons/components/recycle";
 import Alert from "assets/icons/components/alert";
 import Shaft from "assets/icons/components/shaft";
+
+import Stop from "assets/icons/components/stop";
 import React, { FC } from "react";
 
 const DefaultProps = {
@@ -66,6 +68,14 @@ const ShaftIcon: FC = (props) => (
   <Icon component={Shaft} {...DefaultProps} {...props} />
 );
 
+const StopIcon: FC = (props) => (
+  <Icon
+    style={{ color: "green" }}
+    component={Stop}
+    {...DefaultProps}
+    {...props}
+  />
+);
 export {
   Cube3DIcon,
   GearsIcon,
@@ -81,4 +91,5 @@ export {
   AlertIcon,
   Wrench2Icon,
   ShaftIcon,
+  StopIcon,
 };

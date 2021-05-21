@@ -3,9 +3,11 @@ import { Button, Slider, Space } from "antd";
 import {
   PauseOutlined as PauseButton,
   CaretRightOutlined as PlayButton,
+  BorderOutlined,
 } from "@ant-design/icons";
 import { RootStore, ModelStore } from "store";
 import withStores from "hocs/withStores";
+import { StopIcon } from "assets/icons";
 
 function millisToMinutesAndSeconds(ms) {
   const mins = ~~(((ms / 1000) % 3600) / 60);
@@ -100,6 +102,13 @@ const ModelViewerSlider: FC<Props> = ({ stores }) => {
           icon={<PauseButton />}
         />
       )}
+      <Button
+        onClick={handleMixerPauseBtnClicked}
+        type="primary"
+        danger
+        shape="circle"
+        icon={<StopIcon />}
+      />
       <Slider
         value={store.time}
         className="viewer-tools__slider"

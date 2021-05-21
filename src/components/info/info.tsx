@@ -16,16 +16,18 @@ const Info: FC<Props> = ({ stores }) => {
     return null;
   }
 
-  const name =
-    Object.keys(stores.modelStore.selectedPart).length === 0
-      ? "Объект не выбран"
-      : stores.modelStore.selectedPart.name;
+  let name;
+  if (stores.modelStore.selectedPart) {
+    name =
+      Object.keys(stores.modelStore.selectedPart).length === 0
+        ? "Объект не выбран"
+        : stores.modelStore.selectedPart.name;
+  }
 
   const { jsx, title } = partData[stores.modelStore.infoKey] || {
     jsx: "Nothing",
     title: "Nothing",
   };
-  console.log(stores.modelStore.infoKey);
   return (
     <Typography>
       {name}
