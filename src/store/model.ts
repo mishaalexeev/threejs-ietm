@@ -3,7 +3,7 @@ import * as THREE from "three";
 import { Scene } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { RootStore } from "store/index";
-import appendActions from "components/model-viewer/AppendActions";
+import { getAppendActions } from "animations";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 type ViewerData = {
@@ -85,7 +85,7 @@ export default class ModelStore {
           );
           this.actions.push(action);
         });
-        res(clips);
+        res(modelPath);
       });
     });
   }
@@ -144,11 +144,15 @@ export default class ModelStore {
     this.mixer = new THREE.AnimationMixer();
   }
 
-  @action startAnimation() {
+  @action startAnimation(animationName) {
     if (!this.isAnimationActive) {
       this.isAnimationPlaying = true;
       this.isAnimationActive = true;
     }
+
+    const appendActions = getAppendActions(animationName);
+    if (!appendActions) return;
+
     const appActions: THREE.AnimationAction[] = appendActions(
       this.viewerData.scene,
       this.mixer
