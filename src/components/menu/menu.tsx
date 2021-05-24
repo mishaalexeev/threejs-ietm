@@ -25,7 +25,7 @@ const MenuMain: FC<Props> = ({ stores }) => {
         stores.modelStore.startAnimation();
         break;
       case "Необычные неравномерные шумы при работе":
-        const modelName = "/models/gearboxAnimationTest2.glb";
+        const modelName = "/models/gearboxOilchange.glb";
         stores.modelStore.loadAnimation(modelName).then(() => {
           stores.modelStore.startAnimation();
         });
@@ -45,6 +45,7 @@ const MenuMain: FC<Props> = ({ stores }) => {
         if (store.selectedPart) {
           store.selectedPart = null;
         }
+
         store.infoKey = key as string;
         store.setSelectedPartById(+key);
         break;

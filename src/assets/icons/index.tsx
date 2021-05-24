@@ -17,6 +17,7 @@ import Alert from "assets/icons/components/alert";
 import Shaft from "assets/icons/components/shaft";
 
 import Stop from "assets/icons/components/stop";
+import Dovel from "assets/icons/components/dovel";
 import React, { FC } from "react";
 
 const DefaultProps = {
@@ -67,6 +68,9 @@ const Wrench2Icon: FC = (props) => (
 const ShaftIcon: FC = (props) => (
   <Icon component={Shaft} {...DefaultProps} {...props} />
 );
+const DovelIcon: FC = (props) => (
+  <Icon component={Dovel} {...DefaultProps} {...props} />
+);
 
 const StopIcon: FC = (props) => (
   <Icon
@@ -92,4 +96,5 @@ export {
   Wrench2Icon,
   ShaftIcon,
   StopIcon,
+  DovelIcon,
 };

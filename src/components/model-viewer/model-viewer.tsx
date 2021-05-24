@@ -260,6 +260,8 @@ class ModelViewer extends Component<Props, State> {
     pickableObjects?.forEach((o) => {
       if (selectedPart && intersectedObject.name === o.name) {
         if (pickableObjects) {
+          this.store.infoKey = o.name;
+          console.log(o.name);
           o.material = new THREE.MeshBasicMaterial();
           o.material.transparent = true;
           o.material.opacity = 0.9;

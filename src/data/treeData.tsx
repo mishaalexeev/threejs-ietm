@@ -15,6 +15,7 @@ import {
   AlertIcon,
   Wrench2Icon,
   ShaftIcon,
+  DovelIcon,
 } from "assets/icons";
 
 type TreeItem = {
@@ -43,7 +44,7 @@ const treeData: TreeItem[] = [
             selectable: false,
             children: [
               {
-                key: 362,
+                key: 381,
                 title: "Верхняя часть корпуса",
                 switcherIcon: <Cube3DIcon />,
               },
@@ -53,7 +54,7 @@ const treeData: TreeItem[] = [
                 switcherIcon: <Cube3DIcon />,
               },
               {
-                key: 352,
+                key: 376,
                 title: "Средняя часть корпуса",
                 switcherIcon: <Cube3DIcon />,
               },
@@ -255,6 +256,7 @@ const treeData: TreeItem[] = [
       {
         key: "Разборка редуктора",
         title: "Разборка редуктора",
+        switcherIcon: <DovelIcon />,
       },
     ],
   },
