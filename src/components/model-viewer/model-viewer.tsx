@@ -167,20 +167,6 @@ class ModelViewer extends Component<Props, State> {
             );
             // action.loop = THREE.LoopRepeat;
             this.store.actions.push(action);
-            if (clips.length === 1) {
-              this.store.mixer.addEventListener("finished", (e) => {
-                if (e.action === action) {
-                  this.store.mixer.setTime(0.1);
-                  this.store.actions.forEach((a) => {
-                    a.reset();
-                    a.time = this.store.mixer.time;
-                    a.play();
-                  });
-                  this.store.mixer.timeScale = 1.0;
-                  this.store.mixer.update(0.00001);
-                }
-              });
-            }
           });
 
           this.props.stores.modelStore.viewerData.controls?.saveState();

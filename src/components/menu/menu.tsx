@@ -20,9 +20,13 @@ const MenuMain: FC<Props> = ({ stores }) => {
   const handleItemSelect = (selectedKeys: Key[]) => {
     if (selectedKeys.length > 1) throw new Error("Выбрано больше 1 элемента");
     const [key] = selectedKeys;
+
     switch (key) {
       case "Разборка редуктора":
-        stores.modelStore.startAnimation();
+        const model = "/models/gearboxDissassemblingSlowlyLAST.glb";
+        stores.modelStore.loadAnimation(model).then(() => {
+          stores.modelStore.startAnimation();
+        });
         break;
       case "Необычные неравномерные шумы при работе":
         const modelName = "/models/gearboxOilchange.glb";

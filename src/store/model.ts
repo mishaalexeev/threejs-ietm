@@ -72,6 +72,7 @@ export default class ModelStore {
     this.modelReady = true;
   }
   @action loadAnimation(modelPath: string) {
+    this.mixer.stopAllAction();
     const loader = new GLTFLoader();
     this.actions = [];
     return new Promise((res) => {
@@ -82,28 +83,21 @@ export default class ModelStore {
             clip.optimize(),
             this.viewerData.scene
           );
-          // action.loop = THREE.LoopOnce;
           this.actions.push(action);
-          if (clips.length === 1) {
-            this.mixer.addEventListener("finished", (e) => {
-              if (e.action === action) {
-                this.mixer.setTime(0.1);
-                this.actions.forEach((a) => {
-                  a.reset();
-                  a.time = this.mixer.time;
-                  a.play();
-                });
-                this.mixer.timeScale = 1.0;
-                this.mixer.update(0.00001);
-              }
-            });
-          }
         });
         res(clips);
       });
     });
   }
 
+  @action stopAnimations() {
+    this.isAnimationActive = false;
+    this.isAnimationPlaying = false;
+    this.mixer.stopAllAction();
+    this.viewerData.camera = this.viewerData.scene.getObjectByName(
+      "MainFreePerspectiveCamera"
+    );
+  }
   @action initializeViewer(window) {
     this.viewerData.scene = new THREE.Scene();
     this.viewerData.axesHelper = new THREE.AxesHelper(0);
@@ -151,8 +145,10 @@ export default class ModelStore {
   }
 
   @action startAnimation() {
-    this.isAnimationPlaying = true;
-    this.isAnimationActive = true;
+    if (!this.isAnimationActive) {
+      this.isAnimationPlaying = true;
+      this.isAnimationActive = true;
+    }
     const appActions: THREE.AnimationAction[] = appendActions(
       this.viewerData.scene,
       this.mixer
@@ -275,6 +271,7 @@ export default class ModelStore {
       isAnimationActive: observable,
       setCurrentStep: action,
       infoKey: observable,
+      stopAnimations: action,
     });
   }
 }

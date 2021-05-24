@@ -1,11 +1,10 @@
 import React, { FunctionComponent as FC, useEffect, useState } from "react";
 import { Button, Slider, Space } from "antd";
 import {
-  PauseOutlined as PauseButton,
   CaretRightOutlined as PlayButton,
-  BorderOutlined,
+  PauseOutlined as PauseButton,
 } from "@ant-design/icons";
-import { RootStore, ModelStore } from "store";
+import { ModelStore, RootStore } from "store";
 import withStores from "hocs/withStores";
 import { StopIcon } from "assets/icons";
 
@@ -57,9 +56,14 @@ const ModelViewerSlider: FC<Props> = ({ stores }) => {
     stores.modelStore.mixer.timeScale = 1;
     setPaused(false);
   };
+
   const handleMixerPauseBtnClicked = () => {
     pauseMixer();
     changeToFreeCamera();
+  };
+
+  const handleMixerFullStopBtnClicked = () => {
+    stores.modelStore.stopAnimations();
   };
 
   const handleMixerPlayBtnClicked = () => {
@@ -103,7 +107,7 @@ const ModelViewerSlider: FC<Props> = ({ stores }) => {
         />
       )}
       <Button
-        onClick={handleMixerPauseBtnClicked}
+        onClick={handleMixerFullStopBtnClicked}
         type="primary"
         danger
         shape="circle"
