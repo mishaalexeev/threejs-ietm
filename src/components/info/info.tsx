@@ -15,19 +15,23 @@ const Info: FC<Props> = ({ stores }) => {
   if (!stores.modelStore.modelReady) {
     return null;
   }
-  // @ts-ignore
-  const name =
-    Object.keys(stores.modelStore.selectedPart).length === 0
-      ? "Объект не выбран"
-      : stores.modelStore.selectedPart.name;
 
-  let jsx: JSX.Element | null = null;
-  if (partData[name]) {
-    jsx = partData[name].jsx;
+  let name;
+  if (stores.modelStore.selectedPart) {
+    name =
+      Object.keys(stores.modelStore.selectedPart).length === 0
+        ? "Объект не выбран"
+        : stores.modelStore.selectedPart.name;
   }
+
+  const { jsx, title } = partData[stores.modelStore.infoKey] || {
+    jsx: "Nothing",
+    title: "Nothing",
+  };
   return (
     <Typography>
-      <Title>{name}</Title>
+      {name}
+      <Title>{title}</Title>
       <Paragraph>{jsx}</Paragraph>
     </Typography>
   );

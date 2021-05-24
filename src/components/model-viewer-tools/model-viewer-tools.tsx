@@ -1,5 +1,5 @@
 import React, { FunctionComponent as FC } from "react";
-import { Button, Slider, Space } from "antd";
+import { Button, Slider, Space, Alert } from "antd";
 import { EyeOutlined, SyncOutlined } from "@ant-design/icons";
 import { RootStore, ModelStore } from "store";
 import withStores from "hocs/withStores";
@@ -31,20 +31,22 @@ const ModelViewerTools: FC<Props> = ({ stores }) => {
 
   return (
     <section className="viewer-tools">
-      <Space className="viewer-tools__buttons">
-        <Button
-          type="default"
-          icon={<EyeOutlined />}
-          size="large"
-          onClick={handleRestoreVisibilityClicked}
-        />
-        <Button
-          type="default"
-          icon={<SyncOutlined />}
-          size="large"
-          onClick={handleRotateClicked}
-        />
-      </Space>
+      {!store.isAnimationActive ? (
+        <Space className="viewer-tools__buttons">
+          <Button
+            type="default"
+            icon={<EyeOutlined />}
+            size="large"
+            onClick={handleRestoreVisibilityClicked}
+          />
+          <Button
+            type="default"
+            icon={<SyncOutlined />}
+            size="large"
+            onClick={handleRotateClicked}
+          />
+        </Space>
+      ) : null}
       {store.isAnimationActive ? <ModelViewerSlider /> : null}
     </section>
   );

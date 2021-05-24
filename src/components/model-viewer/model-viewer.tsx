@@ -244,11 +244,13 @@ class ModelViewer extends Component<Props, State> {
   };
 
   onModelClick = (event) => {
+    if (this.store.isAnimationActive) {
+      return;
+    }
     const { highlightData, intersectedObject, selectedPart } = this.store;
     const { pickableObjects } = highlightData;
 
     const intersects = this.store.getIntersects(event.clientX, event.clientY);
-    console.log(intersects);
     if (intersects.length < 1) {
       return;
     }
@@ -428,14 +430,16 @@ class ModelViewer extends Component<Props, State> {
             });
           }
 
-          this.store.viewerData.scene.children[5].children[0].traverse((n) => {
-            if (n.type === "Mesh" || n.type === "LineSegments") {
-              if (visibleObjects.indexOf(n) < 0) {
-                n.visible = false;
-                this.store.hiddenObjects.push(n);
+          this.store.viewerData.scene
+            .getObjectByName("Редуктор")
+            .traverse((n) => {
+              if (n.type === "Mesh" || n.type === "LineSegments") {
+                if (visibleObjects.indexOf(n) < 0) {
+                  n.visible = false;
+                  this.store.hiddenObjects.push(n);
+                }
               }
-            }
-          });
+            });
 
           visibleObjects.forEach((n) => {
             n.visible = true;

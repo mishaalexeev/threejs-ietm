@@ -34,6 +34,7 @@ export default class ModelStore {
   @observable isAnimationPlaying = false;
   @observable isAnimationActive = false;
   @observable time = 0;
+  @observable infoKey = "Назначение и описание";
   @action setTime() {
     this.time = this.mixer.time;
   }
@@ -106,9 +107,9 @@ export default class ModelStore {
   @action initializeViewer(window) {
     this.viewerData.scene = new THREE.Scene();
     this.viewerData.axesHelper = new THREE.AxesHelper(0);
-    const right = document.getElementById("info")?.clientWidth;
+    let right = document.getElementById("info")?.clientWidth;
     if (!right) {
-      return;
+      right = 0;
     }
 
     this.viewerData.camera = new THREE.PerspectiveCamera(
@@ -232,9 +233,9 @@ export default class ModelStore {
     }
   }
   @action onWindowResize() {
-    const right = document.getElementById("info")?.offsetWidth;
+    let right = document.getElementById("info")?.offsetWidth;
     if (!right) {
-      return;
+      right = 0;
     }
 
     this.viewerData.camera.aspect =
@@ -273,6 +274,7 @@ export default class ModelStore {
       currentStep: observable,
       isAnimationActive: observable,
       setCurrentStep: action,
+      infoKey: observable,
     });
   }
 }
