@@ -66,10 +66,7 @@ export default class ModelStore {
 
   @observable hiddenObjects: THREE.Mesh[] = [];
 
-  @observable layout = {
-    viewer: 17,
-    info: 7,
-  };
+  @observable isFullscreen = false;
 
   private rootStore: RootStore;
 
@@ -239,25 +236,21 @@ export default class ModelStore {
   }
 
   @action toggleFullscreen() {
-    const isFullscreen = this.layout.viewer === 24;
-    this.layout.viewer = isFullscreen ? 17 : 24;
-    this.layout.info = isFullscreen ? 7 : 0;
+    this.isFullscreen = !this.isFullscreen;
     this.onWindowResize();
   }
 
   @action onWindowResize() {
-    let right = (this.layout.info / 24) * window.innerWidth;
-    if (!right) {
-      right = 0;
+    let width = !this.isFullscreen
+      ? 0.7 * window.innerWidth
+      : window.innerWidth;
+    if (!width) {
+      width = 0;
     }
 
-    this.viewerData.camera.aspect =
-      (window.innerWidth - right) / window.innerHeight;
+    this.viewerData.camera.aspect = width / window.innerHeight;
     this.viewerData.camera.updateProjectionMatrix();
-    this.viewerData.renderer.setSize(
-      window.innerWidth - right,
-      window.innerHeight
-    );
+    this.viewerData.renderer.setSize(width, window.innerHeight);
   }
 
   @action changeCamera(camera: THREE.PerspectiveCamera) {
@@ -290,7 +283,7 @@ export default class ModelStore {
       infoKey: observable,
       stopAnimations: action,
       toggleFullscreen: action,
-      layout: observable,
+      isFullscreen: observable,
     });
   }
 }

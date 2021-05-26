@@ -5,7 +5,13 @@
   pointer-events: none;
   width: 35%;
 }
-
-.info-open {
-
+body{
+  overflow: hidden;
+}
+.content-section{
+  display: grid;
+  grid-template-columns: 70% 30%;
+}
+.content-section.fullscreen{
+  grid-template-columns: 100% 0;
 }

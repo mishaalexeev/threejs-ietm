@@ -14,20 +14,19 @@ type Props = {
 };
 const App: FC<Props> = ({ stores }) => {
   const { modelStore: store } = stores;
-  console.log(store.layout);
   return (
     <div className="App">
       <div className="menu">
         <Menu />
       </div>
-      <Row>
-        <Col span={store.layout.viewer} style={{ overflow: "hidden" }}>
+      <section
+        className={`content-section ${store.isFullscreen ? "fullscreen" : ""}`}
+      >
+        <div id="viewer">
           <ModelViewer />
-        </Col>
-        <Col span={store.layout.info} id="info">
-          {store.isAnimationActive ? <StepView /> : <Info />}
-        </Col>
-      </Row>
+        </div>
+        <div id="info">{store.isAnimationActive ? <StepView /> : <Info />}</div>
+      </section>
     </div>
   );
 };
