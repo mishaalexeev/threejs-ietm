@@ -66,6 +66,11 @@ export default class ModelStore {
 
   @observable hiddenObjects: THREE.Mesh[] = [];
 
+  @observable layout = {
+    viewer: 17,
+    info: 7,
+  };
+
   private rootStore: RootStore;
 
   @action setModelReady() {
@@ -232,8 +237,16 @@ export default class ModelStore {
       this.selectedPart = null;
     }
   }
+
+  @action toggleFullscreen() {
+    const isFullscreen = this.layout.viewer === 24;
+    this.layout.viewer = isFullscreen ? 17 : 24;
+    this.layout.info = isFullscreen ? 7 : 0;
+    this.onWindowResize();
+  }
+
   @action onWindowResize() {
-    let right = document.getElementById("info")?.offsetWidth;
+    let right = (this.layout.info / 24) * window.innerWidth;
     if (!right) {
       right = 0;
     }
@@ -276,6 +289,8 @@ export default class ModelStore {
       setCurrentStep: action,
       infoKey: observable,
       stopAnimations: action,
+      toggleFullscreen: action,
+      layout: observable,
     });
   }
 }

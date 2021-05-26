@@ -12,20 +12,24 @@ import StepView from "components/step-view/step-view";
 type Props = {
   stores: RootStore;
 };
-const App: FC<Props> = ({ stores }) => (
-  <div className="App">
-    <div className="menu">
-      <Menu />
+const App: FC<Props> = ({ stores }) => {
+  const { modelStore: store } = stores;
+  console.log(store.layout);
+  return (
+    <div className="App">
+      <div className="menu">
+        <Menu />
+      </div>
+      <Row>
+        <Col span={store.layout.viewer} style={{ overflow: "hidden" }}>
+          <ModelViewer />
+        </Col>
+        <Col span={store.layout.info} id="info">
+          {store.isAnimationActive ? <StepView /> : <Info />}
+        </Col>
+      </Row>
     </div>
-    <Row>
-      <Col span={17} style={{ overflow: "hidden" }}>
-        <ModelViewer />
-      </Col>
-      <Col span={7} id="info">
-        {stores.modelStore.isAnimationActive ? <StepView /> : <Info />}
-      </Col>
-    </Row>
-  </div>
-);
+  );
+};
 
 export default withStores(App);
