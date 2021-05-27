@@ -5,6 +5,11 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { RootStore } from "store/index";
 import { getAppendActions } from "animations";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import {
+  stepDataDisassembling,
+  stepDataOilchange,
+  stepDataWorking,
+} from "data/stepData";
 
 type ViewerData = {
   scene: Scene;
@@ -45,6 +50,8 @@ export default class ModelStore {
     ).position.x;
   }
   @observable currentStep = 0;
+
+  @observable stepData: Array<string> = [];
 
   @observable highlightData: HighlightData = {
     pickableObjects: null,
@@ -169,6 +176,22 @@ export default class ModelStore {
     this.actions.forEach((a: THREE.AnimationAction) => {
       a.play();
     });
+
+    switch (animationName) {
+      case "/models/gearboxDissassemblingSlowlyLAST.glb":
+        this.stepData = stepDataDisassembling;
+        break;
+      case "/models/gearboxOilchange.glb":
+        this.stepData = stepDataOilchange;
+        break;
+      case "/models/gearboxWorking.glb":
+        this.stepData = stepDataWorking;
+        break;
+      default:
+        return null;
+        break;
+    }
+
     this.onWindowResize();
   }
 
@@ -315,6 +338,7 @@ export default class ModelStore {
       isFullscreen: observable,
       setObjectToDefault: action,
       contextMenuOpen: observable,
+      stepData: observable,
     });
   }
 }

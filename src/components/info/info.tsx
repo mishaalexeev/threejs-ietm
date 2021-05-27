@@ -33,7 +33,6 @@ const Info: FC<Props> = ({ stores }) => {
         ? "Объект не выбран"
         : store.selectedPart.name;
   }
-
   const { jsx, title } = partData[store.infoKey] || {
     jsx: "Nothing",
     title: "Nothing",
@@ -45,17 +44,18 @@ const Info: FC<Props> = ({ stores }) => {
           onClick={handlePrint}
           className="info-icon icon-print"
         />
+        <h3 className="info-title">{title}</h3>
         <CloseOutlined
           className="info-icon icon-close"
           onClick={handleFullscreenExit}
         />
       </Typography>
       <hr className="hr-divider" />
-      <section ref={componentToPrint}>
+      <section className="info-scroll" ref={componentToPrint}>
         <Typography>
           {name}
-          <Title>{title}</Title>
-          <Paragraph>{jsx}</Paragraph>
+          {/* <Title>{title}</Title> */}
+          <section className="info-jsx">{jsx}</section>
         </Typography>
       </section>
     </>

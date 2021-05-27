@@ -125,58 +125,12 @@ function appendActionsOilchange(scene, mixer) {
     });
   });
 
-  const times = [
-    0,
-    10,
-    38,
-    56,
-    77,
-    83,
-    87,
-    95,
-    98,
-    111,
-    135,
-    143,
-    148,
-    154,
-    161,
-    164,
-    180,
-    200,
-    210,
-    216,
-    221,
-    228,
-  ];
+  const times = [0, 6, 11, 23, 25, 29, 38, 45];
   const helper = new THREE.Object3D();
   helper.name = "__StepHelper";
   scene.add(helper);
 
-  const vals = [
-    0,
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12,
-    13,
-    14,
-    15,
-    16,
-    17,
-    18,
-    19,
-    20,
-    21,
-  ];
+  const vals = [0, 1, 2, 3, 4, 5, 6, 7];
 
   const track = new THREE.NumberKeyframeTrack(".x", times, vals);
   track.interpolation = THREE.InterpolateDiscrete;
