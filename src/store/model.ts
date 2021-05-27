@@ -35,6 +35,7 @@ export default class ModelStore {
   @observable isAnimationActive = false;
   @observable time = 0;
   @observable infoKey = "Назначение и описание";
+  @observable contextMenuOpen = false;
   @action setTime() {
     this.time = this.mixer.time;
   }
@@ -313,6 +314,7 @@ export default class ModelStore {
       toggleFullscreen: action,
       isFullscreen: observable,
       setObjectToDefault: action,
+      contextMenuOpen: observable,
     });
   }
 }
