@@ -4,3 +4,25 @@
 .ant-image-mask:after {
     content: 'Открыть';
 }
+.hr-divider {
+    border: 0;
+    height: 2px;
+    background: linear-gradient(to left, #f0f0f0, #8c8b8b, #f0f0f0);
+    margin: 0;
+}
+.info-tools{
+    padding: 10px 20px 10px 20px;
+    display: flex;
+    justify-content: space-between;
+}
+.info-tools .info-icon{
+    font-size: 25px;
+    cursor: pointer;
+    color: #626161;
+}
+.icon-print:hover{
+    color: #a9d4f8;
+}
+.icon-close:hover{
+    color: #fc6161;
+}

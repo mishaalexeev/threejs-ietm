@@ -1,9 +1,11 @@
-import React, { FunctionComponent as FC, useState } from "react";
+import React, { FunctionComponent as FC, useRef, useState } from "react";
 import { Slider, Typography } from "antd";
 import { RootStore } from "store";
 import withStore from "hocs/withStores";
 import partData from "data/partsData";
 import "./info.css";
+import { CloseOutlined, PrinterOutlined } from "@ant-design/icons";
+import { useReactToPrint } from "react-to-print";
 const { Title, Paragraph } = Typography;
 
 type Props = {
@@ -12,28 +14,51 @@ type Props = {
 
 const Info: FC<Props> = ({ stores }) => {
   const [pause, setPause] = useState(false);
-  if (!stores.modelStore.modelReady) {
+  const componentToPrint = useRef<HTMLElement>(null);
+  const handlePrint = useReactToPrint({
+    content: () => componentToPrint.current,
+  });
+  const { modelStore: store } = stores;
+  if (!store.modelReady) {
     return null;
   }
+  const handleFullscreenExit = () => {
+    store.toggleFullscreen();
+  };
 
   let name;
-  if (stores.modelStore.selectedPart) {
+  if (store.selectedPart) {
     name =
       Object.keys(stores.modelStore.selectedPart).length === 0
         ? "Объект не выбран"
-        : stores.modelStore.selectedPart.name;
+        : store.selectedPart.name;
   }
-  console.log(stores.modelStore.infoKey);
-  const { jsx, title } = partData[stores.modelStore.infoKey] || {
+
+  const { jsx, title } = partData[store.infoKey] || {
     jsx: "Nothing",
     title: "Nothing",
   };
   return (
-    <Typography>
-      {name} / id: {stores.modelStore.selectedPart.id}
-      <Title>{title}</Title>
-      <Paragraph>{jsx}</Paragraph>
-    </Typography>
+    <>
+      <Typography className="info-tools">
+        <PrinterOutlined
+          onClick={handlePrint}
+          className="info-icon icon-print"
+        />
+        <CloseOutlined
+          className="info-icon icon-close"
+          onClick={handleFullscreenExit}
+        />
+      </Typography>
+      <hr className="hr-divider" />
+      <section ref={componentToPrint}>
+        <Typography>
+          {name}
+          <Title>{title}</Title>
+          <Paragraph>{jsx}</Paragraph>
+        </Typography>
+      </section>
+    </>
   );
 };
 

@@ -66,6 +66,8 @@ export default class ModelStore {
 
   @observable hiddenObjects: THREE.Mesh[] = [];
 
+  @observable isFullscreen = false;
+
   private rootStore: RootStore;
 
   @action setModelReady() {
@@ -211,14 +213,42 @@ export default class ModelStore {
     return raycaster.intersectObjects(pickableObjects, false);
   }
 
-  @action setIntersectedObject(intersects: THREE.Intersection[]) {
-    if (intersects.length > 0) {
-      const intersect = intersects.find(
-        (el) => this.hiddenObjects.indexOf(el.object) === -1
-      );
-      this.intersectedObject = intersect ? intersect.object : null;
-    } else {
+  @action setObjectToDefault() {
+    if (this.intersectedObject == null) {
+      return;
+    }
+    const { id } = this.intersectedObject;
+    if (
+      this.highlightData.originalMaterials &&
+      id &&
+      this.selectedPart.id !== id
+    ) {
+      this.intersectedObject.material = this.highlightData.originalMaterials[
+        id
+      ];
+      this.intersectedObject.material.color = this.highlightData.originalMaterials[
+        id
+      ].color;
+      this.intersectedObject.material.transparent = false;
       this.intersectedObject = null;
+    }
+  }
+
+  @action setIntersectedObject(intersect: THREE.Intersection) {
+    if (this.selectedPart === intersect.object) {
+      this.setObjectToDefault();
+      return;
+    }
+    if (!intersect.object) {
+      return;
+    }
+    if (this.intersectedObject !== intersect.object) {
+      this.setObjectToDefault();
+      this.intersectedObject = intersect.object;
+      this.intersectedObject.material = new THREE.MeshBasicMaterial();
+      this.intersectedObject.material.transparent = true;
+      this.intersectedObject.material.opacity = 0.7;
+      this.intersectedObject.material.color = new THREE.Color("#000128");
     }
   }
 
@@ -232,19 +262,23 @@ export default class ModelStore {
       this.selectedPart = null;
     }
   }
+
+  @action toggleFullscreen() {
+    this.isFullscreen = !this.isFullscreen;
+    this.onWindowResize();
+  }
+
   @action onWindowResize() {
-    let right = document.getElementById("info")?.offsetWidth;
-    if (!right) {
-      right = 0;
+    let width = !this.isFullscreen
+      ? 0.7 * window.innerWidth
+      : window.innerWidth;
+    if (!width) {
+      width = 0;
     }
 
-    this.viewerData.camera.aspect =
-      (window.innerWidth - right) / window.innerHeight;
+    this.viewerData.camera.aspect = width / window.innerHeight;
     this.viewerData.camera.updateProjectionMatrix();
-    this.viewerData.renderer.setSize(
-      window.innerWidth - right,
-      window.innerHeight
-    );
+    this.viewerData.renderer.setSize(width, window.innerHeight);
   }
 
   @action changeCamera(camera: THREE.PerspectiveCamera) {
@@ -276,6 +310,9 @@ export default class ModelStore {
       setCurrentStep: action,
       infoKey: observable,
       stopAnimations: action,
+      toggleFullscreen: action,
+      isFullscreen: observable,
+      setObjectToDefault: action,
     });
   }
 }

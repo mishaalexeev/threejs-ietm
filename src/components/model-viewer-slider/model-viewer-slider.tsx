@@ -90,7 +90,7 @@ const ModelViewerSlider: FC<Props> = ({ stores }) => {
   }
 
   return (
-    <Space>
+    <Space style={{ pointerEvents: "auto" }}>
       {paused ? (
         <Button
           onClick={handleMixerPlayBtnClicked}

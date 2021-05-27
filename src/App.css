@@ -5,7 +5,47 @@
   pointer-events: none;
   width: 35%;
 }
+body{
+  overflow: hidden;
+}
+.content-section{
+  display: grid;
+  grid-template-columns: 70% 30%;
+}
+.content-section.fullscreen{
+  grid-template-columns: 100% 0;
+}
 
-.info-open {
-
+.landing-page{
+  background: ghostwhite;
+  height: 100vh;
+}
+.img-container{
+  position: relative;
+}
+.img-container img{
+  width: 250px;
+  transform: translate(-50%,-50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.right-content{
+  padding: 24px 72px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.landing-footer{
+  margin-top: 24px;
+}
+.footer-extra{
+  margin-top: 10px;
+  display: flex;
+  gap: 5px;
+  justify-content: left;
+  align-items: center;
+}
+.footer-extra span{
+  font-size: 18px;
 }
