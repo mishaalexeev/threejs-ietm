@@ -16,19 +16,15 @@ const routes = [
     exact: true,
   },
   {
-    name: "ietm",
-    url: "/ietm",
-    component: Ietm,
-    exact: true,
-  },
-  {
     name: "",
     url: "**",
     component: Page404,
   },
 ];
 
-const routesMap = {};
+const routesMap: {
+  [key: string]: string;
+} = {};
 
 routes.forEach((route) => {
   if (route.hasOwnProperty("name")) {
