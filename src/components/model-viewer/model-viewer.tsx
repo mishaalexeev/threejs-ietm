@@ -238,15 +238,10 @@ class ModelViewer extends Component<Props, State> {
     });
   };
   onMouseOut = () => {
-    const { highlightData } = this.store;
-    if (!highlightData.originalMaterials || !highlightData.intersectedObject) {
+    if (!this.store.intersectedObject) {
       return;
     }
-    highlightData.intersectedObject.material =
-      highlightData.originalMaterials[highlightData.intersectedObject.id];
-    highlightData.intersectedObject.material.color =
-      highlightData.originalMaterials[highlightData.intersectedObject.id].color;
-    this.store.highlightData.intersectedObject.material.transparent = false;
+    this.store.setObjectToDefault();
   };
 
   menuItemClicked = (key: string, xPos: number, yPos: number) => {
