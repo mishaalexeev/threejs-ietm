@@ -196,37 +196,16 @@ class ModelViewer extends Component<Props, State> {
     }
     const { selectedPart, highlightData, intersectedObject } = this.store;
     const { pickableObjects } = highlightData;
-
     const intersects = this.store.getIntersects(event.clientX, event.clientY);
-    this.store.setIntersectedObject(intersects);
-    this.mount.style.cursor = intersectedObject ? "pointer" : "default";
-
-    pickableObjects?.forEach((o) => {
-      const isSelected = o === selectedPart;
-      if (isSelected) {
-        // o.material.transparent = false;
-      }
-
-      if (intersectedObject && intersectedObject.name === o.name) {
-        if (intersectedObject === selectedPart) {
-          return;
-        }
-        o.material = new THREE.MeshBasicMaterial();
-        o.material.transparent = true;
-        o.material.opacity = 0.7;
-        o.material;
-        o.material.color = new THREE.Color("#000128");
-      } else {
-        if (o === selectedPart) {
-          return;
-        }
-        // @ts-ignore
-        o.material = highlightData.originalMaterials[o.id];
-        // @ts-ignore
-        o.material.color = highlightData.originalMaterials[o.id].color;
-        o.material.transparent = false;
-      }
-    });
+    const intersect = intersects.find(
+      (el) => this.store.hiddenObjects.indexOf(el.object) === -1
+    );
+    if (intersect) {
+      this.store.setIntersectedObject(intersect);
+    } else {
+      this.store.setObjectToDefault();
+    }
+    this.mount.style.cursor = intersect ? "pointer" : "default";
   };
 
   onModelClick = (event) => {
@@ -247,7 +226,6 @@ class ModelViewer extends Component<Props, State> {
       if (selectedPart && intersectedObject.name === o.name) {
         if (pickableObjects) {
           this.store.infoKey = o.name;
-          console.log(o.name);
           o.material = new THREE.MeshBasicMaterial();
           o.material.transparent = true;
           o.material.opacity = 0.9;
@@ -258,6 +236,17 @@ class ModelViewer extends Component<Props, State> {
         o.material.color = highlightData.originalMaterials[o.id].color;
       }
     });
+  };
+  onMouseOut = () => {
+    const { highlightData } = this.store;
+    if (!highlightData.originalMaterials || !highlightData.intersectedObject) {
+      return;
+    }
+    highlightData.intersectedObject.material =
+      highlightData.originalMaterials[highlightData.intersectedObject.id];
+    highlightData.intersectedObject.material.color =
+      highlightData.originalMaterials[highlightData.intersectedObject.id].color;
+    this.store.highlightData.intersectedObject.material.transparent = false;
   };
 
   menuItemClicked = (key: string, xPos: number, yPos: number) => {
@@ -353,7 +342,6 @@ class ModelViewer extends Component<Props, State> {
             const size = new THREE.Vector3();
             boundBox.getSize(size);
             const maxDim = Math.max(size.x, size.y, size.z);
-
             const offset =
               maxDim /
               (2.0 *
@@ -455,6 +443,8 @@ class ModelViewer extends Component<Props, State> {
             }}
             onMouseMove={this.onMouseMove}
             onDoubleClick={this.onModelClick}
+            onMouseOut={this.onMouseOut}
+            onBlur={() => void 0}
           />
         </ContextMenu>
         <ModelViewerTools />

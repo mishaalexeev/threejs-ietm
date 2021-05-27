@@ -168,6 +168,7 @@
 }
 .action_items span .anticon:hover{
     color: lightgray;
+    pointer-events: auto;
 }
 .first_item
 {
