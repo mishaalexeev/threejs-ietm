@@ -120,7 +120,7 @@ class ModelViewer extends Component<Props, State> {
       loader.load(
         this.props.stores.modelStore.modelName,
         (gltf) => {
-          // gltf.scene.children[0].position.set(100, 50, 80);
+          // gltf.scene.children[0].position.set(70, 60, 200);
 
           gltf.scene.traverse((child) => {
             if (child.isMesh) {
@@ -135,7 +135,7 @@ class ModelViewer extends Component<Props, State> {
               m.material.color.convertSRGBToLinear();
               const mat = m.material.clone();
               m.material = mat.clone();
-
+              // m.position.set(120, 19, 253);
               highlightData.originalMaterials[m.id] = mat;
             }
           });

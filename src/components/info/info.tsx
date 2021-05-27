@@ -23,14 +23,14 @@ const Info: FC<Props> = ({ stores }) => {
         ? "Объект не выбран"
         : stores.modelStore.selectedPart.name;
   }
-
+  console.log(stores.modelStore.infoKey);
   const { jsx, title } = partData[stores.modelStore.infoKey] || {
     jsx: "Nothing",
     title: "Nothing",
   };
   return (
     <Typography>
-      {name}
+      {name} / id: {stores.modelStore.selectedPart.id}
       <Title>{title}</Title>
       <Paragraph>{jsx}</Paragraph>
     </Typography>

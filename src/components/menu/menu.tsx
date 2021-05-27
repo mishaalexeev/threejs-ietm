@@ -35,6 +35,12 @@ const MenuMain: FC<Props> = ({ stores }) => {
           stores.modelStore.startAnimation(modelName);
         });
         break;
+      case "Пробивание масла в местах соединения частей корпуса":
+        modelName = "/models/gearboxWorking.glb";
+        stores.modelStore.loadAnimation(modelName).then(() => {
+          stores.modelStore.startAnimation(modelName);
+        });
+        break;
       default:
         const { modelStore: store } = stores;
         if (store.isAnimationActive) {
