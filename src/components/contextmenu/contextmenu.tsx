@@ -17,7 +17,7 @@ type Props = {
 const ContextMenu: FunctionComponent<Props> = (props) => {
   const [xPos, setXPos] = useState(0);
   const [yPos, setYPos] = useState(0);
-  const [open, setOpen] = useState(false);
+  const { modelStore: store } = props.stores;
 
   const handleContextMenu = (event: MouseEvent<HTMLDivElement>): void => {
     const intersects = props.stores.modelStore.getIntersects(
@@ -27,11 +27,11 @@ const ContextMenu: FunctionComponent<Props> = (props) => {
 
     setXPos(event.clientX);
     setYPos(event.clientY);
-    setOpen(intersects.length > 0);
+    store.contextMenuOpen = intersects.length > 0;
   };
 
   const menuItemClicked = (event): void => {
-    setOpen(false);
+    store.contextMenuOpen = false;
     props.menuItemClicked(event.key, xPos, yPos);
   };
 
@@ -40,7 +40,8 @@ const ContextMenu: FunctionComponent<Props> = (props) => {
       <Menu
         className="viewer-context-menu"
         onClick={menuItemClicked}
-        hidden={!open}
+        selectable={false}
+        hidden={!store.contextMenuOpen}
         style={{
           top: yPos,
           left: xPos,

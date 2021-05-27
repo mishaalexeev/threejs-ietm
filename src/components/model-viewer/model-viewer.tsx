@@ -243,7 +243,9 @@ class ModelViewer extends Component<Props, State> {
     }
     this.store.setObjectToDefault();
   };
-
+  handleClick = () => {
+    this.store.contextMenuOpen = false;
+  };
   menuItemClicked = (key: string, xPos: number, yPos: number) => {
     const { hiddenObjects, highlightData } = this.store;
     const { pickableObjects } = highlightData;
@@ -432,11 +434,14 @@ class ModelViewer extends Component<Props, State> {
     return (
       <Spin spinning={this.state.isLoading} size="large">
         <ContextMenu menuItemClicked={this.menuItemClicked}>
+          {/* eslint-disable-next-line */}
           <div
             ref={(el) => {
               this.mount = el as HTMLDivElement;
             }}
             onMouseMove={this.onMouseMove}
+            onClick={this.handleClick}
+            onKeyDown={this.handleClick}
             onDoubleClick={this.onModelClick}
             onMouseOut={this.onMouseOut}
             onBlur={() => void 0}
