@@ -13,11 +13,16 @@
 .info-tools{
     padding: 10px 20px 10px 20px;
     display: flex;
+    justify-content: space-between;
 }
-.info-icons{
-    font-size: 20px;
+.info-tools .info-icon{
+    font-size: 25px;
     cursor: pointer;
+    color: #626161;
 }
 .icon-print:hover{
     color: #a9d4f8;
+}
+.icon-close:hover{
+    color: #fc6161;
 }

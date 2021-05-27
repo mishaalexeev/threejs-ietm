@@ -4,7 +4,7 @@ import { RootStore } from "store";
 import withStore from "hocs/withStores";
 import partData from "data/partsData";
 import "./info.css";
-import { PrinterOutlined } from "@ant-design/icons";
+import { CloseOutlined, PrinterOutlined } from "@ant-design/icons";
 import { useReactToPrint } from "react-to-print";
 const { Title, Paragraph } = Typography;
 
@@ -18,19 +18,23 @@ const Info: FC<Props> = ({ stores }) => {
   const handlePrint = useReactToPrint({
     content: () => componentToPrint.current,
   });
-  if (!stores.modelStore.modelReady) {
+  const { modelStore: store } = stores;
+  if (!store.modelReady) {
     return null;
   }
+  const handleFullscreenExit = () => {
+    store.toggleFullscreen();
+  };
 
   let name;
-  if (stores.modelStore.selectedPart) {
+  if (store.selectedPart) {
     name =
       Object.keys(stores.modelStore.selectedPart).length === 0
         ? "Объект не выбран"
-        : stores.modelStore.selectedPart.name;
+        : store.selectedPart.name;
   }
 
-  const { jsx, title } = partData[stores.modelStore.infoKey] || {
+  const { jsx, title } = partData[store.infoKey] || {
     jsx: "Nothing",
     title: "Nothing",
   };
@@ -39,7 +43,11 @@ const Info: FC<Props> = ({ stores }) => {
       <Typography className="info-tools">
         <PrinterOutlined
           onClick={handlePrint}
-          className="info-icons icon-print"
+          className="info-icon icon-print"
+        />
+        <CloseOutlined
+          className="info-icon icon-close"
+          onClick={handleFullscreenExit}
         />
       </Typography>
       <hr className="hr-divider" />

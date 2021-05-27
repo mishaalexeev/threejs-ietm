@@ -2,6 +2,7 @@ import React, { FunctionComponent as FC, useState } from "react";
 import { Button, Slider, Space, Alert } from "antd";
 import {
   EyeOutlined,
+  FullscreenExitOutlined,
   FullscreenOutlined,
   SyncOutlined,
 } from "@ant-design/icons";
@@ -72,10 +73,17 @@ const ModelViewerTools: FC<Props> = ({ stores }) => {
                 />
               </span>
               <span className="third_item">
-                <FullscreenOutlined
-                  onClick={handleFullscreenClicked}
-                  className="FABMenu-icon"
-                />
+                {store.isFullscreen ? (
+                  <FullscreenExitOutlined
+                    onClick={handleFullscreenClicked}
+                    className="FABMenu-icon"
+                  />
+                ) : (
+                  <FullscreenOutlined
+                    onClick={handleFullscreenClicked}
+                    className="FABMenu-icon"
+                  />
+                )}
               </span>
               <span className="fourth_item">
                 <EyeOutlined className="FABMenu-icon" />
