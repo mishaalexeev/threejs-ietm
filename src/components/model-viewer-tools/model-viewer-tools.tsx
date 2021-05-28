@@ -1,4 +1,4 @@
-import React, { FunctionComponent as FC, useState } from "react";
+import React, { FunctionComponent as FC, useEffect, useState } from "react";
 import { Button, Slider, Space, Alert } from "antd";
 import {
   EyeOutlined,
@@ -15,7 +15,17 @@ type Props = {
   stores: RootStore;
 };
 const ModelViewerTools: FC<Props> = ({ stores }) => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState<boolean>(() => {
+    const open: boolean | null = JSON.parse(
+      stores.storage.getItem("toolsOpen") as string
+    );
+    return open === null ? false : open;
+  });
+
+  useEffect(() => {
+    stores.storage.setItem("toolsOpen", open.toString());
+  }, [open, stores.storage]);
+
   const store: ModelStore = stores.modelStore;
   if (!store.modelReady) {
     return null;

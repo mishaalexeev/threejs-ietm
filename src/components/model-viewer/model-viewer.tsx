@@ -222,6 +222,8 @@ class ModelViewer extends Component<Props, State> {
     this.store.setSelectedObject(intersects);
     this.mount.style.cursor = intersectedObject ? "pointer" : "default";
 
+    this.store.fitToView(event.clientX, event.clientY);
+
     pickableObjects?.forEach((o) => {
       if (selectedPart && intersectedObject.name === o.name) {
         if (pickableObjects) {
@@ -299,128 +301,23 @@ class ModelViewer extends Component<Props, State> {
       }
       // Изоляция детали
       case "2":
-        const intersects: THREE.Intersection[] = this.store.getIntersects(
-          xPos,
-          yPos
-        );
+        const visibleObjects = this.store.fitToView(xPos, yPos);
+        if (!visibleObjects) return;
 
-        const visibleObjects: THREE.Object3D[] = [];
-
-        this.store.setIntersectedObject(intersects);
-        this.mount.style.cursor = highlightData.intersectedObject
-          ? "pointer"
-          : "default";
-
-        if (intersects.length > 0) {
-          const intersect = intersects.find(
-            (el) => hiddenObjects.indexOf(el.object) === -1
-          );
-
-          const { x, y, z } = intersect.object.parent.position;
-          this.store.viewerData.controls?.target.set(x, y, z);
-          intersect.object.traverse((n) => {
-            if (n.type === "Mesh" || n.type === "LineSegments")
-              visibleObjects.push(n);
+        this.store.viewerData.scene
+          .getObjectByName("Редуктор")
+          .traverse((n) => {
+            if (n.type === "Mesh" || n.type === "LineSegments") {
+              if (visibleObjects.indexOf(n) < 0) {
+                n.visible = false;
+                this.store.hiddenObjects.push(n);
+              }
+            }
           });
 
-          let index = 0;
-          while (
-            index < intersects.length &&
-            !intersect.object.parent.visible
-          ) {
-            index++;
-          }
-          if (intersect) {
-            const leaf = intersect.object.parent;
-            if (!leaf) return;
-
-            const boundBox = new THREE.Box3();
-            boundBox.setFromObject(leaf);
-            const size = new THREE.Vector3();
-            boundBox.getSize(size);
-            const maxDim = Math.max(size.x, size.y, size.z);
-            const offset =
-              maxDim /
-              (2.0 *
-                Math.tan(
-                  this.store.viewerData.controls.object.fov * (Math.PI / 360.0)
-                ));
-
-            // this.store.viewerData.controls.object = this.store.viewerData.scene.getObjectByName(
-            //   "PerspectiveCamera"
-            // );
-
-            const cam = this.store.viewerData.camera;
-
-            //let cam = this.viewer.scene.getObjectByName('__CatalogCamera');
-
-            const pln = new THREE.Plane();
-            const lookAtVector = new THREE.Vector3(0, 0, -1);
-            lookAtVector.applyQuaternion(cam.quaternion.clone()).normalize();
-
-            pln.setFromNormalAndCoplanarPoint(
-              lookAtVector,
-              this.store.viewerData.controls.target
-            );
-            const projectedPoint = new THREE.Vector3();
-            const center = new THREE.Vector3();
-            boundBox.getCenter(center);
-            pln.projectPoint(center, projectedPoint);
-            const dCamera = projectedPoint.sub(
-              this.store.viewerData.controls.target
-            );
-
-            const newCamPose = cam.position.clone().add(dCamera);
-            const dist = center.clone().sub(newCamPose);
-
-            this.store.viewerData.controls.target.copy(center.clone());
-            dist.setLength(dist.length() - offset * 1.8);
-            const finalPose = newCamPose.add(dist);
-
-            const track2 = new THREE.VectorKeyframeTrack(
-              ".position",
-              [0, 0.3],
-              [...cam.position.toArray(), ...finalPose.toArray()],
-              THREE.InterpolateSmooth
-            );
-
-            const clip2 = new THREE.AnimationClip(null, 0.3, [track2]);
-            const action2 = this.store.mixer.clipAction(clip2, cam);
-
-            action2.loop = THREE.LoopOnce;
-            //action2.clampWhenFinished = true;
-
-            // action.play();
-            //this.viewer.catalogActions.push(action2);
-            action2.play();
-
-            this.store.mixer.addEventListener("finished", (e) => {
-              if (e.action === action2) {
-                e.action.stop();
-                this.store.viewerData.camera.position.copy(finalPose.clone());
-                this.store.viewerData.controls.object = this.store.viewerData.camera;
-              }
-            });
-          }
-
-          this.store.viewerData.scene
-            .getObjectByName("Редуктор")
-            .traverse((n) => {
-              if (n.type === "Mesh" || n.type === "LineSegments") {
-                if (visibleObjects.indexOf(n) < 0) {
-                  n.visible = false;
-                  this.store.hiddenObjects.push(n);
-                }
-              }
-            });
-
-          visibleObjects.forEach((n) => {
-            n.visible = true;
-          });
-        } else {
-          highlightData.intersectedObject = null;
-          return;
-        }
+        visibleObjects.forEach((n) => {
+          n.visible = true;
+        });
         break;
       // Выделение детали
       case "3":
