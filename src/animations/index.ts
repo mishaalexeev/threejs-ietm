@@ -1,6 +1,8 @@
 import THREE from "three";
 import { ThisExpression } from "typescript";
 import appendActionsDisassembling from "./animationDisassembling";
+import appendActionsOilchange from "./animationOilchange";
+import appendActionsWorking from "./animationWorking";
 
 type appendActions = (
   scene: THREE.Scene,
@@ -13,7 +15,10 @@ const getAppendActions = (animationName: string): appendActions | null => {
       return appendActionsDisassembling;
       break;
     case "/models/gearboxOilchange.glb":
-      return appendActionsDisassembling;
+      return appendActionsOilchange;
+      break;
+    case "/models/gearboxWorking.glb":
+      return appendActionsWorking;
       break;
     default:
       return null;

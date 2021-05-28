@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import withStores from "hocs/withStores";
 import "./step-view.css";
-import { stepData } from "data/stepData";
 
 const StepView = ({ stores }) => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -24,7 +23,7 @@ const StepView = ({ stores }) => {
 
   return (
     <div className="step-menu">
-      {stepData.map((s, i) => {
+      {stores.modelStore.stepData.map((s, i) => {
         return (
           <div key={i} className={currentStep === i ? "current" : "step"}>
             <span className="step-number">{i + 1}</span>
