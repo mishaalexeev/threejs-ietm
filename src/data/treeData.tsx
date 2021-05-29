@@ -16,6 +16,16 @@ import {
   Wrench2Icon,
   ShaftIcon,
   DovelIcon,
+  InfoIcon,
+  BlueprintIcon,
+  GearWorkingIcon,
+  HelmetIcon,
+  MaintenanceIcon,
+  ToolboxIcon,
+  WarehouseIcon,
+  SearchIcon,
+  EtaIcon,
+  LipsealIcon,
 } from "assets/icons";
 
 type TreeItem = {
@@ -36,6 +46,11 @@ const treeData: TreeItem[] = [
       {
         title: "Введение",
         key: "Введение",
+      },
+      {
+        title: "Назначение",
+        key: "Назначение",
+        switcherIcon: <InfoIcon />,
       },
       {
         title: "Состав изделия",
@@ -80,7 +95,7 @@ const treeData: TreeItem[] = [
             ],
           },
           {
-            key: "Поменять тут",
+            key: "Зубчатые зацепления",
             title: "Зубчатые зацепления",
             selectable: false,
             children: [
@@ -102,7 +117,7 @@ const treeData: TreeItem[] = [
             ],
           },
           {
-            key: "Поменять тут тоже",
+            key: "Валы",
             title: "Валы",
             selectable: false,
             children: [
@@ -141,6 +156,55 @@ const treeData: TreeItem[] = [
             ],
           },
           {
+            key: "Смотровое окно",
+            title: "Смотровое окно",
+            selectable: false,
+            children: [
+              {
+                key: 507,
+                title: "Люк",
+              },
+              {
+                key: "Отдушина",
+                title: "Отдушина",
+              },
+            ],
+          },
+          {
+            key: "Маслоуказатель",
+            title: "Маслоуказатель",
+            selectable: false,
+            children: [
+              {
+                key: 507,
+                title: "Щуп",
+              },
+              {
+                key: "Крышка щупа",
+                title: "Крышка щупа",
+              },
+              {
+                key: "Прокладка",
+                title: "Прокладка",
+              },
+            ],
+          },
+          {
+            key: "Сливное отверстие",
+            title: "Сливное отверстие",
+            selectable: false,
+            children: [
+              {
+                key: 507,
+                title: "Пробка",
+              },
+              {
+                key: "Прокладка",
+                title: "Прокладка",
+              },
+            ],
+          },
+          {
             key: 449,
             title: "Крепежные детали",
             selectable: false,
@@ -173,9 +237,56 @@ const treeData: TreeItem[] = [
                   },
                 ],
               },
+              {
+                key: "Винты",
+                title: "Винты",
+                children: [
+                  {
+                    key: "Винт 1",
+                    title: "Винт 1",
+                    switcherIcon: <BoltIcon />,
+                  },
+                  {
+                    key: "Винт 2",
+                    title: "Винт 2",
+                    switcherIcon: <BoltIcon />,
+                  },
+                ],
+              },
+              {
+                key: "Шпонки",
+                title: "Шпонки",
+                children: [
+                  {
+                    key: "Шпонка 1",
+                    title: "Шпонка 1",
+                    switcherIcon: <BoltIcon />,
+                  },
+                  {
+                    key: "Шпонка 2",
+                    title: "Шпонка 2",
+                    switcherIcon: <BoltIcon />,
+                  },
+                ],
+              },
             ],
           },
         ],
+      },
+      {
+        title: "Конструкция",
+        key: "Конструкция",
+        switcherIcon: <BlueprintIcon />,
+      },
+      {
+        title: "Характеристики",
+        key: "Характеристики",
+        switcherIcon: <EtaIcon />,
+      },
+      {
+        title: "▶ Принцип работы",
+        key: "Принцип работы",
+        switcherIcon: <GearWorkingIcon />,
       },
     ],
   },
@@ -185,113 +296,128 @@ const treeData: TreeItem[] = [
     selectable: false,
     children: [
       {
-        key: "Процедуры обслуживания",
-        title: "Процедуры обслуживания",
+        title: "Техника безопасности",
+        key: "Техника безопасности",
+        switcherIcon: <HelmetIcon />,
+      },
+      {
+        title: "Использование по назначению",
+        key: "Использование по назначению",
+        switcherIcon: <GearsIcon />,
+      },
+      {
+        title: "Техническое обслуживание",
+        key: "Техническое обслуживание",
+        // switcherIcon: <MaintenanceIcon />,
+        switcherIcon: <WrenchIcon />,
+      },
+      {
+        key: "Ремонтные работы",
+        title: "Ремонтные работы",
         children: [
           {
-            key: "Ремонтные работы",
-            title: "Ремонтные работы",
-            children: [
-              {
-                key: "Разборка редуктораа",
-                title: "Сборка, разборка (анимация)",
-                switcherIcon: <WrenchIcon />,
-              },
-              {
-                key: "Замена масла (анимация)",
-                title: "Замена масла (анимация)",
-                switcherIcon: <OilChangeIcon />,
-              },
-            ],
+            key: "Перечень инструментов",
+            title: "Перечень инструментов",
+            switcherIcon: <ToolboxIcon />,
           },
           {
-            key: "Транспортировка",
-            title: "Транспортировка",
-            selectable: false,
-            children: [
-              {
-                key: "Упаковка",
-                title: "Упаковка",
-                switcherIcon: <PackIcon />,
-              },
-              {
-                key: "Комплектность поставки",
-                title: "Комплектность поставки",
-                switcherIcon: <Pack2Icon />,
-              },
-              {
-                key: "Перевозка",
-                title: "Перевозка",
-                switcherIcon: <TruckIcon />,
-              },
-            ],
+            key: "Разборка редуктора",
+            title: "▶ Разборка редуктора",
+            switcherIcon: <WrenchIcon />,
           },
           {
-            key: "Демонтаж и установка",
-            title: "Демонтаж и установка",
-            selectable: false,
-            children: [
-              {
-                key: "Установка",
-                title: "Установка",
-                switcherIcon: <WrenchIcon />,
-              },
-              {
-                key: "Демонтаж",
-                title: "Демонтаж",
-                switcherIcon: <Wrench2Icon />,
-              },
-              {
-                key: "Утилизация",
-                title: "Утилизация",
-                switcherIcon: <RecycleIcon />,
-              },
-            ],
+            key: "Замена масла",
+            title: "▶ Замена масла",
+            switcherIcon: <OilChangeIcon />,
+          },
+          {
+            key: "Замена подшипников",
+            title: "▶ //Замена подшипников",
+            switcherIcon: <BearingIcon />,
+          },
+          {
+            key: "Замена уплотнений",
+            title: "▶ //Замена уплотнений",
+            switcherIcon: <LipsealIcon />,
+          },
+        ],
+      },
+      {
+        key: "Транспортировка",
+        title: "Транспортировка",
+        selectable: false,
+        children: [
+          {
+            key: "Упаковка",
+            title: "Упаковка",
+            switcherIcon: <PackIcon />,
+          },
+          {
+            key: "Комплектность поставки",
+            title: "Комплектность поставки",
+            switcherIcon: <Pack2Icon />,
+          },
+          {
+            key: "Перевозка",
+            title: "Перевозка",
+            switcherIcon: <TruckIcon />,
+          },
+          {
+            key: "Хранение",
+            title: "Хранение",
+            switcherIcon: <WarehouseIcon />,
+          },
+        ],
+      },
+      {
+        key: "Демонтаж и установка",
+        title: "Демонтаж и установка",
+        selectable: false,
+        children: [
+          {
+            key: "Установка",
+            title: "Установка",
+            switcherIcon: <WrenchIcon />,
+          },
+          {
+            key: "Демонтаж",
+            title: "Демонтаж",
+            switcherIcon: <Wrench2Icon />,
+          },
+          {
+            key: "Утилизация",
+            title: "Утилизация",
+            switcherIcon: <RecycleIcon />,
           },
         ],
       },
     ],
   },
-  {
-    key: "sub3",
-    title: "Демонтаж и установка",
-    selectable: false,
-    children: [
-      {
-        key: "Разборка редуктора",
-        title: "Разборка редуктора",
-        switcherIcon: <DovelIcon />,
-      },
-    ],
-  },
+  // {
+  //   key: "sub3",
+  //   title: "Демонтаж и установка",
+  //   selectable: false,
+  //   children: [
+  //     {
+  //       key: "Разборка редуктора",
+  //       title: "Разборка редуктора",
+  //       switcherIcon: <DovelIcon />,
+  //     },
+  //   ],
+  // },
   {
     key: "sub4",
     title: "Типовые неисправности",
     selectable: false,
     children: [
       {
-        key: "Необычные неравномерные шумы при работе",
-        title: "▶ Необычные неравномерные шумы при работе",
-        switcherIcon: <AlertIcon />,
+        key: "Диагностика неисправностей",
+        title: "Диагностика неисправностей",
+        switcherIcon: <SearchIcon />,
       },
       {
-        key: "Равномерный повышенный уровень шума при работе",
-        title: "▶ Равномерный повышенный уровень шума при работе",
-        switcherIcon: <AlertIcon />,
-      },
-      {
-        key: "Пробивание масла в местах соединения частей корпуса",
-        title: "▷ Пробивание масла в местах соединения частей корпуса",
-        switcherIcon: <AlertIcon />,
-      },
-      {
-        key: "Перегрев подшипников",
-        title: "Перегрев подшипников",
-        switcherIcon: <AlertIcon />,
-      },
-      {
-        key: "При включении привода валы редуктора не вращаются",
-        title: "При включении привода валы редуктора не вращаются",
+        key: "Типовые неисправности",
+        title: "Типовые неисправности",
         switcherIcon: <AlertIcon />,
       },
     ],

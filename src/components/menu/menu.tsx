@@ -29,13 +29,13 @@ const MenuMain: FC<Props> = ({ stores }) => {
           stores.modelStore.startAnimation(modelName);
         });
         break;
-      case "Необычные неравномерные шумы при работе":
+      case "Замена масла":
         modelName = "/models/gearboxOilchange.glb";
         stores.modelStore.loadAnimation(modelName).then(() => {
           stores.modelStore.startAnimation(modelName);
         });
         break;
-      case "Пробивание масла в местах соединения частей корпуса":
+      case "Принцип работы":
         modelName = "/models/gearboxWorking.glb";
         stores.modelStore.loadAnimation(modelName).then(() => {
           stores.modelStore.startAnimation(modelName);

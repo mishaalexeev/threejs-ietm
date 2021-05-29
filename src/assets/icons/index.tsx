@@ -18,6 +18,16 @@ import Shaft from "assets/icons/components/shaft";
 
 import Stop from "assets/icons/components/stop";
 import Dovel from "assets/icons/components/dovel";
+import Info from "assets/icons/components/info";
+import Blueprint from "assets/icons/components/blueprint";
+import GearWorking from "assets/icons/components/gearworking";
+import Helmet from "assets/icons/components/helmet";
+import Toolbox from "assets/icons/components/toolbox";
+import Maintenance from "assets/icons/components/maintenance";
+import Warehouse from "assets/icons/components/warehouse";
+import Search from "assets/icons/components/search";
+import Eta from "assets/icons/components/eta";
+import Lipseal from "assets/icons/components/lipseal";
 import React, { FC } from "react";
 
 const DefaultProps = {
@@ -71,6 +81,36 @@ const ShaftIcon: FC = (props) => (
 const DovelIcon: FC = (props) => (
   <Icon component={Dovel} {...DefaultProps} {...props} />
 );
+const InfoIcon: FC = (props) => (
+  <Icon component={Info} {...DefaultProps} {...props} />
+);
+const BlueprintIcon: FC = (props) => (
+  <Icon component={Blueprint} {...DefaultProps} {...props} />
+);
+const GearWorkingIcon: FC = (props) => (
+  <Icon component={GearWorking} {...DefaultProps} {...props} />
+);
+const HelmetIcon: FC = (props) => (
+  <Icon component={Helmet} {...DefaultProps} {...props} />
+);
+const ToolboxIcon: FC = (props) => (
+  <Icon component={Toolbox} {...DefaultProps} {...props} />
+);
+const MaintenanceIcon: FC = (props) => (
+  <Icon component={Maintenance} {...DefaultProps} {...props} />
+);
+const WarehouseIcon: FC = (props) => (
+  <Icon component={Warehouse} {...DefaultProps} {...props} />
+);
+const SearchIcon: FC = (props) => (
+  <Icon component={Search} {...DefaultProps} {...props} />
+);
+const EtaIcon: FC = (props) => (
+  <Icon component={Eta} {...DefaultProps} {...props} />
+);
+const LipsealIcon: FC = (props) => (
+  <Icon component={Lipseal} {...DefaultProps} {...props} />
+);
 
 const StopIcon: FC = (props) => (
   <Icon
@@ -97,4 +137,14 @@ export {
   ShaftIcon,
   StopIcon,
   DovelIcon,
+  InfoIcon,
+  BlueprintIcon,
+  GearWorkingIcon,
+  HelmetIcon,
+  ToolboxIcon,
+  MaintenanceIcon,
+  WarehouseIcon,
+  SearchIcon,
+  EtaIcon,
+  LipsealIcon,
 };
