@@ -296,6 +296,10 @@ const partsData: PartsData = {
     title: "Крышка промежуточная нижняя.002",
     jsx: <>text</>,
   },
+  Введение: {
+    title: "Введение",
+    jsx: <>text</>,
+  },
 };
 
 export default partsData;

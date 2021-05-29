@@ -29,12 +29,16 @@ type TreeItem = {
 
 const treeData: TreeItem[] = [
   {
-    title: "Назначение и описание",
+    title: "Техническое описание",
     key: "0-0",
     selectable: false,
     children: [
       {
-        title: "Дерево модели",
+        title: "Введение",
+        key: "Введение",
+      },
+      {
+        title: "Состав изделия",
         key: "0-0-0",
         selectable: false,
         children: [
