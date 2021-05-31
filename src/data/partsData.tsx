@@ -1,11 +1,12 @@
 import React from "react";
 import { Image } from "antd";
 import { AlertIcon } from "assets/icons";
-
+import ModelStore from "store/model";
 type PartsData = {
   [key: string]: {
     title: string;
-    jsx: JSX.Element;
+    jsx: any;
+    test?: any;
   };
 };
 const partsData: PartsData = {
@@ -761,102 +762,187 @@ const partsData: PartsData = {
   },
   "Типовые неисправности": {
     title: "Типовые неисправности",
-    jsx: (
-      <>
-        <table className="iksweb">
-          <tbody>
-            <tr>
-              <td>НЕИСПРАВНОСТЬ</td>
-              <td> ПРИЧИНА</td>
-              <td>СПОСОБ УСТРАНЕНИЯ </td>
-            </tr>
-            <tr>
-              <td rowSpan={3}>Перегрев подшипников </td>
-              <td>Недостаточен уровень масла</td>
-              <td> Долить масла</td>
-            </tr>
-            <tr>
-              <td>Старение масла</td>
-              <td> Заменить масло</td>
-            </tr>
-            <tr>
-              <td>Выход из строя подшипников</td>
-              <td>Замена подшипников</td>
-            </tr>
-            <tr>
-              <td rowSpan={3}></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td rowSpan={4}></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td rowSpan={2}></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td rowSpan={3}></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td rowSpan={3}></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
-      </>
-    ),
+    jsx: <></>,
+    test: function name(props) {
+      const store: ModelStore = props.store;
+      const start = () => {
+        store.loadAnimation("/models/gearboxOilchange.glb").then(() => {
+          store.startAnimation("/models/gearboxOilchange.glb");
+        });
+      };
+      return (
+        <>
+          <table className="table">
+            <tbody>
+              <tr>
+                <td>НЕИСПРАВНОСТЬ</td>
+                <td> ПРИЧИНА</td>
+                <td>СПОСОБ УСТРАНЕНИЯ </td>
+              </tr>
+              <tr>
+                <td rowSpan={3}>Перегрев подшипников </td>
+                <td>Недостаточен уровень масла</td>
+                <td className="cursor">
+                  {" "}
+                  <div
+                    onClick={start}
+                    onKeyDown={start}
+                    role="button"
+                    tabIndex={0}
+                    className="underline"
+                  >
+                    ▶ Долить масло
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>Старение масла</td>
+                <td className="cursor">
+                  {" "}
+                  <div
+                    onClick={start}
+                    onKeyDown={start}
+                    role="button"
+                    tabIndex={0}
+                    className="underline"
+                  >
+                    ▶ Заменить масло
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>Выход из строя подшипников</td>
+                <td>Замена подшипников</td>
+              </tr>
+              <tr>
+                <td rowSpan={3}>Перегрев редуктора в процессе работы</td>
+                <td>Уровень масла лишком высок</td>
+                <td>Проверить уровень масла и довести до нормы</td>
+              </tr>
+              <tr>
+                <td>Старение масла</td>
+                <td className="cursor">
+                  {" "}
+                  <div
+                    onClick={start}
+                    onKeyDown={start}
+                    role="button"
+                    tabIndex={0}
+                    className="underline"
+                  >
+                    ▶ Заменить масло
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>Наличие в масле посторонних примесей</td>
+                <td className="cursor">
+                  {" "}
+                  <div
+                    onClick={start}
+                    onKeyDown={start}
+                    role="button"
+                    tabIndex={0}
+                    className="underline"
+                  >
+                    ▶ Заменить масло
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td rowSpan={4}>
+                  Повышенный уровень шума редуктора при работе
+                </td>
+                <td>Поломка шестерен</td>
+                <td>Заменить шестерни</td>
+              </tr>
+              <tr>
+                <td>Поломка шестерен</td>
+                <td>Заменить подшипники</td>
+              </tr>
+              <tr>
+                <td>Превышение допустимой нагрузки на редуктор</td>
+                <td>Снизить нагрузку на редуктор до допустимой</td>
+              </tr>
+              <tr>
+                <td>Наличие в масле посторонних примесей</td>
+                <td className="cursor">
+                  {" "}
+                  <div
+                    onClick={start}
+                    onKeyDown={start}
+                    role="button"
+                    tabIndex={0}
+                    className="underline"
+                  >
+                    ▶ Заменить масло
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td rowSpan={2}>Шумы в месте крепления редуктора</td>
+                <td>Ослаблена затяжка болтов крепления</td>
+                <td>Подтянуть болты до требуемого момента затяжки</td>
+              </tr>
+              <tr>
+                <td>Износ болтов крепления</td>
+                <td>Заменить болты</td>
+              </tr>
+              <tr>
+                <td rowSpan={3}>Течь масла</td>
+                <td>Уровень масла лишком высок</td>
+                <td>Проверить уровень масла и довести до нормы</td>
+              </tr>
+              <tr>
+                <td>Нарушение герметичности манжетных уплотнений</td>
+                <td>Заменить манжетные уплотнения</td>
+              </tr>
+              <tr>
+                <td>Износ прокладок</td>
+                <td>Заменить прокладки</td>
+              </tr>
+              <tr>
+                <td rowSpan={3}>
+                  Вал редуктора не вращается или вращение затруднено
+                </td>
+                <td>Вязкость масла превышает допустимую</td>
+                <td className="cursor">
+                  {" "}
+                  <div
+                    onClick={start}
+                    onKeyDown={start}
+                    role="button"
+                    tabIndex={0}
+                    className="underline"
+                  >
+                    ▶ Заменить масло
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>Уровень масла лишком высок</td>
+                <td>Проверить уровень масла и довести до нормы</td>
+              </tr>
+              <tr>
+                <td>Превышение допустимой нагрузки на редуктор</td>
+                <td>
+                  Изменить конструкцию привода или применить редуктор,
+                  рассчитанный на данную нагрузку
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Выходной вал редуктора не вращается при вращении вала
+                  электродвигателя
+                </td>
+                <td>Поломка шестерен</td>
+                <td>Заменить шестерни</td>
+              </tr>
+            </tbody>
+          </table>
+        </>
+      );
+    },
   },
 };
 

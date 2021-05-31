@@ -33,10 +33,11 @@ const Info: FC<Props> = ({ stores }) => {
         ? "Объект не выбран"
         : store.selectedPart.name;
   }
-  const { jsx, title } = partData[store.infoKey] || {
+  const { jsx, title, test } = partData[store.infoKey] || {
     jsx: "Nothing",
     title: "Nothing",
   };
+
   return (
     <>
       <Typography className="info-tools">
@@ -55,6 +56,7 @@ const Info: FC<Props> = ({ stores }) => {
         <Typography>
           {name}
           {/* <Title>{title}</Title> */}
+          {test ? test({ store: store }) : null}
           <section className="info-jsx">{jsx}</section>
         </Typography>
       </section>
