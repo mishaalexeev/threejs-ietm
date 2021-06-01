@@ -1,10 +1,10 @@
 import React, { FunctionComponent as FC, useEffect, useState } from "react";
-import { Button, Slider, Space, Alert } from "antd";
 import {
   EyeOutlined,
   FullscreenExitOutlined,
   FullscreenOutlined,
   SyncOutlined,
+  ExpandAltOutlined,
 } from "@ant-design/icons";
 import { RootStore, ModelStore } from "store";
 import withStores from "hocs/withStores";
@@ -36,13 +36,12 @@ const ModelViewerTools: FC<Props> = ({ stores }) => {
   };
   const handleRestoreVisibilityClicked = (): void => {
     const { pickableObjects } = store.highlightData;
-    if (pickableObjects) {
-      store.viewerData.controls?.reset();
-      store.hiddenObjects.forEach((el) => {
-        el.visible = true;
-      });
-      store.hiddenObjects = [];
-    }
+    store.fitToView(0, 0, true);
+    store.hiddenObjects.forEach((el) => {
+      el.visible = true;
+    });
+    store.hiddenObjects = [];
+    store.setSelectedObjectToDefault();
   };
   const handleRotateClicked = (): void => {
     store.viewerData.controls.autoRotate = !store.viewerData.controls
@@ -96,7 +95,7 @@ const ModelViewerTools: FC<Props> = ({ stores }) => {
                 )}
               </span>
               <span className="fourth_item">
-                <EyeOutlined className="FABMenu-icon" />
+                <ExpandAltOutlined className="FABMenu-icon" />
               </span>
             </div>
           </div>

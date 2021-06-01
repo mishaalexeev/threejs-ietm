@@ -212,6 +212,7 @@ class ModelViewer extends Component<Props, State> {
     if (this.store.isAnimationActive) {
       return;
     }
+    this.store.setSelectedObjectToDefault();
     const { highlightData, intersectedObject, selectedPart } = this.store;
     const { pickableObjects } = highlightData;
 

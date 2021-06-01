@@ -336,26 +336,32 @@ export default class ModelStore {
     this.viewerData.camera = camera;
   }
 
-  @action fitToView(xPos: number, yPos: number) {
-    const intersects: THREE.Intersection[] = this.getIntersects(xPos, yPos);
+  @action fitToView(xPos: number, yPos: number, returnToMain = false) {
+    let intersects: THREE.Intersection[];
 
-    this.setIntersectedObject(intersects);
+    if (!returnToMain) {
+      intersects = this.getIntersects(xPos, yPos);
+      this.setIntersectedObject(intersects);
+    } else {
+      intersects = [];
+    }
 
-    if (intersects.length > 0) {
-      const intersect = intersects.find(
-        (el) => this.hiddenObjects.indexOf(el.object) === -1
-      );
+    if (returnToMain || intersects.length > 0) {
+      const intersect = returnToMain
+        ? this.viewerData.scene.getObjectByName("Редуктор")
+        : intersects.find((el) => this.hiddenObjects.indexOf(el.object) === -1)
+            .object;
 
-      const { x, y, z } = intersect.object.parent.position;
+      const { x, y, z } = intersect.parent.position;
       this.viewerData.controls?.target.set(x, y, z);
 
       let index = 0;
-      while (index < intersects.length && !intersect.object.parent.visible) {
+      while (index < intersects.length && !intersect.parent.visible) {
         index++;
       }
       const visibleObjects: THREE.Object3D[] = [];
       if (intersect) {
-        const leaf = intersect.object.parent;
+        const leaf = intersect.parent;
         if (!leaf) return;
 
         const boundBox = new THREE.Box3();
@@ -373,7 +379,7 @@ export default class ModelStore {
         const pln = new THREE.Plane();
         const lookAtVector = new THREE.Vector3(0, 0, -1);
         lookAtVector.applyQuaternion(cam.quaternion.clone()).normalize();
-        intersect.object.traverse((n) => {
+        intersect.traverse((n) => {
           if (n.type === "Mesh" || n.type === "LineSegments")
             visibleObjects.push(n);
         });
@@ -399,7 +405,7 @@ export default class ModelStore {
           ".position",
           [0, 0.5],
           [...cam.position.toArray(), ...finalPose.toArray()],
-          THREE.InterpolateSmooth
+          THREE.QuaternionLinearInterpolant
         );
 
         const clip2 = new THREE.AnimationClip(null, 0.5, [track2]);
