@@ -132,9 +132,7 @@ export default class ModelStore {
     this.viewerData.light.position.set(-100, 0, -100);
 
     this.viewerData.renderer = new THREE.WebGLRenderer({ antialias: true });
-    this.viewerData.renderer.setPixelRatio(
-      window.devicePixelRatio > 1 ? 1 : window.devicePixelRatio
-    );
+    this.viewerData.renderer.setPixelRatio(1);
     this.viewerData.renderer.setClearColor(new THREE.Color("ghostwhite"));
 
     this.viewerData.controls = new OrbitControls(
@@ -241,12 +239,15 @@ export default class ModelStore {
     if (this.intersectedObject == null) {
       return;
     }
+
     const { id } = this.intersectedObject;
-    if (
-      this.highlightData.originalMaterials &&
-      id &&
-      this.selectedPart.id !== id
-    ) {
+    let test;
+    if (this.selectedPart) {
+      test = this.selectedPart.id !== id;
+    } else {
+      test = true;
+    }
+    if (this.highlightData.originalMaterials && id && test) {
       this.intersectedObject.material = this.highlightData.originalMaterials[
         id
       ];
@@ -276,12 +277,38 @@ export default class ModelStore {
     }
   }
 
+  @action setSelectedObjectToDefault() {
+    if (
+      this.selectedPart &&
+      this.selectedPart.id &&
+      this.highlightData.originalMaterials
+    ) {
+      this.selectedPart.material = this.highlightData.originalMaterials[
+        this.selectedPart.id
+      ];
+      this.selectedPart.material.color = this.highlightData.originalMaterials[
+        this.selectedPart.id
+      ].color;
+    }
+    this.selectedPart = null;
+  }
+
   @action setSelectedObject(intersects) {
     if (intersects.length > 0) {
       const intersect = intersects.find(
         (el) => this.hiddenObjects.indexOf(el.object) === -1
       );
+
+      this.setSelectedObjectToDefault();
+
       this.selectedPart = intersect ? intersect.object : null;
+      if (this.selectedPart) {
+        this.selectedPart.material = new THREE.MeshBasicMaterial();
+        this.selectedPart.material.transparent = true;
+        this.selectedPart.material.opacity = 0.9;
+        this.selectedPart.material.color = new THREE.Color("#9a3737");
+        this.infoKey = this.selectedPart.name;
+      }
     } else {
       this.selectedPart = null;
     }
@@ -370,12 +397,12 @@ export default class ModelStore {
 
         const track2 = new THREE.VectorKeyframeTrack(
           ".position",
-          [0, 0.3],
+          [0, 0.5],
           [...cam.position.toArray(), ...finalPose.toArray()],
           THREE.InterpolateSmooth
         );
 
-        const clip2 = new THREE.AnimationClip(null, 0.3, [track2]);
+        const clip2 = new THREE.AnimationClip(null, 0.5, [track2]);
         const action2 = this.mixer.clipAction(clip2, cam);
 
         action2.loop = THREE.LoopOnce;
@@ -425,6 +452,7 @@ export default class ModelStore {
       setObjectToDefault: action,
       contextMenuOpen: observable,
       stepData: observable,
+      setSelectedObjectToDefault: action,
     });
   }
 }

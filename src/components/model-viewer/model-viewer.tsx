@@ -223,21 +223,6 @@ class ModelViewer extends Component<Props, State> {
     this.mount.style.cursor = intersectedObject ? "pointer" : "default";
 
     this.store.fitToView(event.clientX, event.clientY);
-
-    pickableObjects?.forEach((o) => {
-      if (selectedPart && intersectedObject.name === o.name) {
-        if (pickableObjects) {
-          this.store.infoKey = o.name;
-          o.material = new THREE.MeshBasicMaterial();
-          o.material.transparent = true;
-          o.material.opacity = 0.9;
-          o.material.color = new THREE.Color("#9a3737");
-        }
-      } else if (highlightData.originalMaterials) {
-        o.material = highlightData.originalMaterials[o.id];
-        o.material.color = highlightData.originalMaterials[o.id].color;
-      }
-    });
   };
   onMouseOut = () => {
     if (!this.store.intersectedObject) {

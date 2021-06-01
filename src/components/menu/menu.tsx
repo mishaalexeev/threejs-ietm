@@ -54,7 +54,7 @@ const MenuMain: FC<Props> = ({ stores }) => {
           store.changeCamera(mainCam);
         }
         if (store.selectedPart) {
-          store.selectedPart = null;
+          store.setSelectedObjectToDefault();
         }
 
         store.infoKey = key as string;
