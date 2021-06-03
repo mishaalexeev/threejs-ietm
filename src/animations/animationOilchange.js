@@ -1,30 +1,6 @@
 import * as THREE from "three";
 
-function isolateParts(root, partsNames) {
-  const prts = [];
-  partsNames.forEach((name) => {
-    root.getObjectByName(name).traverse((n) => {
-      if (n.type === "Mesh" || n.type === "LineSegments") {
-        const { parent } = n;
-        if (prts.indexOf(parent) < 0) prts.push(parent);
-      }
-    });
-  });
-
-  const hiddenPrts = [];
-  root.traverse((n) => {
-    if (n.type === "Mesh" || n.type === "LineSegments") {
-      const { parent } = n;
-      if (prts.indexOf(parent) < 0 && hiddenPrts.indexOf(parent) < 0)
-        hiddenPrts.push(parent);
-    }
-  });
-
-  return hiddenPrts.map((p) => p.name);
-}
-
 function appendActionsOilchange(scene, mixer) {
-  const infinity = 999999999999999;
   const anims = [
     {
       name: ["Нижняя_часть_корпуса"],
@@ -88,7 +64,7 @@ function appendActionsOilchange(scene, mixer) {
                 const color = c === null ? origCol : c;
                 return [color.r, color.g, color.b];
               });
-
+              console.log(colorTrackVals);
               const colorTrack = new THREE.ColorKeyframeTrack(
                 ".color",
                 a.highlight.times,

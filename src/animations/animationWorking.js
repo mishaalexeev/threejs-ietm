@@ -1,53 +1,7 @@
 import * as THREE from "three";
 
-function isolateParts(root, partsNames) {
-  const prts = [];
-  partsNames.forEach((name) => {
-    root.getObjectByName(name).traverse((n) => {
-      if (n.type === "Mesh" || n.type === "LineSegments") {
-        const { parent } = n;
-        if (prts.indexOf(parent) < 0) prts.push(parent);
-      }
-    });
-  });
-
-  const hiddenPrts = [];
-  root.traverse((n) => {
-    if (n.type === "Mesh" || n.type === "LineSegments") {
-      const { parent } = n;
-      if (prts.indexOf(parent) < 0 && hiddenPrts.indexOf(parent) < 0)
-        hiddenPrts.push(parent);
-    }
-  });
-
-  return hiddenPrts.map((p) => p.name);
-}
-
 function appendActionsWorking(scene, mixer) {
-  const infinity = 999999999999999;
   const anims = [
-    // {
-    //   name: ["Пробка"],
-    //   //   visible: {
-    //   //     times: [0, 6, infinity],
-    //   //     values: [1, 0, 0],
-    //   //   },
-    //   transparent: {
-    //     times: [0, 4, 6, infinity],
-    //     values: [false, true, true, true],
-    //   },
-    // highlight: {
-    //   times: [2, 2.5, 3, 3.5, 4],
-    //   values: [
-    //     null,
-    //     new THREE.Color("#ff0202"),
-    //     null,
-    //     new THREE.Color("#f80606"),
-    //     null,
-    //   ],
-    // },
-    //   actions: [],
-    // },
     {
       name: [
         "Верхняя_часть_корпуса",
@@ -58,11 +12,11 @@ function appendActionsWorking(scene, mixer) {
         "Винт_М4х0,7х8_______",
       ],
       visible: {
-        times: [0, 2, infinity],
+        times: [0, 2, Infinity],
         values: [1, 0, 0],
       },
       transparent: {
-        times: [0, 1, 2, infinity],
+        times: [0, 1, 2, Infinity],
         values: [false, true, true, true],
       },
       actions: [],
@@ -114,11 +68,11 @@ function appendActionsWorking(scene, mixer) {
         "Винт_М4х0,7х8_________",
       ],
       visible: {
-        times: [0, 9, 11, infinity],
+        times: [0, 9, 11, Infinity],
         values: [1, 1, 0, 0],
       },
       transparent: {
-        times: [0, 9, 10, 11, infinity],
+        times: [0, 9, 10, 11, Infinity],
         values: [false, false, true, true, true],
       },
       actions: [],
@@ -155,11 +109,11 @@ function appendActionsWorking(scene, mixer) {
         "Винт_M3x0,5x6",
       ],
       visible: {
-        times: [0, 25, 29, infinity],
+        times: [0, 25, 29, Infinity],
         values: [1, 1, 0, 0],
       },
       transparent: {
-        times: [0, 25, 28, 29, infinity],
+        times: [0, 25, 28, 29, Infinity],
         values: [false, false, true, true, true],
       },
       actions: [],
@@ -167,11 +121,11 @@ function appendActionsWorking(scene, mixer) {
     {
       name: ["Боковая_крышка_", "Боковая_крышка_______", "Боковая_крышка___"],
       visible: {
-        times: [0, 25, 29, infinity],
+        times: [0, 25, 29, Infinity],
         values: [1, 1, 0, 0],
       },
       transparent: {
-        times: [0, 25, 28, 29, infinity],
+        times: [0, 25, 28, 29, Infinity],
         values: [false, false, true, true, true],
       },
       actions: [],

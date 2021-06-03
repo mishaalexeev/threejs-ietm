@@ -39,7 +39,7 @@ export default class ModelStore {
   @observable isAnimationPlaying = false;
   @observable isAnimationActive = false;
   @observable time = 0;
-  @observable infoKey = "Назначение и описание";
+  @observable infoKey = "Введение";
   @observable contextMenuOpen = false;
   @action setTime() {
     this.time = this.mixer.time;

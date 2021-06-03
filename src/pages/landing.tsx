@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Button, Col, Row } from "antd";
-import imageRender from "assets/model-render.png";
+import imageRender from "assets/images/model-render.png";
 import { FieldTimeOutlined, RightOutlined } from "@ant-design/icons";
 import { withRouter, WithRouterProps } from "react-router";
 import { routesMap } from "routes";
