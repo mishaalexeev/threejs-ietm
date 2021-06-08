@@ -25,6 +25,7 @@ const Info: FC<Props> = ({ stores }) => {
   const handleFullscreenExit = () => {
     store.toggleFullscreen();
   };
+  //console.log(store.selectedPart.name);
 
   let name;
   if (store.selectedPart) {
@@ -37,7 +38,6 @@ const Info: FC<Props> = ({ stores }) => {
     jsx: "Nothing",
     title: "Nothing",
   };
-
   return (
     <>
       <Typography className="info-tools">
