@@ -54,7 +54,7 @@ const Info: FC<Props> = ({ stores }) => {
       <hr className="hr-divider" />
       <section className="info-scroll" ref={componentToPrint}>
         <Typography>
-          {name}
+          {/* {name} */}
           {/* <Title>{title}</Title> */}
           {test ? test({ store: store }) : null}
           <section className="info-jsx">{jsx}</section>
