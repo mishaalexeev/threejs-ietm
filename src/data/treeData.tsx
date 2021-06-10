@@ -63,7 +63,7 @@ const treeData: TreeItem[] = [
             selectable: false,
             children: [
               {
-                key: 381,
+                key: "Верхняя_часть_корпуса",
                 title: "Верхняя часть корпуса",
                 switcherIcon: <Cube3DIcon />,
               },
@@ -73,7 +73,7 @@ const treeData: TreeItem[] = [
                 switcherIcon: <Cube3DIcon />,
               },
               {
-                key: 376,
+                key: "Средняя_часть_корпуса",
                 title: "Средняя часть корпуса",
                 switcherIcon: <Cube3DIcon />,
               },
@@ -332,7 +332,7 @@ const treeData: TreeItem[] = [
           },
           {
             key: "Замена подшипников",
-            title: "▶ //Замена подшипников",
+            title: "▶ Замена подшипников",
             switcherIcon: <BearingIcon />,
           },
           {

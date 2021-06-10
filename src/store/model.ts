@@ -9,6 +9,7 @@ import {
   stepDataDisassembling,
   stepDataOilchange,
   stepDataWorking,
+  stepDataBallbearing,
 } from "data/stepData";
 
 type ViewerData = {
@@ -184,6 +185,9 @@ export default class ModelStore {
         break;
       case "/models/gearboxWorking.glb":
         this.stepData = stepDataWorking;
+        break;
+      case "/models/gearboxBallbearing.glb":
+        this.stepData = stepDataBallbearing;
         break;
       default:
         return null;

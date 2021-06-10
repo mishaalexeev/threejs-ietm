@@ -817,7 +817,18 @@ const partsData: PartsData = {
               <tr>
                 <td rowSpan={3}>Перегрев редуктора в процессе работы</td>
                 <td>Уровень масла лишком высок</td>
-                <td>Проверить уровень масла и довести до нормы</td>
+                <td className="cursor">
+                  {" "}
+                  <div
+                    onClick={start}
+                    onKeyDown={start}
+                    role="button"
+                    tabIndex={0}
+                    className="underline"
+                  >
+                    ▶ Проверить уровень масла и довести до нормы
+                  </div>
+                </td>
               </tr>
               <tr>
                 <td>Старение масла</td>
@@ -891,7 +902,18 @@ const partsData: PartsData = {
               <tr>
                 <td rowSpan={3}>Течь масла</td>
                 <td>Уровень масла лишком высок</td>
-                <td>Проверить уровень масла и довести до нормы</td>
+                <td className="cursor">
+                  {" "}
+                  <div
+                    onClick={start}
+                    onKeyDown={start}
+                    role="button"
+                    tabIndex={0}
+                    className="underline"
+                  >
+                    ▶ Проверить уровень масла и довести до нормы
+                  </div>
+                </td>
               </tr>
               <tr>
                 <td>Нарушение герметичности манжетных уплотнений</td>
@@ -921,7 +943,18 @@ const partsData: PartsData = {
               </tr>
               <tr>
                 <td>Уровень масла лишком высок</td>
-                <td>Проверить уровень масла и довести до нормы</td>
+                <td className="cursor">
+                  {" "}
+                  <div
+                    onClick={start}
+                    onKeyDown={start}
+                    role="button"
+                    tabIndex={0}
+                    className="underline"
+                  >
+                    ▶ Проверить уровень масла и довести до нормы
+                  </div>
+                </td>
               </tr>
               <tr>
                 <td>Превышение допустимой нагрузки на редуктор</td>
@@ -943,6 +976,42 @@ const partsData: PartsData = {
         </>
       );
     },
+  },
+  "Перечень инструментов": {
+    title: "Перечень инструментов",
+    jsx: (
+      <>
+        <p>
+          <Image
+            width={400}
+            src="https://images.satom.ru/i3/firms/28/223/223671/molotok-obratnyy-dlya-sema-podshipnikov-26pr-v-keyse_4e0a17bc478c9db_800x600_1.jpg"
+          />
+        </p>
+        <p className="drawing">Рис. 1 - Набор для съема подшипников</p>
+        <p>
+          <Image
+            width={400}
+            src="https://www.palmira33.ru/8695-thickbox_default/jtc-1321s-nabor-golovok-dlya-povrezhdennykh-boltov-i-gayek-8-21mm-v-keyse-15-predmetov.jpg"
+          />
+        </p>
+        <p className="drawing">Рис. 2 - Набор для откручивания болтов</p>
+        <p>
+          <Image
+            height={300}
+            width={400}
+            src="https://images.satom.ru/i3/firms/28/273/273899/pic_1a8d57b1a50cbeb_1024x3000_1.jpg"
+          />
+        </p>
+        <p className="drawing">Рис. 3 - Съемник шестерней</p>
+        <p>
+          <Image
+            width={400}
+            src="https://milwrussia.ru/image/cache/catalog/4932464996-800x800.jpg"
+          />
+        </p>
+        <p className="drawing">Рис. 4 - Набор ключей для выкручивания гаек</p>
+      </>
+    ),
   },
 };
 

@@ -2,6 +2,7 @@ import THREE from "three";
 import { ThisExpression } from "typescript";
 import appendActionsDisassembling from "./animationDisassembling";
 import appendActionsOilchange from "./animationOilchange";
+import appendActionsBallbearing from "./animationsBallbearing";
 import appendActionsWorking from "./animationWorking";
 
 type appendActions = (
@@ -19,6 +20,9 @@ const getAppendActions = (animationName: string): appendActions | null => {
       break;
     case "/models/gearboxWorking.glb":
       return appendActionsWorking;
+      break;
+    case "/models/gearboxBallbearing.glb":
+      return appendActionsBallbearing;
       break;
     default:
       return null;
