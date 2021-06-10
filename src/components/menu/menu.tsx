@@ -41,6 +41,12 @@ const MenuMain: FC<Props> = ({ stores }) => {
           stores.modelStore.startAnimation(modelName);
         });
         break;
+      case "Замена подшипников":
+        modelName = "/models/gearboxBallbearing.glb";
+        stores.modelStore.loadAnimation(modelName).then(() => {
+          stores.modelStore.startAnimation(modelName);
+        });
+        break;
       default:
         const { modelStore: store } = stores;
         if (store.isAnimationActive) {
