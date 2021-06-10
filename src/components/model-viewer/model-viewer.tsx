@@ -150,12 +150,15 @@ class ModelViewer extends Component<Props, State> {
             "ManualCamera_Orientation"
           );
 
+          const mainTrackTo = scene.getObjectByName("TrackTo").clone();
+          mainTrackTo.name = "MainTrackTo";
+
           const manualFreeCamera = manualCamera.clone();
           manualFreeCamera.name = "ManualFreeCamera";
           manualFreeCamera.position.copy(manualCameraObj.position.clone());
           manualFreeCamera.rotation.copy(manualCameraObj.rotation.clone());
           manualFreeCamera.quaternion.copy(manualCameraObj.quaternion.clone());
-          scene.add(manualFreeCamera);
+          scene.add(manualFreeCamera, mainTrackTo);
 
           let totalDuration = 0;
           const clips = gltf.animations;

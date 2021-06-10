@@ -9,6 +9,7 @@ import {
 import { RootStore, ModelStore } from "store";
 import withStores from "hocs/withStores";
 import ModelViewerSlider from "components/model-viewer-slider/model-viewer-slider";
+import * as THREE from "three";
 import "./model-viewer-tools.css";
 
 type Props = {
@@ -21,6 +22,7 @@ const ModelViewerTools: FC<Props> = ({ stores }) => {
     );
     return open === null ? false : open;
   });
+  const [explosion, setExplosion] = useState(false);
 
   useEffect(() => {
     stores.storage.setItem("toolsOpen", open.toString());
@@ -49,6 +51,34 @@ const ModelViewerTools: FC<Props> = ({ stores }) => {
   };
   const handleFullscreenClicked = () => {
     store.toggleFullscreen();
+  };
+  const handleExplosionClicked = () => {
+    if (!explosion) {
+      store.loadAnimation("/models/gearboxExplosion.glb").then(() => {
+        setExplosion(true);
+        store.mixer.timeScale = 2;
+        store.mixer.setTime(0);
+        store.actions.forEach((a) => {
+          a.loop = THREE.LoopOnce;
+          a.play();
+          a.clampWhenFinished = true;
+          store.mixer.addEventListener("loop", (e) => {
+            if (explosion) {
+              store.mixer.timeScale = 0;
+            }
+          });
+        });
+      });
+    } else {
+      setExplosion(false);
+      store.mixer.timeScale = 0;
+      store.mixer.setTime(0);
+      store.actions.forEach((a) => {
+        a.loop = THREE.LoopOnce;
+        a.clampWhenFinished = false;
+        a.play();
+      });
+    }
   };
 
   return (
@@ -95,7 +125,10 @@ const ModelViewerTools: FC<Props> = ({ stores }) => {
                 )}
               </span>
               <span className="fourth_item">
-                <ExpandAltOutlined className="FABMenu-icon" />
+                <ExpandAltOutlined
+                  onClick={handleExplosionClicked}
+                  className="FABMenu-icon"
+                />
               </span>
             </div>
           </div>
