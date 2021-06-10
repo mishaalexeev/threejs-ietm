@@ -63,6 +63,7 @@ const ModelViewerSlider: FC<Props> = ({ stores }) => {
   };
 
   const handleMixerFullStopBtnClicked = () => {
+    playMixer();
     stores.modelStore.stopAnimations();
     const mainCam = stores.modelStore.viewerData.scene.getObjectByName(
       "MainFreePerspectiveCamera"
@@ -70,7 +71,6 @@ const ModelViewerSlider: FC<Props> = ({ stores }) => {
     stores.modelStore.viewerData.camera = mainCam;
     stores.modelStore.viewerData.controls.object = mainCam;
     stores.modelStore.viewerData.controls?.reset();
-    stores.modelStore.mixer.update(1 / 60);
     stores.modelStore.onWindowResize();
   };
 
