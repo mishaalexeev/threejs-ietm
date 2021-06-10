@@ -34,7 +34,7 @@ const Info: FC<Props> = ({ stores }) => {
         ? null
         : store.selectedPart.name;
   }
-  const { jsx, title } = partData[name] || {
+  const { jsx, title } = partData[store.infoKey] || {
     jsx: "Nothing",
     title: "Nothing",
   };
