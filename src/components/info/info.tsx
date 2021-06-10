@@ -31,10 +31,10 @@ const Info: FC<Props> = ({ stores }) => {
   if (store.selectedPart) {
     name =
       Object.keys(stores.modelStore.selectedPart).length === 0
-        ? "Объект не выбран"
+        ? null
         : store.selectedPart.name;
   }
-  const { jsx, title, test } = partData[store.infoKey] || {
+  const { jsx, title } = partData[name] || {
     jsx: "Nothing",
     title: "Nothing",
   };
@@ -56,7 +56,6 @@ const Info: FC<Props> = ({ stores }) => {
         <Typography>
           {/* {name} */}
           {/* <Title>{title}</Title> */}
-          {test ? test({ store: store }) : null}
           <section className="info-jsx">{jsx}</section>
         </Typography>
       </section>
