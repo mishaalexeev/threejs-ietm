@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { Button, Col, Row } from "antd";
 import imageRender from "assets/images/model-render.png";
-import { FieldTimeOutlined, RightOutlined } from "@ant-design/icons";
+import { InfoCircleOutlined, RightOutlined } from "@ant-design/icons";
 import { withRouter, WithRouterProps } from "react-router";
 import { routesMap } from "routes";
 const Landing: FC<WithRouterProps> = ({ history }) => {
@@ -24,10 +24,8 @@ const Landing: FC<WithRouterProps> = ({ history }) => {
             включает в себя интерактивный, текстовый, фото и видео материал для
             изучения строения редуктора, его технических характеристик,
             составных деталей, методов сборки-разборки, эксплуатации и
-            обслуживания. Механизм привода к ходовому колесу грузовой тележки
-            мостового крана состоит из вертикального двухступенчатого
-            цилиндрического редуктора с косозубой быстроходной и прямозубой
-            тихоходной ступенями
+            обслуживания. Данный редуктор используется в механизме привода к
+            ходовому колесу грузовой тележки мостового крана.
           </p>
           <div className="landing-footer">
             <Button
@@ -38,8 +36,9 @@ const Landing: FC<WithRouterProps> = ({ history }) => {
               Перейти к руководству
             </Button>
             <p className="footer-extra">
-              <FieldTimeOutlined />
-              Продолжительность 5:30 мин.
+              <InfoCircleOutlined />
+              Разработка соответствует: ГОСТ 2.001-2013, ГОСТ Р 54088-2017, ГОСТ
+              Р 56713-2015.
             </p>
           </div>
         </div>

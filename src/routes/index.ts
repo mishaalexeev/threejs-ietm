@@ -32,19 +32,5 @@ routes.forEach((route) => {
   }
 });
 
-const urlBuilder = function (name, params) {
-  if (!routesMap.hasOwnProperty(name)) {
-    return null;
-  }
-
-  let url = routesMap[name]; // news/:id
-
-  for (const key in params) {
-    url = url.replace(":" + key, params[key]);
-  }
-
-  return url;
-};
-
 export default routes;
-export { routesMap, urlBuilder };
+export { routesMap };
