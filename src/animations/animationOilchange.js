@@ -64,7 +64,6 @@ function appendActionsOilchange(scene, mixer) {
                 const color = c === null ? origCol : c;
                 return [color.r, color.g, color.b];
               });
-              console.log(colorTrackVals);
               const colorTrack = new THREE.ColorKeyframeTrack(
                 ".color",
                 a.highlight.times,

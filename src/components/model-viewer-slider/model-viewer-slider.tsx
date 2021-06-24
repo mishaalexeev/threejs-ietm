@@ -76,6 +76,11 @@ const ModelViewerSlider: FC<Props> = ({ stores }) => {
     store.onWindowResize();
     store.changeCamera(manualCam);
   };
+
+  useEffect(() => {
+    handleMixerPlayBtnClicked();
+  }, []);
+
   const handleSliderChange = (value: number) => {
     const { timeScale } = stores.modelStore.mixer;
     if (timeScale === 0) handleMixerPlayBtnClicked();

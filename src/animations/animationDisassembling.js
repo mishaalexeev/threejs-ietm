@@ -767,8 +767,6 @@ function appendActions(scene, mixer) {
 
   anims.forEach((a) => {
     // функция на каждый эл-т массива а - элемент
-    console.log(a);
-    console.log(a.name);
     a.name.forEach((objName) => {
       //  console.log(objName); // название детали
     });
