@@ -34,10 +34,16 @@ const Info: FC<Props> = ({ stores }) => {
         ? null
         : store.selectedPart.name;
   }
-  const { jsx, title } = partData[store.infoKey] || {
+  // eslint-disable-next-line prefer-const
+  let { jsx, title } = partData[store.infoKey] || {
     jsx: "Nothing",
     title: "Nothing",
   };
+
+  if (typeof jsx === "function") {
+    jsx = jsx(stores.modelStore);
+  }
+
   return (
     <>
       <Typography className="info-tools">

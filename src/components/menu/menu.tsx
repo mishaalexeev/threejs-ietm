@@ -62,7 +62,7 @@ const MenuMain: FC<Props> = ({ stores }) => {
         if (store.selectedPart) {
           store.setSelectedObjectToDefault();
         }
-
+        console.log(key);
         store.infoKey = key as string;
         store.setSelectedPartById(+key);
         break;

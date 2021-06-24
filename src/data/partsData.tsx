@@ -762,9 +762,7 @@ const partsData: PartsData = {
   },
   "Типовые неисправности": {
     title: "Типовые неисправности",
-    jsx: <></>,
-    test: function name(props) {
-      const store: ModelStore = props.store;
+    jsx: function name(store: ModelStore) {
       const start = () => {
         store.loadAnimation("/models/gearboxOilchange.glb").then(() => {
           store.startAnimation("/models/gearboxOilchange.glb");
