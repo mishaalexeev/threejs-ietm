@@ -153,11 +153,20 @@ export default class ModelStore {
     this.mixer = new THREE.AnimationMixer();
   }
 
+  @action restoreVisibility() {
+    this.hiddenObjects.forEach((el) => {
+      el.visible = true;
+    });
+    this.hiddenObjects = [];
+    this.setSelectedObjectToDefault();
+    this.viewerData.controls?.reset();
+  }
   @action startAnimation(animationName) {
     if (!this.isAnimationActive) {
       this.isAnimationPlaying = true;
       this.isAnimationActive = true;
     }
+    this.restoreVisibility();
 
     const appendActions = getAppendActions(animationName);
     if (!appendActions) return;
@@ -463,6 +472,7 @@ export default class ModelStore {
       contextMenuOpen: observable,
       stepData: observable,
       setSelectedObjectToDefault: action,
+      restoreVisibility: action,
     });
   }
 }
