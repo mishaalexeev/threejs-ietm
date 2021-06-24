@@ -13,8 +13,8 @@ type Props = {
 };
 
 const Info: FC<Props> = ({ stores }) => {
-  const [pause, setPause] = useState(false);
   const componentToPrint = useRef<HTMLElement>(null);
+
   const handlePrint = useReactToPrint({
     content: () => componentToPrint.current,
   });
@@ -61,7 +61,7 @@ const Info: FC<Props> = ({ stores }) => {
       <section className="info-scroll" ref={componentToPrint}>
         <Typography>
           {/* {name} */}
-          {/* <Title>{title}</Title> */}
+          <h3 className="info-title-print">{title}</h3>
           <section className="info-jsx">{jsx}</section>
         </Typography>
       </section>

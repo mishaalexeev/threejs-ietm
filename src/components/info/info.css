@@ -86,3 +86,12 @@
 .info-title{
     margin: 0 !important;
 }
+.info-title-print{
+  text-align: center;
+}
+
+@media screen {
+  .info-title-print {
+    display: none;
+  }
+}
