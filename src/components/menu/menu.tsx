@@ -50,19 +50,12 @@ const MenuMain: FC<Props> = ({ stores }) => {
       default:
         const { modelStore: store } = stores;
         if (store.isAnimationActive) {
-          store.isAnimationActive = false;
-          store.isAnimationPlaying = false;
-          store.mixer.stopAllAction();
-          const mainCam = store.viewerData.scene.getObjectByName(
-            "MainFreePerspectiveCamera"
-          );
+          store.stopAnimations();
           store.onWindowResize();
-          store.changeCamera(mainCam);
         }
         if (store.selectedPart) {
           store.setSelectedObjectToDefault();
         }
-        console.log(key);
         store.infoKey = key as string;
         store.setSelectedPartById(+key);
         break;

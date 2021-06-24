@@ -105,9 +105,13 @@ export default class ModelStore {
     this.isAnimationActive = false;
     this.isAnimationPlaying = false;
     this.mixer.stopAllAction();
-    this.viewerData.camera = this.viewerData.scene.getObjectByName(
+    const mainCam = this.viewerData.scene.getObjectByName(
       "MainFreePerspectiveCamera"
     );
+    this.viewerData.camera = mainCam;
+    this.viewerData.controls.object = mainCam;
+    this.restoreVisibility();
+    this.onWindowResize();
   }
   @action initializeViewer(window) {
     this.viewerData.scene = new THREE.Scene();
