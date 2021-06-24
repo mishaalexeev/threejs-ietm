@@ -211,7 +211,7 @@ class ModelViewer extends Component<Props, State> {
     this.mount.style.cursor = intersect ? "pointer" : "default";
   };
 
-  onModelClick = (event) => {
+  onModelClick = ({ clientX, clientY }) => {
     if (this.store.isAnimationActive) {
       return;
     }
@@ -219,14 +219,14 @@ class ModelViewer extends Component<Props, State> {
     const { highlightData, intersectedObject, selectedPart } = this.store;
     const { pickableObjects } = highlightData;
 
-    const intersects = this.store.getIntersects(event.clientX, event.clientY);
+    const intersects = this.store.getIntersects(clientX, clientY);
     if (intersects.length < 1) {
       return;
     }
     this.store.setSelectedObject(intersects);
     this.mount.style.cursor = intersectedObject ? "pointer" : "default";
 
-    this.store.fitToView(event.clientX, event.clientY);
+    this.store.fitToView(clientX, clientY);
   };
   onMouseOut = () => {
     if (!this.store.intersectedObject) {
@@ -310,6 +310,7 @@ class ModelViewer extends Component<Props, State> {
         break;
       // Выделение детали
       case "3":
+        this.onModelClick({ clientX: xPos, clientY: yPos });
         break;
       default:
         break;
