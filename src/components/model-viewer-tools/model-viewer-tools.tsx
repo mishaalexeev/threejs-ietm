@@ -71,13 +71,7 @@ const ModelViewerTools: FC<Props> = ({ stores }) => {
       });
     } else {
       setExplosion(false);
-      store.mixer.timeScale = 0;
-      store.mixer.setTime(0);
-      store.actions.forEach((a) => {
-        a.loop = THREE.LoopOnce;
-        a.clampWhenFinished = false;
-        a.play();
-      });
+      store.stopAnimations();
     }
   };
 
