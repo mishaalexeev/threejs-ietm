@@ -6,6 +6,7 @@ import partData from "data/partsData";
 import "./info.css";
 import { CloseOutlined, PrinterOutlined } from "@ant-design/icons";
 import { useReactToPrint } from "react-to-print";
+import partsData from "data/partsData";
 const { Title, Paragraph } = Typography;
 
 type Props = {
@@ -35,10 +36,7 @@ const Info: FC<Props> = ({ stores }) => {
         : store.selectedPart.name;
   }
   // eslint-disable-next-line prefer-const
-  let { jsx, title } = partData[store.infoKey] || {
-    jsx: "Nothing",
-    title: "Nothing",
-  };
+  let { jsx, title } = partData[store.infoKey] || partsData["Введение"];
 
   if (typeof jsx === "function") {
     jsx = jsx(stores.modelStore);
@@ -46,6 +44,7 @@ const Info: FC<Props> = ({ stores }) => {
 
   return (
     <>
+      {/* {store.selectedPart.id} */}
       <Typography className="info-tools">
         <PrinterOutlined
           onClick={handlePrint}

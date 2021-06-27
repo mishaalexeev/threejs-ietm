@@ -47,6 +47,12 @@ const MenuMain: FC<Props> = ({ stores }) => {
           stores.modelStore.startAnimation(modelName);
         });
         break;
+      case "Замена уплотнений":
+        modelName = "/models/gearboxLipsing.glb";
+        stores.modelStore.loadAnimation(modelName).then(() => {
+          stores.modelStore.startAnimation(modelName);
+        });
+        break;
       default:
         const { modelStore: store } = stores;
         if (store.isAnimationActive) {
@@ -57,7 +63,8 @@ const MenuMain: FC<Props> = ({ stores }) => {
           store.setSelectedObjectToDefault();
         }
         store.infoKey = key as string;
-        store.setSelectedPartById(+key);
+        store.setSelectedPartByName(key as string);
+        console.log(key);
         break;
     }
   };

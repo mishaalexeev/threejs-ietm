@@ -10,6 +10,7 @@ import {
   stepDataOilchange,
   stepDataWorking,
   stepDataBallbearing,
+  stepDataLipsing,
 } from "data/stepData";
 
 type ViewerData = {
@@ -202,6 +203,9 @@ export default class ModelStore {
       case "/models/gearboxBallbearing.glb":
         this.stepData = stepDataBallbearing;
         break;
+      case "/models/gearboxLipsing.glb":
+        this.stepData = stepDataLipsing;
+        break;
       default:
         return null;
         break;
@@ -233,7 +237,13 @@ export default class ModelStore {
       this.highlightPart(this.selectedPart);
     }
   };
-
+  @action setSelectedPartByName = (name: string) => {
+    const selectedPart = this.viewerData.scene.getObjectByName(name);
+    if (selectedPart) {
+      this.selectedPart = selectedPart;
+      this.highlightPart(this.selectedPart);
+    }
+  };
   // Получить массив объектов на которые наведена мышь
   @action getIntersects(
     clientX: number,
@@ -298,7 +308,8 @@ export default class ModelStore {
     if (
       this.selectedPart &&
       this.selectedPart.id &&
-      this.highlightData.originalMaterials
+      this.highlightData.originalMaterials &&
+      this.selectedPart.material
     ) {
       this.selectedPart.material = this.highlightData.originalMaterials[
         this.selectedPart.id
@@ -325,6 +336,7 @@ export default class ModelStore {
         this.selectedPart.material.opacity = 0.9;
         this.selectedPart.material.color = new THREE.Color("#9a3737");
         this.infoKey = this.selectedPart.name;
+        console.log(this.infoKey);
       }
     } else {
       this.selectedPart = null;
@@ -454,6 +466,7 @@ export default class ModelStore {
       getIntersects: action,
       setIntersectedObject: action,
       setSelectedObject: action,
+      setSelectedPartByName: action,
       initializeViewer: action,
       startAnimation: action,
       mixer: observable,

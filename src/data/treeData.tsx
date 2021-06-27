@@ -161,7 +161,7 @@ const treeData: TreeItem[] = [
             selectable: false,
             children: [
               {
-                key: 507,
+                key: "Люк",
                 title: "Люк",
               },
               {
@@ -176,7 +176,7 @@ const treeData: TreeItem[] = [
             selectable: false,
             children: [
               {
-                key: 507,
+                key: "Щуп",
                 title: "Щуп",
               },
               {
@@ -337,7 +337,7 @@ const treeData: TreeItem[] = [
           },
           {
             key: "Замена уплотнений",
-            title: "▶ //Замена уплотнений",
+            title: "▶ Замена уплотнений",
             switcherIcon: <LipsealIcon />,
           },
         ],
